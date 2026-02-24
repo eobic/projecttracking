@@ -144,7 +144,7 @@
   <div><label>Owner</label><br><select id="f-owner" onchange="applyFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-priority" onchange="applyFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-status" onchange="applyFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>CFO</label><br><select id="f-cfo" onchange="applyFilters()"><option value="">All</option><option value="yes">CFO Priority</option><option value="no">Not CFO</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-cfo" onchange="applyFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
   <div><label>Pillar</label><br><select id="f-pillar" onchange="applyFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFilters()">Reset</button></div>
 </div>
@@ -153,7 +153,7 @@
   <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">28</div><div class="l">In Progress</div></div>
   <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
   <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">1</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">6</div><div class="l">CFO Priority</div></div>
+  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">6</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="status-bar-section">
@@ -190,12 +190,12 @@
   <div class="workload-row"><div class="wl-name">Daniel</div><div class="wl-bar-bg"><div class="wl-bar-fill daniel" style="width:17%">4</div></div></div>
 </div>
 </div>
-<div class="cfo-bar"><h3>CFO Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
+<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
 
 <!-- DATA INTAKE & MANAGEMENT -->
 <div class="pillar" data-pillar="intake">
   <div class="pillar-banner intake-bg"><span class="pb-title">Data Intake & Management</span><span class="pb-desc">Requests, cleanliness, build-out</span><span class="pb-count">6 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
+  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
   <tbody>
     <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">10</td><td>Integrate Paylocity via Fivetran</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Manual weekly upload (interim)</td></tr>
     <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">13</td><td>Onboard New Acquisitions to Snowflake</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Pending data readiness</td><td class="notes">BA Inc., Smeriglio, St Clair, Hulquist</td></tr>
@@ -209,7 +209,7 @@
 <!-- REPORTING -->
 <div class="pillar" data-pillar="reporting">
   <div class="pillar-banner rpt-bg"><span class="pb-title">Reporting</span><span class="pb-count">21 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
+  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
   <tbody>
     <tr data-owner="Ervina" data-p="P1" data-status="none" data-cfo="yes"><td class="id">6</td><td>Full WIP Report w/ Automated Flags</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Monthly review workflow with flag logic</td></tr>
     <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">35</td><td>PowerBI Bug: Sarah Lippled Client Owner (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Sarah Lippled showing as client_owner on KPI report under Meridian, but she is not in that firm.</td></tr>
@@ -238,7 +238,7 @@
 <!-- DATA MODELING -->
 <div class="pillar" data-pillar="modeling">
   <div class="pillar-banner model-bg"><span class="pb-title">Data Modeling</span><span class="pb-count">7 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
+  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
   <tbody>
     <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no"><td class="id">1</td><td>Validate Karbon_entities Table</td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Foundational</td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
     <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no"><td class="id">2</td><td>Update Core client_subsidiary Model</td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1</td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
@@ -253,7 +253,7 @@
 <!-- GOVERNANCE & ARCHITECTURE -->
 <div class="pillar" data-pillar="gov">
   <div class="pillar-banner gov-bg"><span class="pb-title">Governance & Architecture</span><span class="pb-count">6 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
+  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
   <tbody>
     <tr data-owner="Ervina" data-p="P1" data-status="none" data-cfo="yes"><td class="id">5</td><td>Monthly Tie-Out to Financials</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #4</td><td class="notes">Reconcile Power BI vs. financials monthly</td></tr>
     <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no"><td class="id">8</td><td>Move Power BI Access to IT/HR</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Depends on #7</td><td class="notes">Remove manual Security Group bottleneck</td></tr>
@@ -289,7 +289,7 @@
   <div><label>Owner</label><br><select id="f-fp-owner" onchange="applyFullFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>CFO</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="yes">CFO Priority</option><option value="no">Not CFO</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
   <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
 </div>
@@ -298,7 +298,7 @@
   <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">28</div><div class="l">In Progress</div></div>
   <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
   <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">1</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">6</div><div class="l">CFO Priority</div></div>
+  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">6</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="status-bar-section">
@@ -312,8 +312,31 @@
     <div class="legend-item"><div class="legend-dot ns"></div>Not Started (16)</div>
   </div>
 </div>
-<div class="cfo-bar"><h3>CFO Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
-<table id="full-table"><thead><tr><th>#</th><th>Project</th><th>Pillar</th><th>Owner</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
+<div class="chart-grid">
+<div class="chart-section">
+  <h3>Projects by Pillar & Owner <span class="chart-hint">(click to filter)</span></h3>
+  <div class="bar-chart">
+    <div class="bar-group" data-pillar="intake" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:14px">2</div><div class="bar-seg abdul" style="height:28px">4</div></div><div class="bar-label">Data Intake<br>& Mgmt</div></div>
+    <div class="bar-group" data-pillar="reporting" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:56px">8</div><div class="bar-seg abdul" style="height:91px">13</div></div><div class="bar-label">Reporting</div></div>
+    <div class="bar-group" data-pillar="modeling" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:14px">2</div><div class="bar-seg daniel" style="height:28px">4</div><div class="bar-seg abdul" style="height:12px">1</div></div><div class="bar-label">Data<br>Modeling</div></div>
+    <div class="bar-group" data-pillar="gov" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:35px">5</div><div class="bar-seg abdul" style="height:12px">1</div></div><div class="bar-label">Gov &<br>Architecture</div></div>
+    <div class="bar-group" data-pillar="ai" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg abdul" style="height:28px">4</div></div><div class="bar-label">AI<br>Pipeline</div></div>
+  </div>
+  <div class="chart-legend">
+    <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
+    <div class="legend-item"><div class="legend-dot daniel"></div>Daniel</div>
+    <div class="legend-item"><div class="legend-dot abdul"></div>Abdulrahman</div>
+  </div>
+</div>
+<div class="workload-section">
+  <h3>Workload by Owner</h3>
+  <div class="workload-row"><div class="wl-name">Abdulrahman</div><div class="wl-bar-bg"><div class="wl-bar-fill abdul" style="width:100%">23</div></div></div>
+  <div class="workload-row"><div class="wl-name">Ervina</div><div class="wl-bar-bg"><div class="wl-bar-fill ervina" style="width:74%">17</div></div></div>
+  <div class="workload-row"><div class="wl-name">Daniel</div><div class="wl-bar-bg"><div class="wl-bar-fill daniel" style="width:17%">4</div></div></div>
+</div>
+</div>
+<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
+<table id="full-table"><thead><tr><th>#</th><th>Project</th><th>Pillar</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
 <tbody>
   <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">1</td><td>Validate Karbon_entities Table</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Foundational</td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
   <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">2</td><td>Update Core client_subsidiary Model</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1</td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
@@ -369,7 +392,7 @@
 <div class="filter-bar">
   <div><label>Priority</label><br><select id="f-e-priority" onchange="applyErvinaFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option></select></div>
   <div><label>Status</label><br><select id="f-e-status" onchange="applyErvinaFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>CFO</label><br><select id="f-e-cfo" onchange="applyErvinaFilters()"><option value="">All</option><option value="yes">CFO Priority</option><option value="no">Not CFO</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-e-cfo" onchange="applyErvinaFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
   <div><label>Pillar</label><br><select id="f-e-pillar" onchange="applyErvinaFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetErvinaFilters()">Reset</button></div>
 </div>
@@ -378,7 +401,7 @@
   <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">5</div><div class="l">In Progress</div></div>
   <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
   <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">1</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">5</div><div class="l">CFO Priority</div></div>
+  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">5</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="chart-grid">
@@ -412,18 +435,18 @@
     <div class="legend-item"><div class="legend-dot ns"></div>Not Started (16)</div>
   </div>
 </div>
-<div class="cfo-bar"><h3>CFO Priority Items (5)</h3><ul><li>#5 Monthly Tie-Out to Financials</li><li>#6 Full WIP Report</li><li>#11 HDI Timekeeping Data</li><li>#12 Daily Production Report</li><li>#17 Aged WIP by Office</li></ul></div>
+<div class="cfo-bar"><h3>Stakeholder Priority Items (5)</h3><ul><li>#5 Monthly Tie-Out to Financials</li><li>#6 Full WIP Report</li><li>#11 HDI Timekeeping Data</li><li>#12 Daily Production Report</li><li>#17 Aged WIP by Office</li></ul></div>
 
 <div class="a-section" data-pillar="intake">
   <div class="pillar-banner intake-bg"><span class="pb-title">Data Intake & Management</span><span class="pb-count">2</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P3" data-s="none" data-cfo="no"><td class="id">22</td><td>New A/R Filters for Finance</td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="notes"></td></tr>
     <tr data-p="Future" data-s="none" data-cfo="no"><td class="id">7</td><td>Align HR, IT & Data on Employee Groups</td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="notes">Future project. Define groupings, update DIM_RLS.</td></tr>
   </tbody></table>
 </div>
 <div class="a-section" data-pillar="reporting">
   <div class="pillar-banner rpt-bg"><span class="pb-title">Reporting</span><span class="pb-count">8</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P1" data-s="none" data-cfo="yes"><td class="id">6</td><td>Full WIP Report w/ Automated Flags</td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Monthly review workflow with flag logic</td></tr>
     <tr data-p="P2" data-s="none" data-cfo="yes"><td class="id">12</td><td>Daily Production by Office vs. PY & Forecast</td><td></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Daily output vs. prior year and forecast</td></tr>
     <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">30</td><td>Executive Cohort Details</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">PowerBI reporting updates</td></tr>
@@ -436,7 +459,7 @@
 </div>
 <div class="a-section" data-pillar="modeling">
   <div class="pillar-banner model-bg"><span class="pb-title">Data Modeling</span><span class="pb-count">6</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">1</td><td>Validate Karbon_entities Table <span class="collab-tag">w/ Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
     <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">2</td><td>Update Core client_subsidiary Model <span class="collab-tag">w/ Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
     <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">3</td><td>Update Master Office Mapping</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Unit table approach, join to dim_subsidiary.</td></tr>
@@ -447,7 +470,7 @@
 </div>
 <div class="a-section" data-pillar="gov">
   <div class="pillar-banner gov-bg"><span class="pb-title">Governance & Architecture</span><span class="pb-count">5</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P1" data-s="none" data-cfo="yes"><td class="id">5</td><td>Monthly Tie-Out to Financials</td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Reconcile Power BI vs. financials monthly</td></tr>
     <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">8</td><td>Move Power BI Access to IT/HR</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Remove manual Security Group bottleneck</td></tr>
     <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">9</td><td>Clean Up Snowflake Roles & Permissions</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Unblock pending access requests</td></tr>
@@ -473,7 +496,7 @@
 <div class="filter-bar">
   <div><label>Priority</label><br><select id="f-a-priority" onchange="applyAbdulFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-a-status" onchange="applyAbdulFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>CFO</label><br><select id="f-a-cfo" onchange="applyAbdulFilters()"><option value="">All</option><option value="yes">CFO Priority</option><option value="no">Not CFO</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-a-cfo" onchange="applyAbdulFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
   <div><label>Pillar</label><br><select id="f-a-pillar" onchange="applyAbdulFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetAbdulFilters()">Reset</button></div>
 </div>
@@ -482,7 +505,7 @@
   <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">23</div><div class="l">In Progress</div></div>
   <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">0</div><div class="l">Not Started</div></div>
   <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">4</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">1</div><div class="l">CFO Priority</div></div>
+  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">1</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="chart-grid">
@@ -521,7 +544,7 @@
 
 <div class="a-section" data-pillar="intake">
   <div class="pillar-banner intake-bg"><span class="pb-title">Data Intake & Management</span><span class="pb-count">4</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">1</td><td>Integrate Paylocity - Weekly Employee Upload</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Manual weekly upload to Snowflake. Interim until Fivetran.</td></tr>
     <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">2</td><td>Onboard New Acquisitions to Snowflake</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">BA Inc., Smeriglio, St Clair, Hulquist. Process being defined.</td></tr>
     <tr data-p="P2" data-s="In Progress" data-cfo="yes"><td class="id">3</td><td>Ryan's Data Request (PDF IDs)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Data request with IDs in PDF format.</td></tr>
@@ -530,7 +553,7 @@
 </div>
 <div class="a-section" data-pillar="reporting">
   <div class="pillar-banner rpt-bg"><span class="pb-title">Reporting</span><span class="pb-count">13</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">5</td><td>PowerBI Bug: Sarah Lippled Client Owner (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Sarah Lippled showing as client_owner on KPI report under Meridian, but she is not in that firm.</td></tr>
     <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">6</td><td>PowerBI Bug: Brett M Contreras WIP (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Client showing high $6.6k WIP, but other details point to only $170.</td></tr>
     <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">7</td><td>PowerBI Bug: BC Athletics WIP (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Same WIP discrepancy issue as Brett M Contreras.</td></tr>
@@ -548,19 +571,19 @@
 </div>
 <div class="a-section" data-pillar="modeling">
   <div class="pillar-banner model-bg"><span class="pb-title">Data Modeling</span><span class="pb-count">1</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">18</td><td>Update Karbon Status Mapping Table</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Request from Mark. Bayshore Advisors - Santa Cruz office. Update in Snowflake.</td></tr>
   </tbody></table>
 </div>
 <div class="a-section" data-pillar="gov">
   <div class="pillar-banner gov-bg"><span class="pb-title">Governance & Architecture</span><span class="pb-count">1</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">19</td><td>Create Data Ticketing System</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Formalize request intake so data requests aren't coming through Teams and getting lost.</td></tr>
   </tbody></table>
 </div>
 <div class="a-section" data-pillar="ai">
   <div class="pillar-banner ai-bg"><span class="pb-title">AI Pipeline</span><span class="pb-count">4</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>CFO</th><th>Due</th><th>Notes</th></tr></thead><tbody>
+  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
     <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">20</td><td>Corporate Development x Claude</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes">Need project details to scope</td></tr>
     <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">21</td><td>Talent Acquisition x Claude</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes">Candidate review, summarize, organize</td></tr>
     <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">22</td><td>Compliance Request</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes"></td></tr>
@@ -791,6 +814,13 @@ document.querySelectorAll('#completed-pillar-chart .bar-group[data-cpillar]').fo
   bg.addEventListener('click',function(){
     var p=this.dataset.cpillar;var sel=document.getElementById('f-c-pillar');
     sel.value=(sel.value===p)?'':p;applyCompletedFilters();
+  });
+});
+/* Full Project View bars -> pillar filter */
+document.querySelectorAll('.bar-group[data-tab-filter="fp"]').forEach(function(bg){
+  bg.addEventListener('click',function(){
+    var p=this.dataset.pillar;if(!p)return;var sel=document.getElementById('f-fp-pillar');
+    sel.value=(sel.value===p)?'':p;applyFullFilters();
   });
 });
 </script>
