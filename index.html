@@ -33,7 +33,7 @@
   .chart-section{background:#FFF;border-radius:10px;padding:20px;box-shadow:2px 2px 8px rgba(0,0,0,.06)}
   .chart-section h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:12px}
   .chart-hint{font-weight:400;font-size:11px;color:#8A8C8E}
-  .bar-chart{display:flex;gap:20px;align-items:flex-end;height:150px;padding:0 10px}
+  .bar-chart{display:flex;gap:20px;align-items:flex-end;height:190px;padding:0 10px}
   .bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .15s,opacity .15s}
   .bar-group:hover{transform:translateY(-2px);opacity:.85}
   .bar-stack{display:flex;flex-direction:column-reverse;align-items:center;width:100%;max-width:120px;gap:1px}
@@ -117,7 +117,11 @@
   .mini-card-bd li{padding:6px 0;border-bottom:1px solid #F5F6F4;font-size:12px;display:flex;justify-content:space-between;align-items:center}
   .mini-card-bd li:last-child{border-bottom:none}
   .footer{text-align:center;padding:16px;font-size:10px;color:#8A8C8E}
-  @media(max-width:900px){.chart-grid{grid-template-columns:1fr}.stat-strip,.content,.filter-bar{padding:16px 20px}.header,.tab-nav{padding-left:20px;padding-right:20px}.bar-chart{height:110px}.pillar-progress{grid-template-columns:1fr 1fr}}
+  #full-table thead th{cursor:pointer;user-select:none;white-space:nowrap}
+  #full-table thead th:hover{background:#52566a}
+  #full-table thead th[data-sort="asc"]::after{content:" ▲";font-size:8px;opacity:.7}
+  #full-table thead th[data-sort="desc"]::after{content:" ▼";font-size:8px;opacity:.7}
+  @media(max-width:900px){.chart-grid{grid-template-columns:1fr}.stat-strip,.content,.filter-bar{padding:16px 20px}.header,.tab-nav{padding-left:20px;padding-right:20px}.bar-chart{height:140px}.pillar-progress{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.pillar-progress{grid-template-columns:1fr}.tier-strip{flex-wrap:wrap}}
 </style>
 </head>
@@ -144,7 +148,7 @@
   <div><label>Owner</label><br><select id="f-owner" onchange="applyFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-priority" onchange="applyFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-status" onchange="applyFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-cfo" onchange="applyFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-cfo" onchange="applyFilters()"><option value="">All</option><option value="yes">CFO</option></select></div>
   <div><label>Pillar</label><br><select id="f-pillar" onchange="applyFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFilters()">Reset</button></div>
 </div>
@@ -289,7 +293,7 @@
   <div><label>Owner</label><br><select id="f-fp-owner" onchange="applyFullFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="yes">CFO</option></select></div>
   <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
 </div>
@@ -336,7 +340,7 @@
 </div>
 </div>
 <div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
-<table id="full-table"><thead><tr><th>#</th><th>Project</th><th>Pillar</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
+<table id="full-table"><thead><tr><th onclick="sortFullTable(0)">#</th><th onclick="sortFullTable(1)">Project</th><th onclick="sortFullTable(2)">Pillar</th><th onclick="sortFullTable(3)">Owner</th><th onclick="sortFullTable(4)">Status</th><th onclick="sortFullTable(5)">Priority</th><th onclick="sortFullTable(6)">Stakeholder</th><th onclick="sortFullTable(7)">Due</th><th onclick="sortFullTable(8)">Dependencies</th><th onclick="sortFullTable(9)">Notes</th></tr></thead>
 <tbody>
   <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">1</td><td>Validate Karbon_entities Table</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Foundational</td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
   <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">2</td><td>Update Core client_subsidiary Model</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1</td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
@@ -392,7 +396,7 @@
 <div class="filter-bar">
   <div><label>Priority</label><br><select id="f-e-priority" onchange="applyErvinaFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option></select></div>
   <div><label>Status</label><br><select id="f-e-status" onchange="applyErvinaFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-e-cfo" onchange="applyErvinaFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-e-cfo" onchange="applyErvinaFilters()"><option value="">All</option><option value="yes">CFO</option></select></div>
   <div><label>Pillar</label><br><select id="f-e-pillar" onchange="applyErvinaFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetErvinaFilters()">Reset</button></div>
 </div>
@@ -496,7 +500,7 @@
 <div class="filter-bar">
   <div><label>Priority</label><br><select id="f-a-priority" onchange="applyAbdulFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-a-status" onchange="applyAbdulFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-a-cfo" onchange="applyAbdulFilters()"><option value="">All</option><option value="yes">Stakeholder</option><option value="no">Not Stakeholder</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-a-cfo" onchange="applyAbdulFilters()"><option value="">All</option><option value="yes">CFO</option></select></div>
   <div><label>Pillar</label><br><select id="f-a-pillar" onchange="applyAbdulFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetAbdulFilters()">Reset</button></div>
 </div>
@@ -816,6 +820,26 @@ document.querySelectorAll('#completed-pillar-chart .bar-group[data-cpillar]').fo
     sel.value=(sel.value===p)?'':p;applyCompletedFilters();
   });
 });
+/* FULL PROJECT VIEW SORT */
+function sortFullTable(col){
+  var table=document.getElementById('full-table');
+  var tbody=table.querySelector('tbody');
+  var rows=Array.from(tbody.querySelectorAll('tr'));
+  var ths=table.querySelectorAll('thead th');
+  var asc=ths[col].dataset.sort!=='asc';
+  ths.forEach(function(h){h.removeAttribute('data-sort')});
+  ths[col].dataset.sort=asc?'asc':'desc';
+  var priOrder={'P1':1,'P2':2,'P3':3,'Future':4,'Pipeline':5};
+  rows.sort(function(a,b){
+    var av=a.querySelectorAll('td')[col]?a.querySelectorAll('td')[col].textContent.trim():'';
+    var bv=b.querySelectorAll('td')[col]?b.querySelectorAll('td')[col].textContent.trim():'';
+    if(col===0){return asc?parseInt(av)-parseInt(bv):parseInt(bv)-parseInt(av)}
+    if(col===5){var ao=priOrder[av]||99,bo=priOrder[bv]||99;return asc?ao-bo:bo-ao}
+    return asc?av.localeCompare(bv):bv.localeCompare(av);
+  });
+  rows.forEach(function(r){tbody.appendChild(r)});
+}
+
 /* Full Project View bars -> pillar filter */
 document.querySelectorAll('.bar-group[data-tab-filter="fp"]').forEach(function(bg){
   bg.addEventListener('click',function(){
