@@ -134,162 +134,14 @@
 </div>
 
 <div class="tab-nav">
-  <button class="tab-btn active" data-tab="main" onclick="switchTab('main')">All Projects</button>
-  <button class="tab-btn fp-tab" data-tab="full" onclick="switchTab('full')">Full Project View</button>
-  <button class="tab-btn e-tab" data-tab="ervina" onclick="switchTab('ervina')">Ervina</button>
-  <button class="tab-btn a-tab" data-tab="abdul" onclick="switchTab('abdul')">Abdulrahman</button>
+  <button class="tab-btn fp-tab active" data-tab="full" onclick="switchTab('full')">Full Project View</button>
   <button class="tab-btn c-tab" data-tab="completed" onclick="switchTab('completed')">Completed</button>
 </div>
 
 <!-- ══════════════════════════════════════ -->
-<!-- TAB 1: ALL PROJECTS                   -->
-<!-- ══════════════════════════════════════ -->
-<div id="tab-main" class="tab-content active">
-<div class="filter-bar">
-  <div><label>Owner</label><br><select id="f-owner" onchange="applyFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
-  <div><label>Priority</label><br><select id="f-priority" onchange="applyFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
-  <div><label>Status</label><br><select id="f-status" onchange="applyFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-cfo" onchange="applyFilters()"><option value="">All</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
-  <div><label>Pillar</label><br><select id="f-pillar" onchange="applyFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
-  <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFilters()">Reset</button></div>
-</div>
-<div class="stat-strip">
-  <div class="s-card"><div class="n">44</div><div class="l">Total</div></div>
-  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">28</div><div class="l">In Progress</div></div>
-  <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
-  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">1</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">6</div><div class="l">Stakeholder</div></div>
-</div>
-<div class="content">
-<div class="status-bar-section">
-  <h3>Status Overview</h3>
-  <div class="status-bar">
-    <div class="status-seg seg-ip" style="width:64%">28 In Progress</div>
-    <div class="status-seg seg-ns" style="width:36%">16 Not Started</div>
-  </div>
-  <div class="status-bar-legend">
-    <div class="legend-item"><div class="legend-dot ip"></div>In Progress (28)</div>
-    <div class="legend-item"><div class="legend-dot ns"></div>Not Started (16)</div>
-  </div>
-</div>
-<div class="chart-grid">
-<div class="chart-section">
-  <h3>Projects by Pillar & Owner <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart">
-    <div class="bar-group" data-pillar="intake"><div class="bar-stack"><div class="bar-seg ervina" style="height:14px">2</div><div class="bar-seg abdul" style="height:28px">4</div></div><div class="bar-label">Data Intake<br>& Mgmt</div></div>
-    <div class="bar-group" data-pillar="reporting"><div class="bar-stack"><div class="bar-seg ervina" style="height:56px">8</div><div class="bar-seg abdul" style="height:91px">13</div></div><div class="bar-label">Reporting</div></div>
-    <div class="bar-group" data-pillar="modeling"><div class="bar-stack"><div class="bar-seg ervina" style="height:14px">2</div><div class="bar-seg daniel" style="height:28px">4</div><div class="bar-seg abdul" style="height:12px">1</div></div><div class="bar-label">Data<br>Modeling</div></div>
-    <div class="bar-group" data-pillar="gov"><div class="bar-stack"><div class="bar-seg ervina" style="height:35px">5</div><div class="bar-seg abdul" style="height:12px">1</div></div><div class="bar-label">Gov &<br>Architecture</div></div>
-    <div class="bar-group" data-pillar="ai"><div class="bar-stack"><div class="bar-seg abdul" style="height:28px">4</div></div><div class="bar-label">AI<br>Pipeline</div></div>
-  </div>
-  <div class="chart-legend">
-    <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
-    <div class="legend-item"><div class="legend-dot daniel"></div>Daniel</div>
-    <div class="legend-item"><div class="legend-dot abdul"></div>Abdulrahman</div>
-  </div>
-</div>
-<div class="workload-section">
-  <h3>Workload by Owner</h3>
-  <div class="workload-row"><div class="wl-name">Abdulrahman</div><div class="wl-bar-bg"><div class="wl-bar-fill abdul" style="width:100%">23</div></div></div>
-  <div class="workload-row"><div class="wl-name">Ervina</div><div class="wl-bar-bg"><div class="wl-bar-fill ervina" style="width:74%">17</div></div></div>
-  <div class="workload-row"><div class="wl-name">Daniel</div><div class="wl-bar-bg"><div class="wl-bar-fill daniel" style="width:17%">4</div></div></div>
-</div>
-</div>
-<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
-
-<!-- DATA INTAKE & MANAGEMENT -->
-<div class="pillar" data-pillar="intake">
-  <div class="pillar-banner intake-bg"><span class="pb-title">Data Intake & Management</span><span class="pb-desc">Requests, cleanliness, build-out</span><span class="pb-count">6 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
-  <tbody>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">10</td><td>Integrate Paylocity via Fivetran</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Manual weekly upload (interim)</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">13</td><td>Onboard New Acquisitions to Snowflake</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Pending data readiness</td><td class="notes">BA Inc., Smeriglio, St Clair, Hulquist</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="yes" style="background:#FFFDE7"><td class="id">15</td><td>Ryan's Data Request</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">None</td><td class="notes">IDs in PDF format</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">33</td><td>HDI Timekeeping Data - Upload</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Depends on #11</td><td class="notes">Upload all timekeeping data for previous HDI offices. Waiting on Ervina to finish Time Data Architecture.</td></tr>
-    <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="no"><td class="id">22</td><td>New A/R Filters for Finance</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">None</td><td class="notes"></td></tr>
-    <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no"><td class="id">7</td><td>Align HR, IT & Data on Employee Groups</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Future project. Define groupings, update DIM_RLS.</td></tr>
-  </tbody></table>
-</div>
-
-<!-- REPORTING -->
-<div class="pillar" data-pillar="reporting">
-  <div class="pillar-banner rpt-bg"><span class="pb-title">Reporting</span><span class="pb-count">21 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
-  <tbody>
-    <tr data-owner="Ervina" data-p="P1" data-status="none" data-cfo="yes"><td class="id">6</td><td>Full WIP Report w/ Automated Flags</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Monthly review workflow with flag logic</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">35</td><td>PowerBI Bug: Sarah Lippled Client Owner (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Sarah Lippled showing as client_owner on KPI report under Meridian, but she is not in that firm.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">36</td><td>PowerBI Bug: Brett M Contreras WIP (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Client showing high $6.6k WIP, but other details point to only $170.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">37</td><td>PowerBI Bug: BC Athletics WIP (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Same WIP discrepancy issue as Brett M Contreras.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">38</td><td>PowerBI Bug: Negative Production - Meridian (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Need to explain negative production showing on Meridian.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">39</td><td>PowerBI Bug: A/R Report Refresh - DHS (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Look at A/R report refresh for the DHS office.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">40</td><td>PowerBI Bug: Mike Watters Incorrect Office (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Mike Watters showing as client owner in DHS North Cal, but he is director of DHS Roseburg.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">41</td><td>PowerBI Bug: Arkose Advisors A/R (Brian)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Brian</span></td><td></td><td class="deps">None</td><td class="notes">Michael &amp; Tracey Moore. PowerBI shows negative $2,040 balance, but NetSuite shows $1,285 open balance.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">43</td><td>PowerBI Access Issue - Jeff Dredge</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Jeff Dredge</span></td><td></td><td class="deps">None</td><td class="notes">Jeff cannot see any revenue in PowerBI. Investigate access issue.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">45</td><td>PowerBI Bug: WIP N/A - Jack C Wilder Admin Trust (Amber)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Aaron Gitnick pushed back on N/A explanation. Jack C Wilder Administrative Trust is the only client missing Owner/Manager in Karbon ($1,438.33 in production). Dashboard shows $6,344 open WIP for N/A. Investigating what is pulling into WIP for N/A.</td></tr>
-    <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="yes"><td class="id">12</td><td>Daily Production by Office vs. PY & Forecast</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #3</td><td class="notes">Daily output vs. prior year and forecast</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">16</td><td>Exception Report for Office Admins</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Push data quality ownership to source</td></tr>
-    <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no"><td class="id">30</td><td>Executive Cohort Details</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">PowerBI reporting updates</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">27</td><td>CY PY Bar Graph - Gross Production</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Similar to revenue by client owner report</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">28</td><td>Add Paylocity Roles to Billable Hours</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Verify dbt column (user_account table), add if missing, update PowerBI</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">29</td><td>HDI Toggle in PowerBI</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Add HDI toggle to PowerBI reporting</td></tr>
-    <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="yes"><td class="id">17</td><td>Aged WIP by Office</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">WIP aging model per office</td></tr>
-    <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="no"><td class="id">20</td><td>Update Median Pricing Formula</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">None</td><td class="notes">New KPI reporting</td></tr>
-    <tr data-owner="Ervina" data-p="P3" data-status="In Progress" data-cfo="no"><td class="id">21</td><td>Update Executive Dashboard</td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p3">P3</span></td><td></td><td><span class="due-badge">This week</span></td><td class="deps">Depends on #3</td><td class="notes">Update Ops Manager filters. Restructuring YoY.</td></tr>
-    <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no"><td class="id">31</td><td>Separate Team KPI from Book of Business</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">KPI Beta App, future consideration</td></tr>
-    <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no"><td class="id">32</td><td>Introduce Target Metrics in Reporting</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Across different reports, future consideration</td></tr>
-  </tbody></table>
-</div>
-
-<!-- DATA MODELING -->
-<div class="pillar" data-pillar="modeling">
-  <div class="pillar-banner model-bg"><span class="pb-title">Data Modeling</span><span class="pb-count">7 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
-  <tbody>
-    <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no"><td class="id">1</td><td>Validate Karbon_entities Table</td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Foundational</td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
-    <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no"><td class="id">2</td><td>Update Core client_subsidiary Model</td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1</td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
-    <tr data-owner="Ervina" data-p="P1" data-status="In Progress" data-cfo="no"><td class="id">3</td><td>Update Master Office Mapping</td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Unit table approach, join to dim_subsidiary.</td></tr>
-    <tr data-owner="Ervina" data-p="P2" data-status="In Progress" data-cfo="yes"><td class="id">11</td><td>HDI Timekeeping Data - Architecture Design</td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">None</td><td class="notes">Designing architecture for HDI timekeeping data. Abdulrahman completed HDI for 5 offices.</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">42</td><td>Update Karbon Status Mapping Table</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Request from Mark. Bayshore Advisors - Santa Cruz office. Update in Snowflake.</td></tr>
-    <tr data-owner="Daniel" data-p="P3" data-status="none" data-cfo="no"><td class="id">18</td><td>New Churn Model (Lost &rarr; WIP)</td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Cross-ref Karbon work against 'lost' labels</td></tr>
-    <tr data-owner="Daniel" data-p="P3" data-status="none" data-cfo="no"><td class="id">19</td><td>TTM & YTD Churn Models</td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">Depends on #1, #2, #16</td><td class="notes">Stable foundation required</td></tr>
-  </tbody></table>
-</div>
-
-<!-- GOVERNANCE & ARCHITECTURE -->
-<div class="pillar" data-pillar="gov">
-  <div class="pillar-banner gov-bg"><span class="pb-title">Governance & Architecture</span><span class="pb-count">6 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Dependencies</th><th>Notes</th></tr></thead>
-  <tbody>
-    <tr data-owner="Ervina" data-p="P1" data-status="none" data-cfo="yes"><td class="id">5</td><td>Monthly Tie-Out to Financials</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #4</td><td class="notes">Reconcile Power BI vs. financials monthly</td></tr>
-    <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no"><td class="id">8</td><td>Move Power BI Access to IT/HR</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Depends on #7</td><td class="notes">Remove manual Security Group bottleneck</td></tr>
-    <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no"><td class="id">9</td><td>Clean Up Snowflake Roles & Permissions</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Unblock pending access requests</td></tr>
-    <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no"><td class="id">14</td><td>Implement Orchestration Tooling</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Prevent silent Power BI failures</td></tr>
-    <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">44</td><td>Create Data Ticketing System</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Formalize request intake so data requests aren't coming through Teams and getting lost.</td></tr>
-    <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no"><td class="id">4</td><td>Create Validation Process</td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Future orchestration project. Catch inactive users, email changes, RLS integrity.</td></tr>
-  </tbody></table>
-</div>
-
-<!-- AI PIPELINE -->
-<div class="pillar" data-pillar="ai">
-  <div class="pillar-banner ai-bg"><span class="pb-title">AI Pipeline</span><span class="pb-count">4 projects</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Owner</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
-  <tbody>
-    <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">23</td><td>Corporate Development x Claude</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td class="notes">Need project details to scope</td></tr>
-    <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">24</td><td>Talent Acquisition x Claude</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td class="notes">Candidate review, summarize, organize</td></tr>
-    <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">25</td><td>Compliance Request</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td class="notes"></td></tr>
-    <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" style="background:#FFFDE7"><td class="id">34</td><td>Office Prospecting Tool</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td class="notes">AI tool for Noah (Corp Dev). Generates list of acquirable offices by state, filtering noisy data.</td></tr>
-  </tbody></table>
-</div>
-
-<div class="side-sections"><div class="mini-card"><div class="mini-card-hd">To-Do Items</div><div class="mini-card-bd"><ul>
-  <li><span>Review Fivetran NetSuite migration docs</span><span style="font-size:10px;color:#8A8C8E">Fri, Feb 21</span></li>
-</ul></div></div></div>
-</div></div>
-
-<!-- ══════════════════════════════════════ -->
 <!-- TAB: FULL PROJECT VIEW                -->
 <!-- ══════════════════════════════════════ -->
-<div id="tab-full" class="tab-content">
+<div id="tab-full" class="tab-content active">
 <div class="filter-bar">
   <div><label>Owner</label><br><select id="f-fp-owner" onchange="applyFullFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
@@ -299,21 +151,21 @@
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
-  <div class="s-card"><div class="n">44</div><div class="l">Total</div></div>
-  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">28</div><div class="l">In Progress</div></div>
+  <div class="s-card"><div class="n">43</div><div class="l">Total</div></div>
+  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">27</div><div class="l">In Progress</div></div>
   <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
-  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">1</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">6</div><div class="l">Stakeholder</div></div>
+  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">2</div><div class="l">Completed</div></div>
+  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">14</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="status-bar-section">
   <h3>Status Overview</h3>
   <div class="status-bar">
-    <div class="status-seg seg-ip" style="width:64%">28 In Progress</div>
-    <div class="status-seg seg-ns" style="width:36%">16 Not Started</div>
+    <div class="status-seg seg-ip" style="width:63%">27 In Progress</div>
+    <div class="status-seg seg-ns" style="width:37%">16 Not Started</div>
   </div>
   <div class="status-bar-legend">
-    <div class="legend-item"><div class="legend-dot ip"></div>In Progress (28)</div>
+    <div class="legend-item"><div class="legend-dot ip"></div>In Progress (27)</div>
     <div class="legend-item"><div class="legend-dot ns"></div>Not Started (16)</div>
   </div>
 </div>
@@ -340,7 +192,7 @@
   <div class="workload-row"><div class="wl-name">Daniel</div><div class="wl-bar-bg"><div class="wl-bar-fill daniel" style="width:17%">4</div></div></div>
 </div>
 </div>
-<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li><li>Ryan's Data Request</li></ul></div>
+<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li></ul></div>
 <table id="full-table"><thead><tr><th onclick="sortFullTable(0)">#</th><th onclick="sortFullTable(1)">Project</th><th onclick="sortFullTable(2)">Pillar</th><th onclick="sortFullTable(3)">Owner</th><th onclick="sortFullTable(4)">Status</th><th onclick="sortFullTable(5)">Priority</th><th onclick="sortFullTable(6)">Stakeholder</th><th onclick="sortFullTable(7)">Due</th><th onclick="sortFullTable(8)">Dependencies</th><th onclick="sortFullTable(9)">Notes</th></tr></thead>
 <tbody>
   <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">1</td><td>Validate Karbon_entities Table</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Foundational</td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
@@ -357,7 +209,6 @@
   <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="yes" data-pillar="reporting"><td class="id">12</td><td>Daily Production by Office vs. PY & Forecast</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #3</td><td class="notes">Daily output vs. prior year and forecast</td></tr>
   <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="intake" style="background:#FFFDE7"><td class="id">13</td><td>Onboard New Acquisitions to Snowflake</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Pending data readiness</td><td class="notes">BA Inc., Smeriglio, St Clair, Hulquist</td></tr>
   <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no" data-pillar="gov"><td class="id">14</td><td>Implement Orchestration Tooling</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Prevent silent Power BI failures</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="yes" data-pillar="intake" style="background:#FFFDE7"><td class="id">15</td><td>Ryan's Data Request</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">None</td><td class="notes">IDs in PDF format</td></tr>
   <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">16</td><td>Exception Report for Office Admins</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Push data quality ownership to source</td></tr>
   <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="yes" data-pillar="reporting"><td class="id">17</td><td>Aged WIP by Office</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">WIP aging model per office</td></tr>
   <tr data-owner="Daniel" data-p="P3" data-status="none" data-cfo="no" data-pillar="modeling"><td class="id">18</td><td>New Churn Model (Lost &rarr; WIP)</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Cross-ref Karbon work against 'lost' labels</td></tr>
@@ -391,222 +242,6 @@
 </div></div>
 
 <!-- ══════════════════════════════════════ -->
-<!-- TAB 2: ERVINA                         -->
-<!-- ══════════════════════════════════════ -->
-<div id="tab-ervina" class="tab-content">
-<div class="filter-bar">
-  <div><label>Priority</label><br><select id="f-e-priority" onchange="applyErvinaFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option></select></div>
-  <div><label>Status</label><br><select id="f-e-status" onchange="applyErvinaFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-e-cfo" onchange="applyErvinaFilters()"><option value="">All</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
-  <div><label>Pillar</label><br><select id="f-e-pillar" onchange="applyErvinaFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option></select></div>
-  <div style="align-self:flex-end"><button class="reset-btn" onclick="resetErvinaFilters()">Reset</button></div>
-</div>
-<div class="stat-strip">
-  <div class="s-card"><div class="n">21</div><div class="l">Total</div></div>
-  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">5</div><div class="l">In Progress</div></div>
-  <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
-  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">1</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">5</div><div class="l">Stakeholder</div></div>
-</div>
-<div class="content">
-<div class="chart-grid">
-<div class="chart-section">
-  <h3>My Projects by Pillar <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart" style="height:130px">
-    <div class="bar-group" data-pillar="intake" data-tab-filter="e"><div class="bar-stack"><div class="bar-seg ervina" style="height:20px">2</div></div><div class="bar-label">Data Intake</div></div>
-    <div class="bar-group" data-pillar="reporting" data-tab-filter="e"><div class="bar-stack"><div class="bar-seg ervina" style="height:80px">8</div></div><div class="bar-label">Reporting</div></div>
-    <div class="bar-group" data-pillar="modeling" data-tab-filter="e"><div class="bar-stack"><div class="bar-seg ervina" style="height:60px">6</div></div><div class="bar-label">Data Modeling</div></div>
-    <div class="bar-group" data-pillar="gov" data-tab-filter="e"><div class="bar-stack"><div class="bar-seg ervina" style="height:50px">5</div></div><div class="bar-label">Gov &<br>Architecture</div></div>
-  </div>
-  <div class="chart-legend">
-    <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
-  </div>
-</div>
-<div class="chart-section">
-  <h3>Completed by Date <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart" style="height:120px" id="ervina-completed-chart">
-    <div class="bar-group" data-ecdate="Feb 24"><div class="bar-stack"><div class="bar-seg ervina" style="height:25px">1</div></div><div class="bar-label">Feb 24</div></div>
-  </div>
-  <div class="chart-legend">
-    <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
-  </div>
-</div>
-</div>
-<div class="status-bar-section">
-  <h3>Status Overview</h3>
-  <div class="status-bar"><div class="status-seg seg-ip" style="width:24%">5 In Progress</div><div class="status-seg seg-ns" style="width:76%">16 Not Started</div></div>
-  <div class="status-bar-legend">
-    <div class="legend-item"><div class="legend-dot ip"></div>In Progress (5)</div>
-    <div class="legend-item"><div class="legend-dot ns"></div>Not Started (16)</div>
-  </div>
-</div>
-<div class="cfo-bar"><h3>Stakeholder Priority Items (5)</h3><ul><li>#5 Monthly Tie-Out to Financials</li><li>#6 Full WIP Report</li><li>#11 HDI Timekeeping Data</li><li>#12 Daily Production Report</li><li>#17 Aged WIP by Office</li></ul></div>
-
-<div class="a-section" data-pillar="intake">
-  <div class="pillar-banner intake-bg"><span class="pb-title">Data Intake & Management</span><span class="pb-count">2</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P3" data-s="none" data-cfo="no"><td class="id">22</td><td>New A/R Filters for Finance</td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="notes"></td></tr>
-    <tr data-p="Future" data-s="none" data-cfo="no"><td class="id">7</td><td>Align HR, IT & Data on Employee Groups</td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="notes">Future project. Define groupings, update DIM_RLS.</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="reporting">
-  <div class="pillar-banner rpt-bg"><span class="pb-title">Reporting</span><span class="pb-count">8</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P1" data-s="none" data-cfo="yes"><td class="id">6</td><td>Full WIP Report w/ Automated Flags</td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Monthly review workflow with flag logic</td></tr>
-    <tr data-p="P2" data-s="none" data-cfo="yes"><td class="id">12</td><td>Daily Production by Office vs. PY & Forecast</td><td></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Daily output vs. prior year and forecast</td></tr>
-    <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">30</td><td>Executive Cohort Details</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">PowerBI reporting updates</td></tr>
-    <tr data-p="P3" data-s="none" data-cfo="yes"><td class="id">17</td><td>Aged WIP by Office</td><td></td><td><span class="pri-badge p3">P3</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">WIP aging model per office</td></tr>
-    <tr data-p="P3" data-s="none" data-cfo="no"><td class="id">20</td><td>Update Median Pricing Formula</td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="notes">New KPI reporting</td></tr>
-    <tr data-p="P3" data-s="In Progress" data-cfo="no"><td class="id">21</td><td>Update Executive Dashboard</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p3">P3</span></td><td></td><td><span class="due-badge">This week</span></td><td class="notes">Update Ops Manager filters. Restructuring YoY.</td></tr>
-    <tr data-p="Future" data-s="none" data-cfo="no"><td class="id">31</td><td>Separate Team KPI from Book of Business</td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="notes">KPI Beta App</td></tr>
-    <tr data-p="Future" data-s="none" data-cfo="no"><td class="id">32</td><td>Introduce Target Metrics in Reporting</td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="notes">Across different reports</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="modeling">
-  <div class="pillar-banner model-bg"><span class="pb-title">Data Modeling</span><span class="pb-count">6</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">1</td><td>Validate Karbon_entities Table <span class="collab-tag">w/ Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">2</td><td>Update Core client_subsidiary Model <span class="collab-tag">w/ Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">3</td><td>Update Master Office Mapping</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="notes">Unit table approach, join to dim_subsidiary.</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="yes"><td class="id">11</td><td>HDI Timekeeping Data - Architecture Design</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Designing architecture for HDI timekeeping data.</td></tr>
-    <tr data-p="P3" data-s="none" data-cfo="no"><td class="id">18</td><td>New Churn Model (Lost &rarr; WIP) <span class="collab-tag">w/ Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="notes">Cross-ref Karbon work against 'lost' labels</td></tr>
-    <tr data-p="P3" data-s="none" data-cfo="no"><td class="id">19</td><td>TTM & YTD Churn Models <span class="collab-tag">w/ Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="notes">Stable foundation required</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="gov">
-  <div class="pillar-banner gov-bg"><span class="pb-title">Governance & Architecture</span><span class="pb-count">5</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P1" data-s="none" data-cfo="yes"><td class="id">5</td><td>Monthly Tie-Out to Financials</td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Reconcile Power BI vs. financials monthly</td></tr>
-    <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">8</td><td>Move Power BI Access to IT/HR</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Remove manual Security Group bottleneck</td></tr>
-    <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">9</td><td>Clean Up Snowflake Roles & Permissions</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Unblock pending access requests</td></tr>
-    <tr data-p="P2" data-s="none" data-cfo="no"><td class="id">14</td><td>Implement Orchestration Tooling</td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Prevent silent Power BI failures</td></tr>
-    <tr data-p="Future" data-s="none" data-cfo="no"><td class="id">4</td><td>Create Validation Process</td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="notes">Future orchestration project</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="completed">
-  <div class="pillar-banner cp-bg"><span class="pb-title">Completed</span><span class="pb-count">1</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Pillar</th><th>Date</th><th>Impact</th></tr></thead><tbody>
-    <tr data-cpillar="modeling" data-cdate="Feb 24"><td class="id">26</td><td>dim_date Table</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td>Feb 24</td><td class="notes">Created in Snowflake via Initial Table Creation Notebook. Does not need to be run again.</td></tr>
-  </tbody></table>
-</div>
-<div class="side-sections"><div class="mini-card"><div class="mini-card-hd">My To-Dos</div><div class="mini-card-bd"><ul>
-  <li><span>Review Fivetran NetSuite migration docs</span><span style="font-size:10px;color:#8A8C8E">Fri, Feb 21</span></li>
-</ul></div></div></div>
-</div></div>
-
-<!-- ══════════════════════════════════════ -->
-<!-- TAB 3: ABDULRAHMAN                    -->
-<!-- ══════════════════════════════════════ -->
-<div id="tab-abdul" class="tab-content">
-<div class="filter-bar">
-  <div><label>Priority</label><br><select id="f-a-priority" onchange="applyAbdulFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Pipeline">Pipeline</option></select></div>
-  <div><label>Status</label><br><select id="f-a-status" onchange="applyAbdulFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-a-cfo" onchange="applyAbdulFilters()"><option value="">All</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
-  <div><label>Pillar</label><br><select id="f-a-pillar" onchange="applyAbdulFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
-  <div style="align-self:flex-end"><button class="reset-btn" onclick="resetAbdulFilters()">Reset</button></div>
-</div>
-<div class="stat-strip">
-  <div class="s-card"><div class="n">23</div><div class="l">Total</div></div>
-  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">23</div><div class="l">In Progress</div></div>
-  <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">0</div><div class="l">Not Started</div></div>
-  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">4</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">1</div><div class="l">Stakeholder</div></div>
-</div>
-<div class="content">
-<div class="chart-grid">
-<div class="chart-section">
-  <h3>Projects by Category <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart" style="height:130px">
-    <div class="bar-group" data-pillar="intake" data-tab-filter="a"><div class="bar-stack"><div class="bar-seg abdul" style="height:40px">4</div></div><div class="bar-label">Data Intake</div></div>
-    <div class="bar-group" data-pillar="reporting" data-tab-filter="a"><div class="bar-stack"><div class="bar-seg abdul" style="height:130px">13</div></div><div class="bar-label">Reporting</div></div>
-    <div class="bar-group" data-pillar="modeling" data-tab-filter="a"><div class="bar-stack"><div class="bar-seg abdul" style="height:14px">1</div></div><div class="bar-label">Modeling</div></div>
-    <div class="bar-group" data-pillar="gov" data-tab-filter="a"><div class="bar-stack"><div class="bar-seg abdul" style="height:14px">1</div></div><div class="bar-label">Gov</div></div>
-    <div class="bar-group" data-pillar="ai" data-tab-filter="a"><div class="bar-stack"><div class="bar-seg abdul" style="height:40px">4</div></div><div class="bar-label">AI Pipeline</div></div>
-  </div>
-  <div class="chart-legend">
-    <div class="legend-item"><div class="legend-dot abdul"></div>Abdulrahman</div>
-  </div>
-</div>
-<div class="chart-section">
-  <h3>Completed by Date <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart" style="height:120px" id="abdul-completed-chart">
-    <div class="bar-group" data-cdate="Feb 18"><div class="bar-stack"><div class="bar-seg abdul" style="height:75px">3</div></div><div class="bar-label">Feb 18</div></div>
-    <div class="bar-group" data-cdate="Feb 23"><div class="bar-stack"><div class="bar-seg abdul" style="height:25px">1</div></div><div class="bar-label">Feb 23</div></div>
-  </div>
-  <div class="chart-legend">
-    <div class="legend-item"><div class="legend-dot abdul"></div>Abdulrahman</div>
-  </div>
-</div>
-</div>
-<div class="status-bar-section">
-  <h3>Status Overview</h3>
-  <div class="status-bar"><div class="status-seg seg-ip" style="width:85%">23 In Progress</div><div class="status-seg seg-cp" style="width:15%">4 Completed</div></div>
-  <div class="status-bar-legend">
-    <div class="legend-item"><div class="legend-dot ip"></div>In Progress (23)</div>
-    <div class="legend-item"><div class="legend-dot cp"></div>Completed (4)</div>
-  </div>
-</div>
-
-<div class="a-section" data-pillar="intake">
-  <div class="pillar-banner intake-bg"><span class="pb-title">Data Intake & Management</span><span class="pb-count">4</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">1</td><td>Integrate Paylocity - Weekly Employee Upload</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Manual weekly upload to Snowflake. Interim until Fivetran.</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">2</td><td>Onboard New Acquisitions to Snowflake</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">BA Inc., Smeriglio, St Clair, Hulquist. Process being defined.</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="yes"><td class="id">3</td><td>Ryan's Data Request (PDF IDs)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="notes">Data request with IDs in PDF format.</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">4</td><td>HDI Timekeeping Data - Upload</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Upload all timekeeping data for previous HDI offices. Waiting on Ervina to finish Time Data Architecture.</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="reporting">
-  <div class="pillar-banner rpt-bg"><span class="pb-title">Reporting</span><span class="pb-count">13</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">5</td><td>PowerBI Bug: Sarah Lippled Client Owner (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Sarah Lippled showing as client_owner on KPI report under Meridian, but she is not in that firm.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">6</td><td>PowerBI Bug: Brett M Contreras WIP (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Client showing high $6.6k WIP, but other details point to only $170.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">7</td><td>PowerBI Bug: BC Athletics WIP (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Same WIP discrepancy issue as Brett M Contreras.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">8</td><td>PowerBI Bug: Negative Production - Meridian (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Need to explain negative production showing on Meridian.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">9</td><td>PowerBI Bug: A/R Report Refresh - DHS (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Look at A/R report refresh for the DHS office.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">10</td><td>PowerBI Bug: Mike Watters Incorrect Office (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Mike Watters showing as client owner in DHS North Cal, but he is director of DHS Roseburg.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">11</td><td>PowerBI Bug: Arkose Advisors A/R (Brian)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Brian</span></td><td></td><td class="notes">Michael &amp; Tracey Moore. PowerBI shows negative $2,040 balance, but NetSuite shows $1,285 open balance.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">12</td><td>PowerBI Access Issue - Jeff Dredge</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Jeff Dredge</span></td><td></td><td class="notes">Jeff cannot see any revenue in PowerBI. Investigate access issue.</td></tr>
-    <tr data-p="P1" data-s="In Progress" data-cfo="no"><td class="id">13</td><td>PowerBI Bug: WIP N/A - Jack C Wilder Admin Trust (Amber)</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="notes">Aaron Gitnick pushed back on N/A explanation. Jack C Wilder Administrative Trust is the only client missing Owner/Manager in Karbon ($1,438.33 in production). Dashboard shows $6,344 open WIP for N/A. Investigating what is pulling into WIP for N/A.</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">14</td><td>Exception Report for Office Admins</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Push data quality ownership to source</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">15</td><td>CY PY Bar Graph - Gross Production</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Similar to revenue by client owner report</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">16</td><td>Add Paylocity Roles to Billable Hours</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Verify dbt column (user_account table), add if missing, update PowerBI</td></tr>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">17</td><td>HDI Toggle in PowerBI</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Add HDI toggle to PowerBI reporting</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="modeling">
-  <div class="pillar-banner model-bg"><span class="pb-title">Data Modeling</span><span class="pb-count">1</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">18</td><td>Update Karbon Status Mapping Table</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Request from Mark. Bayshore Advisors - Santa Cruz office. Update in Snowflake.</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="gov">
-  <div class="pillar-banner gov-bg"><span class="pb-title">Governance & Architecture</span><span class="pb-count">1</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="P2" data-s="In Progress" data-cfo="no"><td class="id">19</td><td>Create Data Ticketing System</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="notes">Formalize request intake so data requests aren't coming through Teams and getting lost.</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="ai">
-  <div class="pillar-banner ai-bg"><span class="pb-title">AI Pipeline</span><span class="pb-count">4</span></div>
-  <table><thead><tr><th>#</th><th>Project</th><th>Status</th><th>Priority</th><th>Stakeholder</th><th>Due</th><th>Notes</th></tr></thead><tbody>
-    <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">20</td><td>Corporate Development x Claude</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes">Need project details to scope</td></tr>
-    <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">21</td><td>Talent Acquisition x Claude</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes">Candidate review, summarize, organize</td></tr>
-    <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">22</td><td>Compliance Request</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes"></td></tr>
-    <tr data-p="Pipeline" data-s="In Progress" data-cfo="no"><td class="id">23</td><td>Office Prospecting Tool</td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="notes">AI tool for Noah (Corp Dev). Generates list of acquirable offices by state, filtering noisy data.</td></tr>
-  </tbody></table>
-</div>
-<div class="a-section" data-pillar="completed">
-  <div class="pillar-banner cp-bg"><span class="pb-title">Completed</span><span class="pb-count">4</span></div>
-  <table><thead><tr><th>#</th><th>Deliverable</th><th>Pillar</th><th>Date</th><th>Impact</th></tr></thead><tbody>
-    <tr data-cpillar="modeling" data-cdate="Feb 23"><td class="id">1</td><td>Historical Data Integration - 5 Offices<br><span style="font-size:11px;color:#888">ASG, Pottsville, Greencoast, Walpole, Santa Cruz</span></td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td>Feb 23</td><td class="notes">Uploaded tables to Snowflake, added to dbt models, published in Power BI.</td></tr>
-    <tr data-cpillar="intake" data-cdate="Feb 18"><td class="id">2</td><td>Added Karbon Statuses to Snowflake for Brian</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Loaded Karbon status data into Snowflake, published for reporting.</td></tr>
-    <tr data-cpillar="intake" data-cdate="Feb 18"><td class="id">3</td><td>Added Karbon Statuses to Snowflake for Mark/Tyson Colledge</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Loaded Karbon status data for Colledge offices.</td></tr>
-    <tr data-cpillar="intake" data-cdate="Feb 18"><td class="id">4</td><td>Custom Data Request for Chase - Two Offices</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Custom data extraction and delivery for two offices.</td></tr>
-  </tbody></table>
-</div>
-</div></div>
-
-<!-- ══════════════════════════════════════ -->
 <!-- TAB 4: ALL COMPLETED                  -->
 <!-- ══════════════════════════════════════ -->
 <div id="tab-completed" class="tab-content">
@@ -616,7 +251,7 @@
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetCompletedFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
-  <div class="s-card"><div class="n">5</div><div class="l">Total Completed</div></div>
+  <div class="s-card"><div class="n">6</div><div class="l">Total Completed</div></div>
   <div class="s-card" style="border-top:3px solid #F4D05E"><div class="n" style="color:#BF5700">4</div><div class="l">Abdulrahman</div></div>
   <div class="s-card" style="border-top:3px solid #6995FF"><div class="n" style="color:#6995FF">1</div><div class="l">Ervina</div></div>
 </div>
@@ -656,6 +291,7 @@
   <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">3</td><td>Added Karbon Statuses to Snowflake for Mark/Tyson Colledge</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Loaded Karbon status data for Colledge offices.</td></tr>
   <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">4</td><td>Custom Data Request for Chase - Two Offices</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Custom data extraction and delivery for two offices.</td></tr>
   <tr data-cowner="Ervina" data-cpillar="modeling"><td class="id">5</td><td>dim_date Table</td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td>Feb 24</td><td class="notes">Created in Snowflake via Initial Table Creation Notebook. Does not need to be run again.</td></tr>
+  <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">6</td><td>Ryan's Data Request (PDF IDs)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 24</td><td class="notes">CFO data request. IDs in PDF format.</td></tr>
 </tbody></table>
 </div></div>
 
@@ -668,26 +304,6 @@ function switchTab(t){
   document.getElementById('tab-'+t).classList.add('active');
   document.querySelector('.tab-btn[data-tab="'+t+'"]').classList.add('active');
 }
-
-/* MAIN TAB FILTERS */
-function applyFilters(){
-  var owner=document.getElementById('f-owner').value,pri=document.getElementById('f-priority').value,status=document.getElementById('f-status').value,cfo=document.getElementById('f-cfo').value,pillar=document.getElementById('f-pillar').value;
-  document.querySelectorAll('#tab-main tbody tr[data-p]').forEach(function(r){
-    var s=true;
-    if(owner&&!r.dataset.owner.includes(owner))s=false;
-    if(pri&&r.dataset.p!==pri)s=false;
-    if(status==='none'&&r.dataset.status!=='none')s=false;
-    else if(status&&status!=='none'&&r.dataset.status!==status)s=false;
-    if(cfo){var shTd=r.querySelectorAll('td')[5];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
-    r.classList.toggle('hidden',!s);
-  });
-  document.querySelectorAll('#tab-main .pillar').forEach(function(p){
-    if(pillar&&p.dataset.pillar!==pillar){p.style.display='none';return}
-    var v=p.querySelectorAll('tbody tr[data-p]:not(.hidden)').length;
-    p.style.display=v?'':'none';
-  });
-}
-function resetFilters(){['f-owner','f-priority','f-status','f-cfo','f-pillar'].forEach(function(id){document.getElementById(id).value=''});applyFilters()}
 
 /* FULL PROJECT VIEW FILTERS */
 function applyFullFilters(){
@@ -705,53 +321,6 @@ function applyFullFilters(){
 }
 function resetFullFilters(){['f-fp-owner','f-fp-priority','f-fp-status','f-fp-cfo','f-fp-pillar'].forEach(function(id){document.getElementById(id).value=''});applyFullFilters()}
 
-/* ERVINA TAB FILTERS */
-function applyErvinaFilters(){
-  var pri=document.getElementById('f-e-priority').value,status=document.getElementById('f-e-status').value,cfo=document.getElementById('f-e-cfo').value,pillar=document.getElementById('f-e-pillar').value;
-  document.querySelectorAll('#tab-ervina .a-section[data-pillar]').forEach(function(sec){
-    if(sec.dataset.pillar==='completed')return;
-    if(pillar&&sec.dataset.pillar!==pillar){sec.style.display='none';return}
-    sec.style.display='';
-    sec.querySelectorAll('tbody tr[data-p]').forEach(function(r){
-      var s=true;
-      if(pri&&r.dataset.p!==pri)s=false;
-      if(status==='none'&&r.dataset.s!=='none')s=false;
-      else if(status&&status!=='none'&&r.dataset.s!==status)s=false;
-      if(cfo){var shTd=r.querySelectorAll('td')[4];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
-      r.classList.toggle('hidden',!s);
-    });
-    if(!sec.querySelectorAll('tbody tr[data-p]:not(.hidden)').length)sec.style.display='none';
-  });
-}
-function resetErvinaFilters(){['f-e-priority','f-e-status','f-e-cfo','f-e-pillar'].forEach(function(id){document.getElementById(id).value=''});applyErvinaFilters()}
-
-/* ABDULRAHMAN TAB FILTERS */
-function applyAbdulFilters(){
-  var pri=document.getElementById('f-a-priority').value,status=document.getElementById('f-a-status').value,cfo=document.getElementById('f-a-cfo').value,pillar=document.getElementById('f-a-pillar').value;
-  document.querySelectorAll('#tab-abdul .a-section[data-pillar]').forEach(function(sec){
-    if(sec.dataset.pillar==='completed'){
-      sec.querySelectorAll('tbody tr[data-cpillar]').forEach(function(r){
-        var s=true;
-        if(pillar&&r.dataset.cpillar!==pillar)s=false;
-        r.classList.toggle('hidden',!s);
-      });
-      return;
-    }
-    if(pillar&&sec.dataset.pillar!==pillar){sec.style.display='none';return}
-    sec.style.display='';
-    sec.querySelectorAll('tbody tr[data-p]').forEach(function(r){
-      var s=true;
-      if(pri&&r.dataset.p!==pri)s=false;
-      if(status==='none'&&r.dataset.s!=='none')s=false;
-      else if(status&&status!=='none'&&r.dataset.s!==status)s=false;
-      if(cfo){var shTd=r.querySelectorAll('td')[4];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
-      r.classList.toggle('hidden',!s);
-    });
-    if(!sec.querySelectorAll('tbody tr[data-p]:not(.hidden)').length)sec.style.display='none';
-  });
-}
-function resetAbdulFilters(){['f-a-priority','f-a-status','f-a-cfo','f-a-pillar'].forEach(function(id){document.getElementById(id).value=''});applyAbdulFilters()}
-
 /* COMPLETED TAB FILTERS */
 function applyCompletedFilters(){
   var owner=document.getElementById('f-c-owner').value,pillar=document.getElementById('f-c-pillar').value;
@@ -765,51 +334,6 @@ function applyCompletedFilters(){
 function resetCompletedFilters(){['f-c-owner','f-c-pillar'].forEach(function(id){document.getElementById(id).value=''});applyCompletedFilters()}
 
 /* INTERACTIVE BAR CHARTS */
-/* Main tab bars -> pillar filter */
-document.querySelectorAll('#tab-main > .content .bar-group[data-pillar]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var p=this.dataset.pillar;var sel=document.getElementById('f-pillar');
-    sel.value=(sel.value===p)?'':p;applyFilters();
-  });
-});
-/* Ervina tab bars -> pillar filter */
-document.querySelectorAll('.bar-group[data-tab-filter="e"]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var p=this.dataset.pillar;if(!p)return;var sel=document.getElementById('f-e-pillar');
-    sel.value=(sel.value===p)?'':p;applyErvinaFilters();
-  });
-});
-/* Abdulrahman tab bars -> pillar filter */
-document.querySelectorAll('.bar-group[data-tab-filter="a"]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var p=this.dataset.pillar;if(!p)return;var sel=document.getElementById('f-a-pillar');
-    sel.value=(sel.value===p)?'':p;applyAbdulFilters();
-  });
-});
-/* Abdulrahman completed date bars -> filter completed table */
-document.querySelectorAll('#abdul-completed-chart .bar-group[data-cdate]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var d=this.dataset.cdate;
-    document.querySelectorAll('#tab-abdul .a-section[data-pillar="completed"] tbody tr[data-cdate]').forEach(function(r){
-      if(r.dataset.cdate===d){r.classList.remove('hidden')}else{r.classList.toggle('hidden',!r.classList.contains('hidden')?true:true)}
-    });
-    var allHidden=true;
-    document.querySelectorAll('#tab-abdul .a-section[data-pillar="completed"] tbody tr[data-cdate]').forEach(function(r){if(!r.classList.contains('hidden'))allHidden=false});
-    if(allHidden){document.querySelectorAll('#tab-abdul .a-section[data-pillar="completed"] tbody tr[data-cdate]').forEach(function(r){r.classList.remove('hidden')})}
-  });
-});
-/* Ervina completed date bars -> filter completed table */
-document.querySelectorAll('#ervina-completed-chart .bar-group[data-ecdate]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var d=this.dataset.ecdate;
-    document.querySelectorAll('#tab-ervina .a-section[data-pillar="completed"] tbody tr[data-cdate]').forEach(function(r){
-      if(r.dataset.cdate===d){r.classList.remove('hidden')}else{r.classList.add('hidden')}
-    });
-    var allHidden=true;
-    document.querySelectorAll('#tab-ervina .a-section[data-pillar="completed"] tbody tr[data-cdate]').forEach(function(r){if(!r.classList.contains('hidden'))allHidden=false});
-    if(allHidden){document.querySelectorAll('#tab-ervina .a-section[data-pillar="completed"] tbody tr[data-cdate]').forEach(function(r){r.classList.remove('hidden')})}
-  });
-});
 /* Completed tab pillar chart -> filter table */
 document.querySelectorAll('#completed-pillar-chart .bar-group[data-cpillar]').forEach(function(bg){
   bg.addEventListener('click',function(){
