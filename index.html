@@ -129,8 +129,8 @@
 <body>
 
 <div class="header">
-  <div><h1>PAG Data Platform</h1><div class="sub">Data Intake & Management &nbsp;&rarr;&nbsp; Reporting &nbsp;&rarr;&nbsp; Data Modeling &nbsp;&rarr;&nbsp; Governance & Architecture</div></div>
-  <div class="date">Feb 24, 2026</div>
+  <div><h1>PAG Data Platform</h1><div class="sub">Data Intake &amp; Management &nbsp;&rarr;&nbsp; Reporting &nbsp;&rarr;&nbsp; Data Modeling &nbsp;&rarr;&nbsp; Governance &amp; Architecture</div></div>
+  <div class="date" id="header-date"></div>
 </div>
 
 <div class="tab-nav">
@@ -147,38 +147,26 @@
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
   <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
-  <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option><option value="ai">AI Pipeline</option></select></div>
+  <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
-  <div class="s-card"><div class="n">43</div><div class="l">Total</div></div>
-  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6">27</div><div class="l">In Progress</div></div>
-  <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E">16</div><div class="l">Not Started</div></div>
-  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E">2</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700">14</div><div class="l">Stakeholder</div></div>
+  <div class="s-card"><div class="n" id="stat-fp-total">–</div><div class="l">Total</div></div>
+  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6" id="stat-fp-ip">–</div><div class="l">In Progress</div></div>
+  <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E" id="stat-fp-ns">–</div><div class="l">Not Started</div></div>
+  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E" id="stat-fp-cp">–</div><div class="l">Completed</div></div>
+  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700" id="stat-fp-sh">–</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="status-bar-section">
   <h3>Status Overview</h3>
-  <div class="status-bar">
-    <div class="status-seg seg-ip" style="width:63%">27 In Progress</div>
-    <div class="status-seg seg-ns" style="width:37%">16 Not Started</div>
-  </div>
-  <div class="status-bar-legend">
-    <div class="legend-item"><div class="legend-dot ip"></div>In Progress (27)</div>
-    <div class="legend-item"><div class="legend-dot ns"></div>Not Started (16)</div>
-  </div>
+  <div class="status-bar" id="fp-status-bar"></div>
+  <div class="status-bar-legend" id="fp-status-legend"></div>
 </div>
 <div class="chart-grid">
 <div class="chart-section">
-  <h3>Projects by Pillar & Owner <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart">
-    <div class="bar-group" data-pillar="intake" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:14px">2</div><div class="bar-seg abdul" style="height:28px">4</div></div><div class="bar-label">Data Intake<br>& Mgmt</div></div>
-    <div class="bar-group" data-pillar="reporting" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:56px">8</div><div class="bar-seg abdul" style="height:91px">13</div></div><div class="bar-label">Reporting</div></div>
-    <div class="bar-group" data-pillar="modeling" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:14px">2</div><div class="bar-seg daniel" style="height:28px">4</div><div class="bar-seg abdul" style="height:12px">1</div></div><div class="bar-label">Data<br>Modeling</div></div>
-    <div class="bar-group" data-pillar="gov" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg ervina" style="height:35px">5</div><div class="bar-seg abdul" style="height:12px">1</div></div><div class="bar-label">Gov &<br>Architecture</div></div>
-    <div class="bar-group" data-pillar="ai" data-tab-filter="fp"><div class="bar-stack"><div class="bar-seg abdul" style="height:28px">4</div></div><div class="bar-label">AI<br>Pipeline</div></div>
-  </div>
+  <h3>Projects by Pillar &amp; Owner <span class="chart-hint">(click to filter)</span></h3>
+  <div class="bar-chart" id="full-pillar-chart"></div>
   <div class="chart-legend">
     <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
     <div class="legend-item"><div class="legend-dot daniel"></div>Daniel</div>
@@ -187,96 +175,54 @@
 </div>
 <div class="workload-section">
   <h3>Workload by Owner</h3>
-  <div class="workload-row"><div class="wl-name">Abdulrahman</div><div class="wl-bar-bg"><div class="wl-bar-fill abdul" style="width:100%">23</div></div></div>
-  <div class="workload-row"><div class="wl-name">Ervina</div><div class="wl-bar-bg"><div class="wl-bar-fill ervina" style="width:74%">17</div></div></div>
-  <div class="workload-row"><div class="wl-name">Daniel</div><div class="wl-bar-bg"><div class="wl-bar-fill daniel" style="width:17%">4</div></div></div>
+  <div id="workload-bars"></div>
 </div>
 </div>
-<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul><li>Monthly Tie-Out to Financials</li><li>Full WIP Report</li><li>HDI Timekeeping Data</li><li>Daily Production Report</li><li>Aged WIP by Office</li></ul></div>
-<table id="full-table"><thead><tr><th onclick="sortFullTable(0)">#</th><th onclick="sortFullTable(1)">Project</th><th onclick="sortFullTable(2)">Pillar</th><th onclick="sortFullTable(3)">Owner</th><th onclick="sortFullTable(4)">Status</th><th onclick="sortFullTable(5)">Priority</th><th onclick="sortFullTable(6)">Stakeholder</th><th onclick="sortFullTable(7)">Due</th><th onclick="sortFullTable(8)">Dependencies</th><th onclick="sortFullTable(9)">Notes</th></tr></thead>
-<tbody>
-  <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">1</td><td>Validate Karbon_entities Table</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Foundational</td><td class="notes">Cleared ~5k records. Daniel re-running analysis.</td></tr>
-  <tr data-owner="Daniel" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">2</td><td>Update Core client_subsidiary Model</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1</td><td class="notes">Discussing SCD approach. Meeting Tyson Friday.</td></tr>
-  <tr data-owner="Ervina" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="modeling"><td class="id">3</td><td>Update Master Office Mapping</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Unit table approach, join to dim_subsidiary.</td></tr>
-  <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no" data-pillar="gov"><td class="id">4</td><td>Create Validation Process</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Future orchestration project. Catch inactive users, email changes, RLS integrity.</td></tr>
-  <tr data-owner="Ervina" data-p="P1" data-status="none" data-cfo="yes" data-pillar="gov"><td class="id">5</td><td>Monthly Tie-Out to Financials</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #4</td><td class="notes">Reconcile Power BI vs. financials monthly</td></tr>
-  <tr data-owner="Ervina" data-p="P1" data-status="none" data-cfo="yes" data-pillar="reporting"><td class="id">6</td><td>Full WIP Report w/ Automated Flags</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p1">P1</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Monthly review workflow with flag logic</td></tr>
-  <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no" data-pillar="intake"><td class="id">7</td><td>Align HR, IT & Data on Employee Groups</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Future project. Define groupings, update DIM_RLS.</td></tr>
-  <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no" data-pillar="gov"><td class="id">8</td><td>Move Power BI Access to IT/HR</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Depends on #7</td><td class="notes">Remove manual Security Group bottleneck</td></tr>
-  <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no" data-pillar="gov"><td class="id">9</td><td>Clean Up Snowflake Roles & Permissions</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Unblock pending access requests</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="intake" style="background:#FFFDE7"><td class="id">10</td><td>Integrate Paylocity via Fivetran</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Manual weekly upload (interim)</td></tr>
-  <tr data-owner="Ervina" data-p="P2" data-status="In Progress" data-cfo="yes" data-pillar="modeling"><td class="id">11</td><td>HDI Timekeeping Data - Architecture Design</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">None</td><td class="notes">Designing architecture for HDI timekeeping data. Abdulrahman completed HDI for 5 offices.</td></tr>
-  <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="yes" data-pillar="reporting"><td class="id">12</td><td>Daily Production by Office vs. PY & Forecast</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #3</td><td class="notes">Daily output vs. prior year and forecast</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="intake" style="background:#FFFDE7"><td class="id">13</td><td>Onboard New Acquisitions to Snowflake</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Pending data readiness</td><td class="notes">BA Inc., Smeriglio, St Clair, Hulquist</td></tr>
-  <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no" data-pillar="gov"><td class="id">14</td><td>Implement Orchestration Tooling</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Prevent silent Power BI failures</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">16</td><td>Exception Report for Office Admins</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Push data quality ownership to source</td></tr>
-  <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="yes" data-pillar="reporting"><td class="id">17</td><td>Aged WIP by Office</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td><span class="cfo-badge">CFO</span></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">WIP aging model per office</td></tr>
-  <tr data-owner="Daniel" data-p="P3" data-status="none" data-cfo="no" data-pillar="modeling"><td class="id">18</td><td>New Churn Model (Lost &rarr; WIP)</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">Depends on #1, #2</td><td class="notes">Cross-ref Karbon work against 'lost' labels</td></tr>
-  <tr data-owner="Daniel" data-p="P3" data-status="none" data-cfo="no" data-pillar="modeling"><td class="id">19</td><td>TTM & YTD Churn Models</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge ervina">Ervina</span> <span class="owner-badge daniel">Daniel</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">Depends on #1, #2, #16</td><td class="notes">Stable foundation required</td></tr>
-  <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="no" data-pillar="reporting"><td class="id">20</td><td>Update Median Pricing Formula</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">None</td><td class="notes">New KPI reporting</td></tr>
-  <tr data-owner="Ervina" data-p="P3" data-status="In Progress" data-cfo="no" data-pillar="reporting"><td class="id">21</td><td>Update Executive Dashboard</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p3">P3</span></td><td></td><td><span class="due-badge">This week</span></td><td class="deps">Depends on #3</td><td class="notes">Update Ops Manager filters. Restructuring YoY.</td></tr>
-  <tr data-owner="Ervina" data-p="P3" data-status="none" data-cfo="no" data-pillar="intake"><td class="id">22</td><td>New A/R Filters for Finance</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p3">P3</span></td><td></td><td></td><td class="deps">None</td><td class="notes"></td></tr>
-  <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" data-pillar="ai" style="background:#FFFDE7"><td class="id">23</td><td>Corporate Development x Claude</td><td><span class="pillar-tag ai-t">AI PIPELINE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Need project details to scope</td></tr>
-  <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" data-pillar="ai" style="background:#FFFDE7"><td class="id">24</td><td>Talent Acquisition x Claude</td><td><span class="pillar-tag ai-t">AI PIPELINE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Candidate review, summarize, organize</td></tr>
-  <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" data-pillar="ai" style="background:#FFFDE7"><td class="id">25</td><td>Compliance Request</td><td><span class="pillar-tag ai-t">AI PIPELINE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="deps">None</td><td class="notes"></td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">27</td><td>CY PY Bar Graph - Gross Production</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Similar to revenue by client owner report</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">28</td><td>Add Paylocity Roles to Billable Hours</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Verify dbt column (user_account table), add if missing, update PowerBI</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">29</td><td>HDI Toggle in PowerBI</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Add HDI toggle to PowerBI reporting</td></tr>
-  <tr data-owner="Ervina" data-p="P2" data-status="none" data-cfo="no" data-pillar="reporting"><td class="id">30</td><td>Executive Cohort Details</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">PowerBI reporting updates</td></tr>
-  <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no" data-pillar="reporting"><td class="id">31</td><td>Separate Team KPI from Book of Business</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">KPI Beta App, future consideration</td></tr>
-  <tr data-owner="Ervina" data-p="Future" data-status="none" data-cfo="no" data-pillar="reporting"><td class="id">32</td><td>Introduce Target Metrics in Reporting</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge ervina">Ervina</span></td><td></td><td><span class="pri-badge future">Future</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Across different reports, future consideration</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="intake" style="background:#FFFDE7"><td class="id">33</td><td>HDI Timekeeping Data - Upload</td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">Depends on #11</td><td class="notes">Upload all timekeeping data for previous HDI offices. Waiting on Ervina to finish Time Data Architecture.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="Pipeline" data-status="In Progress" data-cfo="no" data-pillar="ai" style="background:#FFFDE7"><td class="id">34</td><td>Office Prospecting Tool</td><td><span class="pillar-tag ai-t">AI PIPELINE</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge pp">Pipeline</span></td><td></td><td></td><td class="deps">None</td><td class="notes">AI tool for Noah (Corp Dev). Generates list of acquirable offices by state, filtering noisy data.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">35</td><td>PowerBI Bug: Sarah Lippled Client Owner (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Sarah Lippled showing as client_owner on KPI report under Meridian, but she is not in that firm.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">36</td><td>PowerBI Bug: Brett M Contreras WIP (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Client showing high $6.6k WIP, but other details point to only $170.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">37</td><td>PowerBI Bug: BC Athletics WIP (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Same WIP discrepancy issue as Brett M Contreras.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">38</td><td>PowerBI Bug: Negative Production - Meridian (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Need to explain negative production showing on Meridian.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">39</td><td>PowerBI Bug: A/R Report Refresh - DHS (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Look at A/R report refresh for the DHS office.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">40</td><td>PowerBI Bug: Mike Watters Incorrect Office (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Mike Watters showing as client owner in DHS North Cal, but he is director of DHS Roseburg.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">41</td><td>PowerBI Bug: Arkose Advisors A/R (Brian)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Brian</span></td><td></td><td class="deps">None</td><td class="notes">Michael &amp; Tracey Moore. PowerBI shows negative $2,040 balance, but NetSuite shows $1,285 open balance.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="modeling" style="background:#FFFDE7"><td class="id">42</td><td>Update Karbon Status Mapping Table</td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Request from Mark. Bayshore Advisors - Santa Cruz office. Update in Snowflake.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">43</td><td>PowerBI Access Issue - Jeff Dredge</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Jeff Dredge</span></td><td></td><td class="deps">None</td><td class="notes">Jeff cannot see any revenue in PowerBI. Investigate access issue.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P2" data-status="In Progress" data-cfo="no" data-pillar="gov" style="background:#FFFDE7"><td class="id">44</td><td>Create Data Ticketing System</td><td><span class="pillar-tag gov-t">GOV & ARCH</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p2">P2</span></td><td></td><td></td><td class="deps">None</td><td class="notes">Formalize request intake so data requests aren't coming through Teams and getting lost.</td></tr>
-  <tr data-owner="Abdulrahman" data-p="P1" data-status="In Progress" data-cfo="no" data-pillar="reporting" style="background:#FFFDE7"><td class="id">45</td><td>PowerBI Bug: WIP N/A - Jack C Wilder Admin Trust (Amber)</td><td><span class="pillar-tag rpt-t">REPORTING</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="st ip">In Progress</span></td><td><span class="pri-badge p1">P1</span></td><td><span class="sh-badge">Amber</span></td><td></td><td class="deps">None</td><td class="notes">Aaron Gitnick pushed back on N/A explanation. Jack C Wilder Administrative Trust is the only client missing Owner/Manager in Karbon ($1,438.33 in production). Dashboard shows $6,344 open WIP for N/A. Investigating what is pulling into WIP for N/A.</td></tr>
-</tbody></table>
+<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul id="cfo-list"></ul></div>
+<table id="full-table">
+  <thead><tr>
+    <th onclick="sortFullTable(0)">#</th>
+    <th onclick="sortFullTable(1)">Project</th>
+    <th onclick="sortFullTable(2)">Pillar</th>
+    <th onclick="sortFullTable(3)">Owner</th>
+    <th onclick="sortFullTable(4)">Status</th>
+    <th onclick="sortFullTable(5)">Priority</th>
+    <th onclick="sortFullTable(6)">Stakeholder</th>
+    <th onclick="sortFullTable(7)">Due</th>
+    <th onclick="sortFullTable(8)">Dependencies</th>
+    <th onclick="sortFullTable(9)">Notes</th>
+  </tr></thead>
+  <tbody></tbody>
+</table>
 </div></div>
 
 <!-- ══════════════════════════════════════ -->
-<!-- TAB 4: ALL COMPLETED                  -->
+<!-- TAB: ALL COMPLETED                    -->
 <!-- ══════════════════════════════════════ -->
 <div id="tab-completed" class="tab-content">
 <div class="filter-bar">
   <div><label>Owner</label><br><select id="f-c-owner" onchange="applyCompletedFilters()"><option value="">All</option><option>Abdulrahman</option><option>Ervina</option></select></div>
-  <div><label>Pillar</label><br><select id="f-c-pillar" onchange="applyCompletedFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov & Architecture</option></select></div>
+  <div><label>Pillar</label><br><select id="f-c-pillar" onchange="applyCompletedFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetCompletedFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
-  <div class="s-card"><div class="n">6</div><div class="l">Total Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #F4D05E"><div class="n" style="color:#BF5700">4</div><div class="l">Abdulrahman</div></div>
-  <div class="s-card" style="border-top:3px solid #6995FF"><div class="n" style="color:#6995FF">1</div><div class="l">Ervina</div></div>
+  <div class="s-card"><div class="n" id="stat-cp-total">–</div><div class="l">Total Completed</div></div>
+  <div class="s-card" style="border-top:3px solid #F4D05E"><div class="n" style="color:#BF5700" id="stat-cp-abdul">–</div><div class="l">Abdulrahman</div></div>
+  <div class="s-card" style="border-top:3px solid #6995FF"><div class="n" style="color:#6995FF" id="stat-cp-ervina">–</div><div class="l">Ervina</div></div>
 </div>
 <div class="content">
 <div class="chart-grid">
 <div class="chart-section">
-  <h3>Completed by Pillar & Owner <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart" style="height:120px" id="completed-pillar-chart">
-    <div class="bar-group" data-cpillar="intake"><div class="bar-stack"><div class="bar-seg abdul" style="height:75px">3</div></div><div class="bar-label">Data Intake</div></div>
-    <div class="bar-group" data-cpillar="reporting"><div class="bar-stack"><div class="bar-seg zero-bar" style="height:14px">0</div></div><div class="bar-label">Reporting</div></div>
-    <div class="bar-group" data-cpillar="modeling"><div class="bar-stack"><div class="bar-seg ervina" style="height:25px">1</div><div class="bar-seg abdul" style="height:25px">1</div></div><div class="bar-label">Data Modeling</div></div>
-    <div class="bar-group" data-cpillar="gov"><div class="bar-stack"><div class="bar-seg zero-bar" style="height:14px">0</div></div><div class="bar-label">Gov & Arch</div></div>
-  </div>
+  <h3>Completed by Pillar &amp; Owner <span class="chart-hint">(click to filter)</span></h3>
+  <div class="bar-chart" style="height:120px" id="completed-pillar-chart"></div>
   <div class="chart-legend">
     <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
     <div class="legend-item"><div class="legend-dot abdul"></div>Abdulrahman</div>
   </div>
 </div>
 <div class="chart-section">
-  <h3>Completed by Date <span class="chart-hint">(click to filter)</span></h3>
-  <div class="bar-chart" style="height:120px">
-    <div class="bar-group" data-cdate2="Feb 18"><div class="bar-stack"><div class="bar-seg abdul" style="height:75px">3</div></div><div class="bar-label">Feb 18</div></div>
-    <div class="bar-group" data-cdate2="Feb 23"><div class="bar-stack"><div class="bar-seg abdul" style="height:25px">1</div></div><div class="bar-label">Feb 23</div></div>
-    <div class="bar-group" data-cdate2="Feb 24"><div class="bar-stack"><div class="bar-seg ervina" style="height:25px">1</div></div><div class="bar-label">Feb 24</div></div>
-  </div>
+  <h3>Completed by Date</h3>
+  <div class="bar-chart" style="height:120px" id="completed-date-chart"></div>
   <div class="chart-legend">
     <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
     <div class="legend-item"><div class="legend-dot abdul"></div>Abdulrahman</div>
@@ -284,18 +230,14 @@
 </div>
 </div>
 
-<div class="pillar-banner cp-bg"><span class="pb-title">All Completed Work</span><span class="pb-count">5 deliverables</span></div>
-<table id="completed-table"><thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Date</th><th>Impact</th></tr></thead><tbody>
-  <tr data-cowner="Abdulrahman" data-cpillar="modeling"><td class="id">1</td><td>Historical Data Integration - 5 Offices<br><span style="font-size:11px;color:#888">ASG, Pottsville, Greencoast, Walpole, Santa Cruz</span></td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td>Feb 23</td><td class="notes">Uploaded tables to Snowflake, added to dbt models, published in Power BI. Full pipeline delivery.</td></tr>
-  <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">2</td><td>Added Karbon Statuses to Snowflake for Brian</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Loaded Karbon status data into Snowflake, published for reporting.</td></tr>
-  <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">3</td><td>Added Karbon Statuses to Snowflake for Mark/Tyson Colledge</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Loaded Karbon status data for Colledge offices.</td></tr>
-  <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">4</td><td>Custom Data Request for Chase - Two Offices</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 18</td><td class="notes">Custom data extraction and delivery for two offices.</td></tr>
-  <tr data-cowner="Ervina" data-cpillar="modeling"><td class="id">5</td><td>dim_date Table</td><td><span class="owner-badge ervina">Ervina</span></td><td><span class="pillar-tag model-t">DATA MODELING</span></td><td>Feb 24</td><td class="notes">Created in Snowflake via Initial Table Creation Notebook. Does not need to be run again.</td></tr>
-  <tr data-cowner="Abdulrahman" data-cpillar="intake"><td class="id">6</td><td>Ryan's Data Request (PDF IDs)</td><td><span class="owner-badge abdul">Abdulrahman</span></td><td><span class="pillar-tag intake-t">DATA INTAKE</span></td><td>Feb 24</td><td class="notes">CFO data request. IDs in PDF format.</td></tr>
-</tbody></table>
+<div class="pillar-banner cp-bg"><span class="pb-title">All Completed Work</span><span class="pb-count" id="cp-banner-count"></span></div>
+<table id="completed-table">
+  <thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Date</th><th>Impact</th></tr></thead>
+  <tbody></tbody>
+</table>
 </div></div>
 
-<div class="footer">PAG Data Platform &middot; Last updated Feb 24, 2026 &middot; v2</div>
+<div class="footer">PAG Data Platform &middot; Last updated <span id="footer-date"></span> &middot; v2</div>
 
 <script>
 function switchTab(t){
@@ -333,14 +275,6 @@ function applyCompletedFilters(){
 }
 function resetCompletedFilters(){['f-c-owner','f-c-pillar'].forEach(function(id){document.getElementById(id).value=''});applyCompletedFilters()}
 
-/* INTERACTIVE BAR CHARTS */
-/* Completed tab pillar chart -> filter table */
-document.querySelectorAll('#completed-pillar-chart .bar-group[data-cpillar]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var p=this.dataset.cpillar;var sel=document.getElementById('f-c-pillar');
-    sel.value=(sel.value===p)?'':p;applyCompletedFilters();
-  });
-});
 /* FULL PROJECT VIEW SORT */
 function sortFullTable(col){
   var table=document.getElementById('full-table');
@@ -361,13 +295,264 @@ function sortFullTable(col){
   rows.forEach(function(r){tbody.appendChild(r)});
 }
 
-/* Full Project View bars -> pillar filter */
-document.querySelectorAll('.bar-group[data-tab-filter="fp"]').forEach(function(bg){
-  bg.addEventListener('click',function(){
-    var p=this.dataset.pillar;if(!p)return;var sel=document.getElementById('f-fp-pillar');
-    sel.value=(sel.value===p)?'':p;applyFullFilters();
+/* ── DATA RENDERING ── */
+
+var PILLAR_LABELS={intake:'DATA INTAKE',reporting:'REPORTING',modeling:'DATA MODELING',gov:'GOV & ARCH',ai:'AI PIPELINE'};
+var PILLAR_TAG_CLASS={intake:'intake-t',reporting:'rpt-t',modeling:'model-t',gov:'gov-t',ai:'ai-t'};
+var PILLAR_CHART_LABELS={intake:'Data Intake<br>& Mgmt',reporting:'Reporting',modeling:'Data<br>Modeling',gov:'Gov &<br>Architecture',ai:'AI<br>Pipeline'};
+var OWNER_CLASS={Ervina:'ervina',Daniel:'daniel',Abdulrahman:'abdul'};
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function pillarTag(pillar){
+  return '<span class="pillar-tag '+PILLAR_TAG_CLASS[pillar]+'">'+PILLAR_LABELS[pillar]+'</span>';
+}
+
+function ownerBadges(owners){
+  return owners.map(function(o){
+    return '<span class="owner-badge '+(OWNER_CLASS[o]||'')+'">'+esc(o)+'</span>';
+  }).join(' ');
+}
+
+function statusBadge(status){
+  if(status==='In Progress')return '<span class="st ip">In Progress</span>';
+  return '';
+}
+
+function priorityBadge(priority){
+  var cls={P1:'p1',P2:'p2',P3:'p3',Future:'future',Pipeline:'pp'}[priority]||'';
+  return '<span class="pri-badge '+cls+'">'+esc(priority)+'</span>';
+}
+
+function stakeholderBadge(sh){
+  if(!sh)return '';
+  if(sh==='CFO')return '<span class="cfo-badge">CFO</span>';
+  return '<span class="sh-badge">'+esc(sh)+'</span>';
+}
+
+function dueBadge(due){
+  if(!due)return '';
+  return '<span class="due-badge">'+esc(due)+'</span>';
+}
+
+function renderFullTable(projects){
+  var rows=projects.map(function(p){
+    var rowStyle=p.owners.includes('Abdulrahman')?' style="background:#FFFDE7"':'';
+    var ownerStr=p.owners.join(' ');
+    var statusStr=p.status||'none';
+    return '<tr data-owner="'+ownerStr+'" data-p="'+p.priority+'" data-status="'+statusStr+'" data-cfo="'+(p.stakeholder?'yes':'no')+'" data-pillar="'+p.pillar+'"'+rowStyle+'>'+
+      '<td class="id">'+p.id+'</td>'+
+      '<td>'+esc(p.name)+'</td>'+
+      '<td>'+pillarTag(p.pillar)+'</td>'+
+      '<td>'+ownerBadges(p.owners)+'</td>'+
+      '<td>'+statusBadge(p.status)+'</td>'+
+      '<td>'+priorityBadge(p.priority)+'</td>'+
+      '<td>'+stakeholderBadge(p.stakeholder)+'</td>'+
+      '<td>'+dueBadge(p.due)+'</td>'+
+      '<td class="deps">'+esc(p.dependencies)+'</td>'+
+      '<td class="notes">'+esc(p.notes)+'</td>'+
+    '</tr>';
+  }).join('');
+  document.querySelector('#full-table tbody').innerHTML=rows;
+}
+
+function renderCompletedTable(completed){
+  var rows=completed.map(function(c){
+    var nameCell=c.subtitle?
+      esc(c.name)+'<br><span style="font-size:11px;color:#888">'+esc(c.subtitle)+'</span>':
+      esc(c.name);
+    return '<tr data-cowner="'+esc(c.owner)+'" data-cpillar="'+c.pillar+'">'+
+      '<td class="id">'+c.id+'</td>'+
+      '<td>'+nameCell+'</td>'+
+      '<td><span class="owner-badge '+(OWNER_CLASS[c.owner]||'')+'">'+esc(c.owner)+'</span></td>'+
+      '<td>'+pillarTag(c.pillar)+'</td>'+
+      '<td>'+esc(c.date)+'</td>'+
+      '<td class="notes">'+esc(c.impact)+'</td>'+
+    '</tr>';
+  }).join('');
+  document.querySelector('#completed-table tbody').innerHTML=rows;
+}
+
+function renderFullStats(projects,completed){
+  var ip=projects.filter(function(p){return p.status==='In Progress';}).length;
+  var ns=projects.filter(function(p){return !p.status;}).length;
+  var sh=projects.filter(function(p){return p.stakeholder;}).length;
+  document.getElementById('stat-fp-total').textContent=projects.length;
+  document.getElementById('stat-fp-ip').textContent=ip;
+  document.getElementById('stat-fp-ns').textContent=ns;
+  document.getElementById('stat-fp-cp').textContent=completed.length;
+  document.getElementById('stat-fp-sh').textContent=sh;
+  var total=projects.length;
+  var ipPct=Math.round(ip/total*100);
+  var nsPct=100-ipPct;
+  document.getElementById('fp-status-bar').innerHTML=
+    '<div class="status-seg seg-ip" style="width:'+ipPct+'%">'+ip+' In Progress</div>'+
+    '<div class="status-seg seg-ns" style="width:'+nsPct+'%">'+ns+' Not Started</div>';
+  document.getElementById('fp-status-legend').innerHTML=
+    '<div class="legend-item"><div class="legend-dot ip"></div>In Progress ('+ip+')</div>'+
+    '<div class="legend-item"><div class="legend-dot ns"></div>Not Started ('+ns+')</div>';
+}
+
+function renderFullCharts(projects){
+  var pillars=['intake','reporting','modeling','gov','ai'];
+  var owners=['Ervina','Daniel','Abdulrahman'];
+  var counts={};
+  pillars.forEach(function(p){counts[p]={Ervina:0,Daniel:0,Abdulrahman:0};});
+  projects.forEach(function(proj){
+    if(!counts[proj.pillar])return;
+    proj.owners.forEach(function(o){
+      if(counts[proj.pillar][o]!==undefined)counts[proj.pillar][o]++;
+    });
   });
-});
+
+  function barH(n){return n>0?Math.max(12,n*7):0;}
+
+  var chartHtml='';
+  pillars.forEach(function(p){
+    var total=owners.reduce(function(s,o){return s+counts[p][o];},0);
+    chartHtml+='<div class="bar-group" data-pillar="'+p+'" data-tab-filter="fp">';
+    chartHtml+='<div class="bar-stack">';
+    if(total===0){
+      chartHtml+='<div class="bar-seg zero-bar" style="height:14px">0</div>';
+    } else {
+      owners.forEach(function(o){
+        var c=counts[p][o];
+        if(c>0)chartHtml+='<div class="bar-seg '+OWNER_CLASS[o]+'" style="height:'+barH(c)+'px">'+c+'</div>';
+      });
+    }
+    chartHtml+='</div>';
+    chartHtml+='<div class="bar-label">'+PILLAR_CHART_LABELS[p]+'</div>';
+    chartHtml+='</div>';
+  });
+  document.getElementById('full-pillar-chart').innerHTML=chartHtml;
+
+  /* Workload by owner */
+  var ownerTotals={Ervina:0,Daniel:0,Abdulrahman:0};
+  projects.forEach(function(proj){
+    proj.owners.forEach(function(o){
+      if(ownerTotals[o]!==undefined)ownerTotals[o]++;
+    });
+  });
+  var maxW=Math.max(ownerTotals.Ervina,ownerTotals.Daniel,ownerTotals.Abdulrahman);
+  var wlOwners=[{name:'Abdulrahman',cls:'abdul'},{name:'Ervina',cls:'ervina'},{name:'Daniel',cls:'daniel'}];
+  var wlHtml=wlOwners.map(function(o){
+    var c=ownerTotals[o.name];
+    var w=maxW>0?Math.round(c/maxW*100):0;
+    return '<div class="workload-row"><div class="wl-name">'+o.name+'</div>'+
+      '<div class="wl-bar-bg"><div class="wl-bar-fill '+o.cls+'" style="width:'+w+'%">'+c+'</div></div></div>';
+  }).join('');
+  document.getElementById('workload-bars').innerHTML=wlHtml;
+
+  /* CFO stakeholder list */
+  var cfoProjects=projects.filter(function(p){return p.stakeholder==='CFO';});
+  document.getElementById('cfo-list').innerHTML=cfoProjects.map(function(p){
+    return '<li>'+esc(p.name)+'</li>';
+  }).join('');
+
+  /* Re-attach bar click handlers */
+  document.querySelectorAll('#full-pillar-chart .bar-group[data-tab-filter="fp"]').forEach(function(bg){
+    bg.addEventListener('click',function(){
+      var p=this.dataset.pillar;if(!p)return;
+      var sel=document.getElementById('f-fp-pillar');
+      sel.value=(sel.value===p)?'':p;
+      applyFullFilters();
+    });
+  });
+}
+
+function renderCompletedStats(completed){
+  var abdul=completed.filter(function(c){return c.owner==='Abdulrahman';}).length;
+  var ervina=completed.filter(function(c){return c.owner==='Ervina';}).length;
+  document.getElementById('stat-cp-total').textContent=completed.length;
+  document.getElementById('stat-cp-abdul').textContent=abdul;
+  document.getElementById('stat-cp-ervina').textContent=ervina;
+  document.getElementById('cp-banner-count').textContent=completed.length+' deliverable'+(completed.length!==1?'s':'');
+}
+
+function renderCompletedCharts(completed){
+  var pillars=['intake','reporting','modeling','gov'];
+  var cpLabels={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch'};
+  var owners=['Ervina','Abdulrahman'];
+  var counts={};
+  pillars.forEach(function(p){counts[p]={Ervina:0,Abdulrahman:0};});
+  completed.forEach(function(c){
+    if(counts[c.pillar])counts[c.pillar][c.owner]=(counts[c.pillar][c.owner]||0)+1;
+  });
+
+  var cpHtml='';
+  pillars.forEach(function(p){
+    var total=owners.reduce(function(s,o){return s+(counts[p][o]||0);},0);
+    cpHtml+='<div class="bar-group" data-cpillar="'+p+'">';
+    cpHtml+='<div class="bar-stack">';
+    if(total===0){
+      cpHtml+='<div class="bar-seg zero-bar" style="height:14px">0</div>';
+    } else {
+      owners.forEach(function(o){
+        var c=counts[p][o]||0;
+        if(c>0)cpHtml+='<div class="bar-seg '+OWNER_CLASS[o]+'" style="height:'+(c*25)+'px">'+c+'</div>';
+      });
+    }
+    cpHtml+='</div>';
+    cpHtml+='<div class="bar-label">'+cpLabels[p]+'</div>';
+    cpHtml+='</div>';
+  });
+  document.getElementById('completed-pillar-chart').innerHTML=cpHtml;
+
+  /* Completed by date */
+  var dateCounts={};
+  completed.forEach(function(c){
+    if(!dateCounts[c.date])dateCounts[c.date]={Ervina:0,Abdulrahman:0};
+    dateCounts[c.date][c.owner]=(dateCounts[c.date][c.owner]||0)+1;
+  });
+  var months={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  var dates=Object.keys(dateCounts).sort(function(a,b){
+    var pa=a.split(' '),pb=b.split(' ');
+    var ma=months[pa[0]]||0,mb=months[pb[0]]||0;
+    if(ma!==mb)return ma-mb;
+    return parseInt(pa[1])-parseInt(pb[1]);
+  });
+  var dtHtml='';
+  dates.forEach(function(d){
+    var dc=dateCounts[d];
+    dtHtml+='<div class="bar-group" data-cdate="'+d+'">';
+    dtHtml+='<div class="bar-stack">';
+    owners.forEach(function(o){
+      var c=dc[o]||0;
+      if(c>0)dtHtml+='<div class="bar-seg '+OWNER_CLASS[o]+'" style="height:'+(c*25)+'px">'+c+'</div>';
+    });
+    dtHtml+='</div>';
+    dtHtml+='<div class="bar-label">'+esc(d)+'</div>';
+    dtHtml+='</div>';
+  });
+  document.getElementById('completed-date-chart').innerHTML=dtHtml;
+
+  /* Re-attach pillar click handlers */
+  document.querySelectorAll('#completed-pillar-chart .bar-group[data-cpillar]').forEach(function(bg){
+    bg.addEventListener('click',function(){
+      var p=this.dataset.cpillar;
+      var sel=document.getElementById('f-c-pillar');
+      sel.value=(sel.value===p)?'':p;
+      applyCompletedFilters();
+    });
+  });
+}
+
+/* ── INIT: fetch data and render everything ── */
+fetch('projects.json')
+  .then(function(r){return r.json();})
+  .then(function(data){
+    document.getElementById('header-date').textContent=data.lastUpdated;
+    document.getElementById('footer-date').textContent=data.lastUpdated;
+    renderFullTable(data.projects);
+    renderCompletedTable(data.completed);
+    renderFullStats(data.projects,data.completed);
+    renderFullCharts(data.projects);
+    renderCompletedStats(data.completed);
+    renderCompletedCharts(data.completed);
+  })
+  .catch(function(e){console.error('Failed to load projects.json:',e);});
 </script>
 </body>
 </html>
