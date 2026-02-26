@@ -134,6 +134,18 @@
   .tier-badge.t3{background:#FFF3E0;color:#E65100}
   .tier-badge.t4{background:#171847;color:#FFF}
   .tier-badge.t5{background:#EDE9FE;color:#5B21B6}
+  .tier-summary{margin-top:24px;padding-top:24px;border-top:1px solid #e8e8e8}
+  .tier-summary h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:16px}
+  .tier-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .ts-card{border-radius:8px;padding:14px 16px;border-left:4px solid}
+  .ts-card .ts-label{font-size:11px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .ts-card .ts-desc{font-size:11px;line-height:1.55}
+  .ts-card em{font-style:italic;opacity:.7}
+  .ts-card.ts1{background:#F5F6F4;border-left-color:#B0B2B5;color:#39393A}
+  .ts-card.ts2{background:#E8F0FE;border-left-color:#1A4D8F;color:#1A4D8F}
+  .ts-card.ts3{background:#FFF3E0;border-left-color:#E65100;color:#E65100}
+  .ts-card.ts4{background:#E8EAF6;border-left-color:#171847;color:#171847}
+  .ts-card.ts5{background:#EDE9FE;border-left-color:#5B21B6;color:#5B21B6}
   .pillar-summary{margin-top:32px;padding-top:24px;border-top:1px solid #e8e8e8}
   .pillar-summary h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:16px}
   .pillar-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
@@ -211,11 +223,10 @@
     <th onclick="sortFullTable(3)">Owner</th>
     <th onclick="sortFullTable(4)">Status</th>
     <th onclick="sortFullTable(5)">Priority</th>
-    <th onclick="sortFullTable(6)">Project Tier</th>
-    <th onclick="sortFullTable(7)">Stakeholder</th>
-    <th onclick="sortFullTable(8)">Due</th>
-    <th onclick="sortFullTable(9)">Dependencies</th>
-    <th onclick="sortFullTable(10)">Notes</th>
+    <th onclick="sortFullTable(6)">Stakeholder</th>
+    <th onclick="sortFullTable(7)">Due</th>
+    <th onclick="sortFullTable(8)">Dependencies</th>
+    <th onclick="sortFullTable(9)">Notes</th>
     <th>Last Modified</th>
   </tr></thead>
   <tbody></tbody>
@@ -243,6 +254,16 @@
       <div class="ps-title">AI Pipeline</div>
       <div class="ps-desc">Building automation and intelligent workflows using AI. Includes LLM integrations, automated summarization, candidate review, compliance automation, and AI-driven internal tools. <em>If the project leverages AI to automate or enhance decision-making, it belongs here.</em></div>
     </div>
+  </div>
+</div>
+<div class="tier-summary">
+  <h3>Project Difficulty Tiers</h3>
+  <div class="tier-summary-grid">
+    <div class="ts-card ts1"><div class="ts-label"><span class="tier-badge t1">Tier 1</span> Tactical</div><div class="ts-desc">Small, contained tasks with minimal impact. <em>Examples: minor visual updates, simple DAX fixes, adding a column, basic ad hoc data pulls.</em></div></div>
+    <div class="ts-card ts2"><div class="ts-label"><span class="tier-badge t2">Tier 2</span> Moderate</div><div class="ts-desc">Clear scope but limited cross-system impact. <em>Examples: adding a new KPI, modifying a dbt model, onboarding a small data source, fixing a defined data mismatch.</em></div></div>
+    <div class="ts-card ts3"><div class="ts-label"><span class="tier-badge t3">Tier 3</span> Complex</div><div class="ts-desc">Cross-functional or multi-layer impact (Snowflake → dbt → Power BI). <em>Examples: updating business logic affecting executive dashboards, onboarding a new acquisition, investigating root-cause metric discrepancies.</em></div></div>
+    <div class="ts-card ts4"><div class="ts-label"><span class="tier-badge t4">Tier 4</span> Strategic</div><div class="ts-desc">Architectural or firm-impact work with high visibility. <em>Examples: restructuring core fact tables, implementing orchestration tooling, redesigning KPI frameworks.</em></div></div>
+    <div class="ts-card ts5"><div class="ts-label"><span class="tier-badge t5">Tier 5</span> Transformational</div><div class="ts-desc">Firm-wide or future-facing initiatives that change how the organization operates. <em>Examples: enterprise AI implementations, platform redesigns, data governance overhauls.</em></div></div>
   </div>
 </div>
 </div></div>
@@ -311,6 +332,16 @@
     </div>
   </div>
 </div>
+<div class="tier-summary">
+  <h3>Project Difficulty Tiers</h3>
+  <div class="tier-summary-grid">
+    <div class="ts-card ts1"><div class="ts-label"><span class="tier-badge t1">Tier 1</span> Tactical</div><div class="ts-desc">Small, contained tasks with minimal impact. <em>Examples: minor visual updates, simple DAX fixes, adding a column, basic ad hoc data pulls.</em></div></div>
+    <div class="ts-card ts2"><div class="ts-label"><span class="tier-badge t2">Tier 2</span> Moderate</div><div class="ts-desc">Clear scope but limited cross-system impact. <em>Examples: adding a new KPI, modifying a dbt model, onboarding a small data source, fixing a defined data mismatch.</em></div></div>
+    <div class="ts-card ts3"><div class="ts-label"><span class="tier-badge t3">Tier 3</span> Complex</div><div class="ts-desc">Cross-functional or multi-layer impact (Snowflake → dbt → Power BI). <em>Examples: updating business logic affecting executive dashboards, onboarding a new acquisition, investigating root-cause metric discrepancies.</em></div></div>
+    <div class="ts-card ts4"><div class="ts-label"><span class="tier-badge t4">Tier 4</span> Strategic</div><div class="ts-desc">Architectural or firm-impact work with high visibility. <em>Examples: restructuring core fact tables, implementing orchestration tooling, redesigning KPI frameworks.</em></div></div>
+    <div class="ts-card ts5"><div class="ts-label"><span class="tier-badge t5">Tier 5</span> Transformational</div><div class="ts-desc">Firm-wide or future-facing initiatives that change how the organization operates. <em>Examples: enterprise AI implementations, platform redesigns, data governance overhauls.</em></div></div>
+  </div>
+</div>
 </div></div>
 
 <div class="footer">PAG Data Platform &middot; Last updated <span id="footer-date"></span> &middot; v2</div>
@@ -339,7 +370,7 @@ function applyFullFilters(){
     if(status==='none'&&r.dataset.status!=='none')s=false;
     else if(status&&status!=='none'&&r.dataset.status!==status)s=false;
     if(cfo==='any'){if(r.dataset.cfo!=='yes')s=false;}
-    else if(cfo){var shTd=r.querySelectorAll('td')[7];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
+    else if(cfo){var shTd=r.querySelectorAll('td')[6];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
     if(pillar&&r.dataset.pillar!==pillar)s=false;
     if(tier&&r.dataset.tier!==tier)s=false;
     r.classList.toggle('hidden',!s);
@@ -491,7 +522,6 @@ function renderFullTable(projects){
       '<td>'+ownerBadges(p.owners)+'</td>'+
       '<td>'+statusBadge(p.status)+'</td>'+
       '<td>'+priorityBadge(p.priority)+'</td>'+
-      '<td>'+tierBadge(p.tier)+'</td>'+
       '<td>'+stakeholderBadge(p.stakeholder)+'</td>'+
       '<td>'+dueBadge(p.due)+'</td>'+
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
