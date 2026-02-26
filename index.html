@@ -30,12 +30,16 @@
   .s-card{background:#F5F6F4;border-radius:6px;padding:10px 18px;text-align:center;min-width:90px}
   .s-card .n{font-size:22px;font-weight:800;color:#171847}
   .s-card .l{font-size:10px;color:#8A8C8E;text-transform:uppercase;letter-spacing:.4px;margin-top:1px}
+  .s-card.clickable{cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s}
+  .s-card.clickable:hover{background:#e8eaf0;transform:translateY(-2px);box-shadow:0 3px 8px rgba(0,0,0,.1)}
+  .s-card.stat-active{background:#E8F0FE;box-shadow:0 0 0 2px #6995FF inset}
   .chart-section{background:#FFF;border-radius:10px;padding:20px;box-shadow:2px 2px 8px rgba(0,0,0,.06)}
   .chart-section h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:12px}
   .chart-hint{font-weight:400;font-size:11px;color:#8A8C8E}
   .bar-chart{display:flex;gap:20px;align-items:flex-end;height:190px;padding:0 10px}
   .bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .15s,opacity .15s}
   .bar-group:hover{transform:translateY(-2px);opacity:.85}
+  .bar-group.bar-active{transform:translateY(-3px)}
   .bar-stack{display:flex;flex-direction:column-reverse;align-items:center;width:100%;max-width:120px;gap:1px}
   .bar-seg{width:100%;border-radius:2px;min-height:0;transition:.3s;position:relative;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#FFF}
   .bar-seg.ervina{background:#6995FF}.bar-seg.daniel{background:#DE6751}.bar-seg.abdul{background:#F4D05E;color:#39393A}
@@ -55,7 +59,9 @@
   .status-bar-legend .legend-dot.ip{background:#3367D6}.status-bar-legend .legend-dot.ns{background:#C7C9CB}.status-bar-legend .legend-dot.cp{background:#1B7A2E}
   .workload-section{margin-bottom:28px;background:#FFF;border-radius:10px;padding:20px;box-shadow:2px 2px 8px rgba(0,0,0,.06)}
   .workload-section h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:10px}
-  .workload-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .workload-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer;border-radius:5px;padding:3px 4px;transition:background .15s}
+  .workload-row:hover{background:#F0F2F8}
+  .workload-row.wl-active{background:#E8F0FE}
   .wl-name{font-size:12px;font-weight:600;color:#39393A;width:95px;text-align:right}
   .wl-bar-bg{flex:1;background:#F0F0F2;border-radius:4px;height:22px;max-width:400px}
   .wl-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:#FFF}
@@ -146,16 +152,16 @@
   <div><label>Owner</label><br><select id="f-fp-owner" onchange="applyFullFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="any">Has Stakeholder</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
   <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
   <div class="s-card"><div class="n" id="stat-fp-total">–</div><div class="l">Total</div></div>
-  <div class="s-card" style="border-top:3px solid #3367D6"><div class="n" style="color:#3367D6" id="stat-fp-ip">–</div><div class="l">In Progress</div></div>
-  <div class="s-card" style="border-top:3px solid #8A8C8E"><div class="n" style="color:#8A8C8E" id="stat-fp-ns">–</div><div class="l">Not Started</div></div>
-  <div class="s-card" style="border-top:3px solid #1B7A2E"><div class="n" style="color:#1B7A2E" id="stat-fp-cp">–</div><div class="l">Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #BF5700"><div class="n" style="color:#BF5700" id="stat-fp-sh">–</div><div class="l">Stakeholder</div></div>
+  <div class="s-card clickable" id="scard-ip" style="border-top:3px solid #3367D6" onclick="filterByStat('ip')" title="Click to filter by In Progress"><div class="n" style="color:#3367D6" id="stat-fp-ip">–</div><div class="l">In Progress</div></div>
+  <div class="s-card clickable" id="scard-ns" style="border-top:3px solid #8A8C8E" onclick="filterByStat('ns')" title="Click to filter by Not Started"><div class="n" style="color:#8A8C8E" id="stat-fp-ns">–</div><div class="l">Not Started</div></div>
+  <div class="s-card clickable" id="scard-cp" style="border-top:3px solid #1B7A2E" onclick="filterByStat('cp')" title="Click to view Completed tab"><div class="n" style="color:#1B7A2E" id="stat-fp-cp">–</div><div class="l">Completed</div></div>
+  <div class="s-card clickable" id="scard-sh" style="border-top:3px solid #BF5700" onclick="filterByStat('sh')" title="Click to filter by Stakeholder"><div class="n" style="color:#BF5700" id="stat-fp-sh">–</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="status-bar-section">
@@ -174,7 +180,7 @@
   </div>
 </div>
 <div class="workload-section">
-  <h3>Workload by Owner</h3>
+  <h3>Workload by Owner <span class="chart-hint">(click to filter)</span></h3>
   <div id="workload-bars"></div>
 </div>
 </div>
@@ -221,7 +227,7 @@
   </div>
 </div>
 <div class="chart-section">
-  <h3>Completed by Date</h3>
+  <h3>Completed by Date <span class="chart-hint">(click to filter)</span></h3>
   <div class="bar-chart" style="height:120px" id="completed-date-chart"></div>
   <div class="chart-legend">
     <div class="legend-item"><div class="legend-dot ervina"></div>Ervina</div>
@@ -249,31 +255,88 @@ function switchTab(t){
 
 /* FULL PROJECT VIEW FILTERS */
 function applyFullFilters(){
-  var owner=document.getElementById('f-fp-owner').value,pri=document.getElementById('f-fp-priority').value,status=document.getElementById('f-fp-status').value,cfo=document.getElementById('f-fp-cfo').value,pillar=document.getElementById('f-fp-pillar').value;
+  var owner=document.getElementById('f-fp-owner').value,
+      pri=document.getElementById('f-fp-priority').value,
+      status=document.getElementById('f-fp-status').value,
+      cfo=document.getElementById('f-fp-cfo').value,
+      pillar=document.getElementById('f-fp-pillar').value;
+
   document.querySelectorAll('#full-table tbody tr[data-p]').forEach(function(r){
     var s=true;
     if(owner&&!r.dataset.owner.includes(owner))s=false;
     if(pri&&r.dataset.p!==pri)s=false;
     if(status==='none'&&r.dataset.status!=='none')s=false;
     else if(status&&status!=='none'&&r.dataset.status!==status)s=false;
-    if(cfo){var shTd=r.querySelectorAll('td')[6];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
+    if(cfo==='any'){if(r.dataset.cfo!=='yes')s=false;}
+    else if(cfo){var shTd=r.querySelectorAll('td')[6];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
     if(pillar&&r.dataset.pillar!==pillar)s=false;
     r.classList.toggle('hidden',!s);
   });
+
+  /* update stat card active states */
+  document.getElementById('scard-ip').classList.toggle('stat-active',status==='In Progress');
+  document.getElementById('scard-ns').classList.toggle('stat-active',status==='none');
+  document.getElementById('scard-sh').classList.toggle('stat-active',cfo==='any');
+
+  /* update workload row active states */
+  document.querySelectorAll('#workload-bars .workload-row').forEach(function(row){
+    row.classList.toggle('wl-active',owner!==''&&row.dataset.wlOwner===owner);
+  });
 }
-function resetFullFilters(){['f-fp-owner','f-fp-priority','f-fp-status','f-fp-cfo','f-fp-pillar'].forEach(function(id){document.getElementById(id).value=''});applyFullFilters()}
+
+function resetFullFilters(){
+  ['f-fp-owner','f-fp-priority','f-fp-status','f-fp-cfo','f-fp-pillar'].forEach(function(id){
+    document.getElementById(id).value='';
+  });
+  applyFullFilters();
+}
+
+/* Stat card click handler */
+function filterByStat(type){
+  if(type==='cp'){switchTab('completed');return;}
+  if(type==='ip'){
+    var sel=document.getElementById('f-fp-status');
+    sel.value=(sel.value==='In Progress')?'':'In Progress';
+    applyFullFilters();return;
+  }
+  if(type==='ns'){
+    var sel=document.getElementById('f-fp-status');
+    sel.value=(sel.value==='none')?'':'none';
+    applyFullFilters();return;
+  }
+  if(type==='sh'){
+    var sel=document.getElementById('f-fp-cfo');
+    sel.value=(sel.value==='any')?'':'any';
+    applyFullFilters();return;
+  }
+}
 
 /* COMPLETED TAB FILTERS */
+var completedDateFilter='';
+
 function applyCompletedFilters(){
-  var owner=document.getElementById('f-c-owner').value,pillar=document.getElementById('f-c-pillar').value;
+  var owner=document.getElementById('f-c-owner').value,
+      pillar=document.getElementById('f-c-pillar').value;
+
   document.querySelectorAll('#completed-table tbody tr[data-cowner]').forEach(function(r){
     var s=true;
     if(owner&&r.dataset.cowner!==owner)s=false;
     if(pillar&&r.dataset.cpillar!==pillar)s=false;
+    if(completedDateFilter&&r.dataset.cdate!==completedDateFilter)s=false;
     r.classList.toggle('hidden',!s);
   });
+
+  /* update date bar active states */
+  document.querySelectorAll('#completed-date-chart .bar-group').forEach(function(bg){
+    bg.classList.toggle('bar-active',completedDateFilter!==''&&bg.dataset.cdate===completedDateFilter);
+  });
 }
-function resetCompletedFilters(){['f-c-owner','f-c-pillar'].forEach(function(id){document.getElementById(id).value=''});applyCompletedFilters()}
+
+function resetCompletedFilters(){
+  ['f-c-owner','f-c-pillar'].forEach(function(id){document.getElementById(id).value=''});
+  completedDateFilter='';
+  applyCompletedFilters();
+}
 
 /* FULL PROJECT VIEW SORT */
 function sortFullTable(col){
@@ -318,6 +381,7 @@ function ownerBadges(owners){
 
 function statusBadge(status){
   if(status==='In Progress')return '<span class="st ip">In Progress</span>';
+  if(status==='Waiting')return '<span class="st wt">Waiting</span>';
   return '';
 }
 
@@ -363,7 +427,7 @@ function renderCompletedTable(completed){
     var nameCell=c.subtitle?
       esc(c.name)+'<br><span style="font-size:11px;color:#888">'+esc(c.subtitle)+'</span>':
       esc(c.name);
-    return '<tr data-cowner="'+esc(c.owner)+'" data-cpillar="'+c.pillar+'">'+
+    return '<tr data-cowner="'+esc(c.owner)+'" data-cpillar="'+c.pillar+'" data-cdate="'+esc(c.date)+'">'+
       '<td class="id">'+c.id+'</td>'+
       '<td>'+nameCell+'</td>'+
       '<td><span class="owner-badge '+(OWNER_CLASS[c.owner]||'')+'">'+esc(c.owner)+'</span></td>'+
@@ -440,8 +504,10 @@ function renderFullCharts(projects){
   var wlHtml=wlOwners.map(function(o){
     var c=ownerTotals[o.name];
     var w=maxW>0?Math.round(c/maxW*100):0;
-    return '<div class="workload-row"><div class="wl-name">'+o.name+'</div>'+
-      '<div class="wl-bar-bg"><div class="wl-bar-fill '+o.cls+'" style="width:'+w+'%">'+c+'</div></div></div>';
+    return '<div class="workload-row" data-wl-owner="'+o.name+'">'+
+      '<div class="wl-name">'+o.name+'</div>'+
+      '<div class="wl-bar-bg"><div class="wl-bar-fill '+o.cls+'" style="width:'+w+'%">'+c+'</div></div>'+
+      '</div>';
   }).join('');
   document.getElementById('workload-bars').innerHTML=wlHtml;
 
@@ -451,12 +517,22 @@ function renderFullCharts(projects){
     return '<li>'+esc(p.name)+'</li>';
   }).join('');
 
-  /* Re-attach bar click handlers */
+  /* Pillar bar click handlers */
   document.querySelectorAll('#full-pillar-chart .bar-group[data-tab-filter="fp"]').forEach(function(bg){
     bg.addEventListener('click',function(){
       var p=this.dataset.pillar;if(!p)return;
       var sel=document.getElementById('f-fp-pillar');
       sel.value=(sel.value===p)?'':p;
+      applyFullFilters();
+    });
+  });
+
+  /* Workload bar click handlers */
+  document.querySelectorAll('#workload-bars .workload-row').forEach(function(row){
+    row.addEventListener('click',function(){
+      var owner=this.dataset.wlOwner;
+      var sel=document.getElementById('f-fp-owner');
+      sel.value=(sel.value===owner)?'':owner;
       applyFullFilters();
     });
   });
@@ -516,7 +592,7 @@ function renderCompletedCharts(completed){
   var dtHtml='';
   dates.forEach(function(d){
     var dc=dateCounts[d];
-    dtHtml+='<div class="bar-group" data-cdate="'+d+'">';
+    dtHtml+='<div class="bar-group" data-cdate="'+esc(d)+'">';
     dtHtml+='<div class="bar-stack">';
     owners.forEach(function(o){
       var c=dc[o]||0;
@@ -528,12 +604,21 @@ function renderCompletedCharts(completed){
   });
   document.getElementById('completed-date-chart').innerHTML=dtHtml;
 
-  /* Re-attach pillar click handlers */
+  /* Completed pillar click handlers */
   document.querySelectorAll('#completed-pillar-chart .bar-group[data-cpillar]').forEach(function(bg){
     bg.addEventListener('click',function(){
       var p=this.dataset.cpillar;
       var sel=document.getElementById('f-c-pillar');
       sel.value=(sel.value===p)?'':p;
+      applyCompletedFilters();
+    });
+  });
+
+  /* Completed date click handlers */
+  document.querySelectorAll('#completed-date-chart .bar-group[data-cdate]').forEach(function(bg){
+    bg.addEventListener('click',function(){
+      var d=this.dataset.cdate;
+      completedDateFilter=(completedDateFilter===d)?'':d;
       applyCompletedFilters();
     });
   });
