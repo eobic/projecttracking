@@ -1,34 +1,24 @@
 # PAG Data Platform - Project Tracker
 
-## Current state (as of Feb 25, 2026)
+## Current state (as of Feb 26, 2026)
 
 ### Architecture
-The tracker was refactored from a single hardcoded `index.html` to a JSON-driven system:
-- `projects.json` — all data (43 active projects, 6 completed). **Only file that changes.**
+The tracker is a JSON-driven system:
+- `projects.json` — all data (active projects + completed). **Only file that changes.**
 - `index.html` — layout, CSS, and JS only. Fetches `projects.json` on load and renders everything dynamically.
 - `CLAUDE.md` — this file. Instructions for Claude.
 
-### What was just completed
-- Extracted all project data from `index.html` into `projects.json`
-- Refactored `index.html` to use `fetch('projects.json')` with JS render functions
-- All filters, sorting, and bar chart click-to-filter are fully functional
-- Stats, status bar, pillar chart, workload bars, and CFO list all compute dynamically from data
-
-### Next steps pending
-- **Push to GitHub** — changes are local only. Run from this directory:
-  ```
-  git add projects.json index.html CLAUDE.md
-  git commit -m "Refactor: move project data to projects.json, render dynamically"
-  git push
-  ```
-- **Add Abdulrahman as GitHub collaborator** — GitHub repo → Settings → Collaborators
-- **Verify live site** after pushing — all 43 projects should render, filters/sort/charts should work
+### Features
+- Click-to-filter: Pillar chart bars, Workload by Owner bars, KPI stat cards (In Progress, Not Started, Stakeholder), Completed by Date bars
+- Column sort on Full Project View table
+- Status badges: In Progress, Waiting, (blank = Not Started)
+- Last Modified column on both tables
 
 ### Next available project ID
-The highest current ID is **45**. Next new project should use ID **46**.
+The highest current ID is **46**. Next new project should use ID **47**.
 
 ### Next available completed ID
-The highest current completed ID is **6**. Next completed item should use ID **7**.
+The highest current completed ID is **8**. Next completed item should use ID **9**.
 
 ---
 
@@ -37,8 +27,9 @@ The highest current completed ID is **6**. Next completed item should use ID **7
 All project data lives in `projects.json`. When asked to add, update, or complete a project:
 
 1. Edit `projects.json` only — **never edit `index.html` for data changes**
-2. Update `lastUpdated` to today's date (e.g. `"Feb 25, 2026"`)
-3. Commit and push to GitHub — the page updates automatically
+2. Update `lastUpdated` to today's date (e.g. `"Feb 26, 2026"`)
+3. **Always update `lastModified`** on any project that was changed — set to today's date
+4. Commit and push to GitHub — the page updates automatically
 
 `index.html` is layout/rendering only. It reads from `projects.json` on page load.
 
@@ -52,12 +43,13 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 | `name` | string | Project name |
 | `pillar` | string | See valid values below |
 | `owners` | array | e.g. `["Ervina"]` or `["Ervina","Daniel"]` |
-| `status` | string | `"In Progress"` or `""` (empty = Not Started) |
+| `status` | string | `"In Progress"` \| `"Waiting"` \| `""` (empty = Not Started) |
 | `priority` | string | See valid values below |
 | `stakeholder` | string | See valid values below, or `""` |
 | `due` | string | Free text, e.g. `"This week"`, or `""` |
 | `dependencies` | string | e.g. `"Depends on #1, #2"` or `"None"` |
 | `notes` | string | Free text notes |
+| `lastModified` | string | Date of last update, e.g. `"Feb 26, 2026"`. Set to today when adding or editing a project. |
 
 ## Completed item fields
 
@@ -68,8 +60,9 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 | `subtitle` | string | Optional sub-line (e.g. office names), or `""` |
 | `owner` | string | Single owner name |
 | `pillar` | string | See valid values below |
-| `date` | string | e.g. `"Feb 25"` |
+| `date` | string | Completion date, e.g. `"Feb 26"` |
 | `impact` | string | One-sentence description of what was delivered |
+| `lastModified` | string | Date record was last updated, e.g. `"Feb 26, 2026"`. Defaults to completion date if never edited. |
 
 ---
 
@@ -77,7 +70,7 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 
 **pillar:** `intake` | `reporting` | `modeling` | `gov` | `ai`
 
-**status:** `"In Progress"` | `""` (empty string = Not Started)
+**status:** `"In Progress"` | `"Waiting"` | `""` (empty string = Not Started)
 
 **priority:** `"P1"` | `"P2"` | `"P3"` | `"Future"` | `"Pipeline"`
 
@@ -90,17 +83,17 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 ## Common tasks
 
 ### Add a new active project
-Add an entry to the `"projects"` array. Find the highest existing ID and use the next integer.
+Add an entry to the `"projects"` array. Use the next available ID. Set `lastModified` to today's date.
 
 ### Mark a project complete
 1. Remove it from the `"projects"` array
-2. Add it to the `"completed"` array with `date`, `impact`, and `subtitle` (if applicable)
+2. Add it to the `"completed"` array with `date`, `impact`, `subtitle` (if applicable), and `lastModified` (set to today)
 
 ### Update a project's status, notes, or owner
-Find it in `"projects"` by `id` and edit the relevant fields.
+Find it in `"projects"` by `id`, edit the relevant fields, and update `lastModified` to today's date.
 
 ### Add a new team member as owner
-Add their name to the `owners` array on the relevant projects. The rendering engine supports any string in the owners array, but new owner badge styles would need to be added to `index.html` CSS if a new person joins.
+Add their name to the `owners` array on the relevant projects. New owner badge styles would need to be added to `index.html` CSS if a new person joins.
 
 ---
 

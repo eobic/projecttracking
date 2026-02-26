@@ -184,7 +184,6 @@
   <div id="workload-bars"></div>
 </div>
 </div>
-<div class="cfo-bar"><h3>Stakeholder Priority</h3><ul id="cfo-list"></ul></div>
 <table id="full-table">
   <thead><tr>
     <th onclick="sortFullTable(0)">#</th>
@@ -197,6 +196,7 @@
     <th onclick="sortFullTable(7)">Due</th>
     <th onclick="sortFullTable(8)">Dependencies</th>
     <th onclick="sortFullTable(9)">Notes</th>
+    <th>Last Modified</th>
   </tr></thead>
   <tbody></tbody>
 </table>
@@ -238,7 +238,7 @@
 
 <div class="pillar-banner cp-bg"><span class="pb-title">All Completed Work</span><span class="pb-count" id="cp-banner-count"></span></div>
 <table id="completed-table">
-  <thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Date</th><th>Impact</th></tr></thead>
+  <thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Completed Date</th><th>Impact</th><th>Last Modified</th></tr></thead>
   <tbody></tbody>
 </table>
 </div></div>
@@ -416,6 +416,7 @@ function renderFullTable(projects){
       '<td>'+dueBadge(p.due)+'</td>'+
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
       '<td class="notes">'+esc(p.notes)+'</td>'+
+      '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(p.lastModified||'')+'</td>'+
     '</tr>';
   }).join('');
   document.querySelector('#full-table tbody').innerHTML=rows;
@@ -433,6 +434,7 @@ function renderCompletedTable(completed){
       '<td>'+pillarTag(c.pillar)+'</td>'+
       '<td>'+esc(c.date)+'</td>'+
       '<td class="notes">'+esc(c.impact)+'</td>'+
+      '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(c.lastModified||c.date||'')+'</td>'+
     '</tr>';
   }).join('');
   document.querySelector('#completed-table tbody').innerHTML=rows;
@@ -509,12 +511,6 @@ function renderFullCharts(projects){
       '</div>';
   }).join('');
   document.getElementById('workload-bars').innerHTML=wlHtml;
-
-  /* CFO stakeholder list */
-  var cfoProjects=projects.filter(function(p){return p.stakeholder==='CFO';});
-  document.getElementById('cfo-list').innerHTML=cfoProjects.map(function(p){
-    return '<li>'+esc(p.name)+'</li>';
-  }).join('');
 
   /* Pillar bar click handlers */
   document.querySelectorAll('#full-pillar-chart .bar-group[data-tab-filter="fp"]').forEach(function(bg){
