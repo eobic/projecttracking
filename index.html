@@ -136,7 +136,7 @@
   .tier-badge.t5{background:#EDE9FE;color:#5B21B6}
   .tier-summary{margin-top:24px;padding-top:24px;border-top:1px solid #e8e8e8}
   .tier-summary h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:16px}
-  .tier-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .tier-summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
   .ts-card{border-radius:8px;padding:14px 16px;border-left:4px solid}
   .ts-card .ts-label{font-size:11px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
   .ts-card .ts-desc{font-size:11px;line-height:1.55}
@@ -148,7 +148,7 @@
   .ts-card.ts5{background:#EDE9FE;border-left-color:#5B21B6;color:#5B21B6}
   .pillar-summary{margin-top:32px;padding-top:24px;border-top:1px solid #e8e8e8}
   .pillar-summary h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:16px}
-  .pillar-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .pillar-summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
   .ps-card{border-radius:8px;padding:14px 16px;border-left:4px solid}
   .ps-card .ps-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
   .ps-card .ps-desc{font-size:11px;line-height:1.55}
@@ -223,10 +223,11 @@
     <th onclick="sortFullTable(3)">Owner</th>
     <th onclick="sortFullTable(4)">Status</th>
     <th onclick="sortFullTable(5)">Priority</th>
-    <th onclick="sortFullTable(6)">Stakeholder</th>
-    <th onclick="sortFullTable(7)">Due</th>
-    <th onclick="sortFullTable(8)">Dependencies</th>
-    <th onclick="sortFullTable(9)">Notes</th>
+    <th onclick="sortFullTable(6)">Project Tier</th>
+    <th onclick="sortFullTable(7)">Stakeholder</th>
+    <th onclick="sortFullTable(8)">Due</th>
+    <th onclick="sortFullTable(9)">Dependencies</th>
+    <th onclick="sortFullTable(10)">Notes</th>
     <th>Last Modified</th>
   </tr></thead>
   <tbody></tbody>
@@ -370,7 +371,7 @@ function applyFullFilters(){
     if(status==='none'&&r.dataset.status!=='none')s=false;
     else if(status&&status!=='none'&&r.dataset.status!==status)s=false;
     if(cfo==='any'){if(r.dataset.cfo!=='yes')s=false;}
-    else if(cfo){var shTd=r.querySelectorAll('td')[6];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
+    else if(cfo){var shTd=r.querySelectorAll('td')[7];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
     if(pillar&&r.dataset.pillar!==pillar)s=false;
     if(tier&&r.dataset.tier!==tier)s=false;
     r.classList.toggle('hidden',!s);
@@ -522,6 +523,7 @@ function renderFullTable(projects){
       '<td>'+ownerBadges(p.owners)+'</td>'+
       '<td>'+statusBadge(p.status)+'</td>'+
       '<td>'+priorityBadge(p.priority)+'</td>'+
+      '<td></td>'+
       '<td>'+stakeholderBadge(p.stakeholder)+'</td>'+
       '<td>'+dueBadge(p.due)+'</td>'+
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
