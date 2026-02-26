@@ -128,6 +128,24 @@
   #full-table thead th:hover{background:#52566a}
   #full-table thead th[data-sort="asc"]::after{content:" ▲";font-size:8px;opacity:.7}
   #full-table thead th[data-sort="desc"]::after{content:" ▼";font-size:8px;opacity:.7}
+  .tier-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;white-space:nowrap}
+  .tier-badge.t1{background:#F5F6F4;color:#6B6F82;border:1px solid #ddd}
+  .tier-badge.t2{background:#E8F0FE;color:#1A4D8F}
+  .tier-badge.t3{background:#FFF3E0;color:#E65100}
+  .tier-badge.t4{background:#171847;color:#FFF}
+  .tier-badge.t5{background:#EDE9FE;color:#5B21B6}
+  .pillar-summary{margin-top:32px;padding-top:24px;border-top:1px solid #e8e8e8}
+  .pillar-summary h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:16px}
+  .pillar-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .ps-card{border-radius:8px;padding:14px 16px;border-left:4px solid}
+  .ps-card .ps-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+  .ps-card .ps-desc{font-size:11px;line-height:1.55}
+  .ps-card em{font-style:italic;opacity:.7}
+  .ps-card.intake-ps{background:#E8F0FE;border-left-color:#1A4D8F;color:#1A4D8F}
+  .ps-card.rpt-ps{background:#F3E8FD;border-left-color:#5E35B1;color:#5E35B1}
+  .ps-card.model-ps{background:#FDECEA;border-left-color:#783534;color:#783534}
+  .ps-card.gov-ps{background:#E6F4EA;border-left-color:#0F2625;color:#0F2625}
+  .ps-card.ai-ps{background:#FFF8E1;border-left-color:#7B6100;color:#7B6100}
   @media(max-width:900px){.chart-grid{grid-template-columns:1fr}.stat-strip,.content,.filter-bar{padding:16px 20px}.header,.tab-nav{padding-left:20px;padding-right:20px}.bar-chart{height:140px}.pillar-progress{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.pillar-progress{grid-template-columns:1fr}.tier-strip{flex-wrap:wrap}}
 </style>
@@ -154,6 +172,7 @@
   <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
   <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="any">Has Stakeholder</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
   <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
+  <div><label>Tier</label><br><select id="f-fp-tier" onchange="applyFullFilters()"><option value="">All</option><option value="1">Tier 1 – Tactical</option><option value="2">Tier 2 – Moderate</option><option value="3">Tier 3 – Complex</option><option value="4">Tier 4 – Strategic</option><option value="5">Tier 5 – Transformational</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
@@ -192,14 +211,40 @@
     <th onclick="sortFullTable(3)">Owner</th>
     <th onclick="sortFullTable(4)">Status</th>
     <th onclick="sortFullTable(5)">Priority</th>
-    <th onclick="sortFullTable(6)">Stakeholder</th>
-    <th onclick="sortFullTable(7)">Due</th>
-    <th onclick="sortFullTable(8)">Dependencies</th>
-    <th onclick="sortFullTable(9)">Notes</th>
+    <th onclick="sortFullTable(6)">Tier</th>
+    <th onclick="sortFullTable(7)">Stakeholder</th>
+    <th onclick="sortFullTable(8)">Due</th>
+    <th onclick="sortFullTable(9)">Dependencies</th>
+    <th onclick="sortFullTable(10)">Notes</th>
     <th>Last Modified</th>
   </tr></thead>
   <tbody></tbody>
 </table>
+<div class="pillar-summary">
+  <h3>About the Data Pillars</h3>
+  <div class="pillar-summary-grid">
+    <div class="ps-card intake-ps">
+      <div class="ps-title">Data Intake</div>
+      <div class="ps-desc">Bringing new and updated data into Snowflake from source systems. Includes onboarding acquisitions, adding vendor fields, uploading historical data, and fixing source mapping. <em>If the work makes data available in Snowflake for the first time, it belongs here.</em></div>
+    </div>
+    <div class="ps-card model-ps">
+      <div class="ps-title">Data Modeling</div>
+      <div class="ps-desc">Transforming raw data into structured, business-ready datasets. Includes building fact/dimension tables, churn/WIP models, KPI logic, and mapping tables. <em>If the work changes business logic or how metrics are calculated, it belongs here.</em></div>
+    </div>
+    <div class="ps-card rpt-ps">
+      <div class="ps-title">Reporting</div>
+      <div class="ps-desc">Delivering insights through dashboards and analysis. Includes building Power BI reports, DAX measures, ad hoc data requests, filters, and report-level bugs. <em>If the work happens in Power BI or focuses on how users consume data, it belongs here.</em></div>
+    </div>
+    <div class="ps-card gov-ps">
+      <div class="ps-title">Governance &amp; Architecture</div>
+      <div class="ps-desc">Improving the structure, reliability, and scalability of the data platform. Includes orchestration tooling, data ticketing, RLS/security, schema restructuring, and preventing refresh failures. <em>If the work strengthens the platform itself rather than a single report, it belongs here.</em></div>
+    </div>
+    <div class="ps-card ai-ps">
+      <div class="ps-title">AI Pipeline</div>
+      <div class="ps-desc">Building automation and intelligent workflows using AI. Includes LLM integrations, automated summarization, candidate review, compliance automation, and AI-driven internal tools. <em>If the project leverages AI to automate or enhance decision-making, it belongs here.</em></div>
+    </div>
+  </div>
+</div>
 </div></div>
 
 <!-- ══════════════════════════════════════ -->
@@ -238,9 +283,34 @@
 
 <div class="pillar-banner cp-bg"><span class="pb-title">All Completed Work</span><span class="pb-count" id="cp-banner-count"></span></div>
 <table id="completed-table">
-  <thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Completed Date</th><th>Impact</th><th>Last Modified</th></tr></thead>
+  <thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Impact</th><th>Completed Date</th></tr></thead>
   <tbody></tbody>
 </table>
+<div class="pillar-summary">
+  <h3>About the Data Pillars</h3>
+  <div class="pillar-summary-grid">
+    <div class="ps-card intake-ps">
+      <div class="ps-title">Data Intake</div>
+      <div class="ps-desc">Bringing new and updated data into Snowflake from source systems. Includes onboarding acquisitions, adding vendor fields, uploading historical data, and fixing source mapping. <em>If the work makes data available in Snowflake for the first time, it belongs here.</em></div>
+    </div>
+    <div class="ps-card model-ps">
+      <div class="ps-title">Data Modeling</div>
+      <div class="ps-desc">Transforming raw data into structured, business-ready datasets. Includes building fact/dimension tables, churn/WIP models, KPI logic, and mapping tables. <em>If the work changes business logic or how metrics are calculated, it belongs here.</em></div>
+    </div>
+    <div class="ps-card rpt-ps">
+      <div class="ps-title">Reporting</div>
+      <div class="ps-desc">Delivering insights through dashboards and analysis. Includes building Power BI reports, DAX measures, ad hoc data requests, filters, and report-level bugs. <em>If the work happens in Power BI or focuses on how users consume data, it belongs here.</em></div>
+    </div>
+    <div class="ps-card gov-ps">
+      <div class="ps-title">Governance &amp; Architecture</div>
+      <div class="ps-desc">Improving the structure, reliability, and scalability of the data platform. Includes orchestration tooling, data ticketing, RLS/security, schema restructuring, and preventing refresh failures. <em>If the work strengthens the platform itself rather than a single report, it belongs here.</em></div>
+    </div>
+    <div class="ps-card ai-ps">
+      <div class="ps-title">AI Pipeline</div>
+      <div class="ps-desc">Building automation and intelligent workflows using AI. Includes LLM integrations, automated summarization, candidate review, compliance automation, and AI-driven internal tools. <em>If the project leverages AI to automate or enhance decision-making, it belongs here.</em></div>
+    </div>
+  </div>
+</div>
 </div></div>
 
 <div class="footer">PAG Data Platform &middot; Last updated <span id="footer-date"></span> &middot; v2</div>
@@ -259,7 +329,8 @@ function applyFullFilters(){
       pri=document.getElementById('f-fp-priority').value,
       status=document.getElementById('f-fp-status').value,
       cfo=document.getElementById('f-fp-cfo').value,
-      pillar=document.getElementById('f-fp-pillar').value;
+      pillar=document.getElementById('f-fp-pillar').value,
+      tier=document.getElementById('f-fp-tier').value;
 
   document.querySelectorAll('#full-table tbody tr[data-p]').forEach(function(r){
     var s=true;
@@ -268,8 +339,9 @@ function applyFullFilters(){
     if(status==='none'&&r.dataset.status!=='none')s=false;
     else if(status&&status!=='none'&&r.dataset.status!==status)s=false;
     if(cfo==='any'){if(r.dataset.cfo!=='yes')s=false;}
-    else if(cfo){var shTd=r.querySelectorAll('td')[6];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
+    else if(cfo){var shTd=r.querySelectorAll('td')[7];if((shTd?shTd.textContent.trim():'')!==cfo)s=false;}
     if(pillar&&r.dataset.pillar!==pillar)s=false;
+    if(tier&&r.dataset.tier!==tier)s=false;
     r.classList.toggle('hidden',!s);
   });
 
@@ -285,7 +357,7 @@ function applyFullFilters(){
 }
 
 function resetFullFilters(){
-  ['f-fp-owner','f-fp-priority','f-fp-status','f-fp-cfo','f-fp-pillar'].forEach(function(id){
+  ['f-fp-owner','f-fp-priority','f-fp-status','f-fp-cfo','f-fp-pillar','f-fp-tier'].forEach(function(id){
     document.getElementById(id).value='';
   });
   applyFullFilters();
@@ -401,17 +473,25 @@ function dueBadge(due){
   return '<span class="due-badge">'+esc(due)+'</span>';
 }
 
+function tierBadge(tier){
+  if(!tier)return '';
+  var labels={1:'Tactical',2:'Moderate',3:'Complex',4:'Strategic',5:'Transformational'};
+  var cls={1:'t1',2:'t2',3:'t3',4:'t4',5:'t5'}[tier]||'';
+  return '<span class="tier-badge '+cls+'" title="Tier '+tier+' \u2013 '+labels[tier]+'">Tier '+tier+'</span>';
+}
+
 function renderFullTable(projects){
   var rows=projects.map(function(p){
     var ownerStr=p.owners.join(' ');
     var statusStr=p.status||'none';
-    return '<tr data-owner="'+ownerStr+'" data-p="'+p.priority+'" data-status="'+statusStr+'" data-cfo="'+(p.stakeholder?'yes':'no')+'" data-pillar="'+p.pillar+'">'+
+    return '<tr data-owner="'+ownerStr+'" data-p="'+p.priority+'" data-status="'+statusStr+'" data-cfo="'+(p.stakeholder?'yes':'no')+'" data-pillar="'+p.pillar+'" data-tier="'+(p.tier||'')+'">' +
       '<td class="id">'+p.id+'</td>'+
       '<td>'+esc(p.name)+'</td>'+
       '<td>'+pillarTag(p.pillar)+'</td>'+
       '<td>'+ownerBadges(p.owners)+'</td>'+
       '<td>'+statusBadge(p.status)+'</td>'+
       '<td>'+priorityBadge(p.priority)+'</td>'+
+      '<td>'+tierBadge(p.tier)+'</td>'+
       '<td>'+stakeholderBadge(p.stakeholder)+'</td>'+
       '<td>'+dueBadge(p.due)+'</td>'+
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
@@ -432,7 +512,6 @@ function renderCompletedTable(completed){
       '<td>'+nameCell+'</td>'+
       '<td><span class="owner-badge '+(OWNER_CLASS[c.owner]||'')+'">'+esc(c.owner)+'</span></td>'+
       '<td>'+pillarTag(c.pillar)+'</td>'+
-      '<td>'+esc(c.date)+'</td>'+
       '<td class="notes">'+esc(c.impact)+'</td>'+
       '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(c.lastModified||c.date||'')+'</td>'+
     '</tr>';
@@ -543,11 +622,11 @@ function renderCompletedStats(completed){
 }
 
 function renderCompletedCharts(completed){
-  var pillars=['intake','reporting','modeling','gov'];
-  var cpLabels={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch'};
+  var pillars=['intake','reporting','modeling','gov','ai'];
+  var cpLabels={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch',ai:'AI Pipeline'};
   var owners=['Ervina','Abdulrahman'];
   var counts={};
-  pillars.forEach(function(p){counts[p]={Ervina:0,Abdulrahman:0};});
+  pillars.forEach(function(p){counts[p]={Ervina:0,Abdulrahman:0,Daniel:0};});
   completed.forEach(function(c){
     if(counts[c.pillar])counts[c.pillar][c.owner]=(counts[c.pillar][c.owner]||0)+1;
   });

@@ -49,6 +49,7 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 | `due` | string | Free text, e.g. `"This week"`, or `""` |
 | `dependencies` | string | e.g. `"Depends on #1, #2"` or `"None"` |
 | `notes` | string | Free text notes |
+| `tier` | number | Difficulty/complexity tier: `1` through `5`. See tier definitions below. |
 | `lastModified` | string | Date of last update, e.g. `"Feb 26, 2026"`. Set to today when adding or editing a project. |
 
 ## Completed item fields
@@ -70,7 +71,29 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 
 **pillar:** `intake` | `reporting` | `modeling` | `gov` | `ai`
 
+### Pillar definitions
+
+| Pillar | Key | When to use |
+|---|---|---|
+| Data Intake | `intake` | Bringing new or updated data into Snowflake from source systems. Onboarding acquisitions, adding vendor fields, uploading historical data, fixing source mapping. Use if the work makes data available in Snowflake for the first time. |
+| Data Modeling | `modeling` | Transforming raw data into structured, business-ready datasets. Building/modifying fact & dimension tables, churn/WIP models, KPI logic, mapping tables, metric investigations. Use if the work changes business logic or how metrics are calculated. |
+| Reporting | `reporting` | Delivering insights through dashboards and analysis. Building/updating Power BI reports, DAX measures, ad hoc requests, filters, toggles, report-level bugs. Use if the work happens in Power BI or focuses on how users consume data. |
+| Governance & Architecture | `gov` | Improving structure, reliability, and scalability of the platform. Orchestration tooling, data ticketing, RLS/security, schema restructuring, preventing refresh failures. Use if the work strengthens the platform itself rather than a single report. |
+| AI Pipeline | `ai` | Building automation and intelligent workflows using AI. LLM integrations, automated summarization, candidate review, compliance automation, AI-driven internal tools. Use if the project leverages AI to automate or enhance decision-making. |
+
 **status:** `"In Progress"` | `"Waiting"` | `""` (empty string = Not Started)
+
+**tier:** `1` | `2` | `3` | `4` | `5`
+
+### Project Difficulty Tier System
+
+| Tier | Label | Description | Examples |
+|---|---|---|---|
+| `1` | Tactical | Small, contained tasks with minimal impact. | Minor visual updates, simple DAX fixes, adding a column, basic ad hoc data pulls. |
+| `2` | Moderate | Clear scope but limited cross-system impact. | Adding a new KPI to a report, modifying a dbt model, onboarding a small data source, fixing a defined data mismatch. |
+| `3` | Complex | Cross-functional or multi-layer impact (Snowflake → dbt → Power BI). | Updating business logic affecting executive dashboards, onboarding a new acquisition, investigating root-cause metric discrepancies. |
+| `4` | Strategic | Architectural or firm-impact work with high visibility. | Restructuring core fact tables, implementing orchestration tooling, redesigning KPI frameworks, major platform improvements. |
+| `5` | Transformational | Firm-wide or future-facing initiatives that change how the organization operates. | Enterprise AI implementations, platform redesigns, data governance overhauls, multi-office system standardization initiatives. |
 
 **priority:** `"P1"` | `"P2"` | `"P3"` | `"Future"` | `"Pipeline"`
 
