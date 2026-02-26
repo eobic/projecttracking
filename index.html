@@ -42,14 +42,14 @@
   .bar-group.bar-active{transform:translateY(-3px)}
   .bar-stack{display:flex;flex-direction:column-reverse;align-items:center;width:100%;max-width:120px;gap:1px}
   .bar-seg{width:100%;border-radius:2px;min-height:0;transition:.3s;position:relative;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#FFF}
-  .bar-seg.ervina{background:#6995FF}.bar-seg.daniel{background:#DE6751}.bar-seg.abdul{background:#F4D05E;color:#39393A}
+  .bar-seg.ervina{background:#6995FF}.bar-seg.daniel{background:#DE6751}.bar-seg.abdul{background:#9FCEA8;color:#39393A}
   .bar-seg.intake-color{background:#1A4D8F}.bar-seg.rpt-color{background:#5E35B1}.bar-seg.model-color{background:#783534}.bar-seg.gov-color{background:#0F2625}.bar-seg.ai-color{background:#7B6100}
   .bar-seg.zero-bar{background:#E0E0E0;color:#8A8C8E}
   .bar-label{font-size:10px;color:#8A8C8E;text-align:center;font-weight:600;margin-top:6px;line-height:1.2}
   .chart-legend{display:flex;gap:16px;margin-top:14px;justify-content:center;flex-wrap:wrap}
   .legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:#39393A;font-weight:600}
   .legend-dot{width:10px;height:10px;border-radius:2px}
-  .legend-dot.ervina{background:#6995FF}.legend-dot.daniel{background:#DE6751}.legend-dot.abdul{background:#F4D05E}
+  .legend-dot.ervina{background:#6995FF}.legend-dot.daniel{background:#DE6751}.legend-dot.abdul{background:#9FCEA8}
   .status-bar-section{margin-bottom:28px;background:#FFF;border-radius:10px;padding:20px;box-shadow:2px 2px 8px rgba(0,0,0,.06)}
   .status-bar-section h3{font-size:13px;font-weight:700;color:#171847;margin-bottom:10px}
   .status-bar{display:flex;height:28px;border-radius:6px;overflow:hidden;background:#F5F6F4}
@@ -65,7 +65,7 @@
   .wl-name{font-size:12px;font-weight:600;color:#39393A;width:95px;text-align:right}
   .wl-bar-bg{flex:1;background:#F0F0F2;border-radius:4px;height:22px;max-width:400px}
   .wl-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:#FFF}
-  .wl-bar-fill.ervina{background:#6995FF}.wl-bar-fill.daniel{background:#DE6751}.wl-bar-fill.abdul{background:#F4D05E;color:#39393A}
+  .wl-bar-fill.ervina{background:#6995FF}.wl-bar-fill.daniel{background:#DE6751}.wl-bar-fill.abdul{background:#9FCEA8;color:#39393A}
   .pri-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700}
   .pri-badge.p1{background:#171847;color:#FFF}.pri-badge.p2{background:#6995FF;color:#FFF}.pri-badge.p3{background:#C7C9CB;color:#39393A}
   .pri-badge.pp{background:#F4D05E33;color:#7B6100}.pri-badge.future{background:#F5F6F4;color:#8A8C8E;border:1px dashed #B0B2B5}
@@ -92,7 +92,7 @@
   .st{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;white-space:nowrap}
   .st.ip{background:#E8F0FE;color:#3367D6}.st.wt{background:#FFF3E0;color:#E65100}.st.cp{background:#E6F4EA;color:#1B7A2E}
   .owner-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600}
-  .owner-badge.ervina{background:#E8F0FE;color:#1A4D8F}.owner-badge.daniel{background:#FDECEA;color:#783534}.owner-badge.abdul{background:#FFF3E0;color:#BF5700}
+  .owner-badge.ervina{background:#E8F0FE;color:#1A4D8F}.owner-badge.daniel{background:#FDECEA;color:#783534}.owner-badge.abdul{background:#E6F4EA;color:#1B7A2E}
   .collab-tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:600;background:#F3E8FD;color:#5E35B1;margin-left:4px}
   .cfo-badge{display:inline-block;background:#FFF3E0;color:#BF5700;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px}
   .sh-badge{display:inline-block;background:#EDE9FE;color:#5B21B6;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px}
@@ -158,10 +158,10 @@
 </div>
 <div class="stat-strip">
   <div class="s-card"><div class="n" id="stat-fp-total">–</div><div class="l">Total</div></div>
-  <div class="s-card clickable" id="scard-ip" style="border-top:3px solid #3367D6" onclick="filterByStat('ip')" title="Click to filter by In Progress"><div class="n" style="color:#3367D6" id="stat-fp-ip">–</div><div class="l">In Progress</div></div>
+  <div class="s-card clickable" id="scard-ip" style="border-top:3px solid #6995FF" onclick="filterByStat('ip')" title="Click to filter by In Progress"><div class="n" style="color:#6995FF" id="stat-fp-ip">–</div><div class="l">In Progress</div></div>
   <div class="s-card clickable" id="scard-ns" style="border-top:3px solid #8A8C8E" onclick="filterByStat('ns')" title="Click to filter by Not Started"><div class="n" style="color:#8A8C8E" id="stat-fp-ns">–</div><div class="l">Not Started</div></div>
-  <div class="s-card clickable" id="scard-cp" style="border-top:3px solid #1B7A2E" onclick="filterByStat('cp')" title="Click to view Completed tab"><div class="n" style="color:#1B7A2E" id="stat-fp-cp">–</div><div class="l">Completed</div></div>
-  <div class="s-card clickable" id="scard-sh" style="border-top:3px solid #BF5700" onclick="filterByStat('sh')" title="Click to filter by Stakeholder"><div class="n" style="color:#BF5700" id="stat-fp-sh">–</div><div class="l">Stakeholder</div></div>
+  <div class="s-card clickable" id="scard-cp" style="border-top:3px solid #9FCEA8" onclick="filterByStat('cp')" title="Click to view Completed tab"><div class="n" style="color:#9FCEA8" id="stat-fp-cp">–</div><div class="l">Completed</div></div>
+  <div class="s-card clickable" id="scard-sh" style="border-top:3px solid #DE6751" onclick="filterByStat('sh')" title="Click to filter by Stakeholder"><div class="n" style="color:#DE6751" id="stat-fp-sh">–</div><div class="l">Stakeholder</div></div>
 </div>
 <div class="content">
 <div class="status-bar-section">
@@ -213,7 +213,7 @@
 </div>
 <div class="stat-strip">
   <div class="s-card"><div class="n" id="stat-cp-total">–</div><div class="l">Total Completed</div></div>
-  <div class="s-card" style="border-top:3px solid #F4D05E"><div class="n" style="color:#BF5700" id="stat-cp-abdul">–</div><div class="l">Abdulrahman</div></div>
+  <div class="s-card" style="border-top:3px solid #9FCEA8"><div class="n" style="color:#1B7A2E" id="stat-cp-abdul">–</div><div class="l">Abdulrahman</div></div>
   <div class="s-card" style="border-top:3px solid #6995FF"><div class="n" style="color:#6995FF" id="stat-cp-ervina">–</div><div class="l">Ervina</div></div>
 </div>
 <div class="content">
@@ -403,10 +403,9 @@ function dueBadge(due){
 
 function renderFullTable(projects){
   var rows=projects.map(function(p){
-    var rowStyle=p.owners.includes('Abdulrahman')?' style="background:#FFFDE7"':'';
     var ownerStr=p.owners.join(' ');
     var statusStr=p.status||'none';
-    return '<tr data-owner="'+ownerStr+'" data-p="'+p.priority+'" data-status="'+statusStr+'" data-cfo="'+(p.stakeholder?'yes':'no')+'" data-pillar="'+p.pillar+'"'+rowStyle+'>'+
+    return '<tr data-owner="'+ownerStr+'" data-p="'+p.priority+'" data-status="'+statusStr+'" data-cfo="'+(p.stakeholder?'yes':'no')+'" data-pillar="'+p.pillar+'">'+
       '<td class="id">'+p.id+'</td>'+
       '<td>'+esc(p.name)+'</td>'+
       '<td>'+pillarTag(p.pillar)+'</td>'+
