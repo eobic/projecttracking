@@ -172,6 +172,7 @@
 <div class="tab-nav">
   <button class="tab-btn fp-tab active" data-tab="full" onclick="switchTab('full')">Full Project View</button>
   <button class="tab-btn c-tab" data-tab="completed" onclick="switchTab('completed')">Completed</button>
+  <button class="tab-btn" data-tab="info" onclick="switchTab('info')">Info</button>
 </div>
 
 <!-- ══════════════════════════════════════ -->
@@ -232,41 +233,6 @@
   </tr></thead>
   <tbody></tbody>
 </table>
-<div class="pillar-summary">
-  <h3>About the Data Pillars</h3>
-  <div class="pillar-summary-grid">
-    <div class="ps-card intake-ps">
-      <div class="ps-title">Data Intake</div>
-      <div class="ps-desc">Bringing new and updated data into Snowflake from source systems. Includes onboarding acquisitions, adding vendor fields, uploading historical data, and fixing source mapping. <em>If the work makes data available in Snowflake for the first time, it belongs here.</em></div>
-    </div>
-    <div class="ps-card model-ps">
-      <div class="ps-title">Data Modeling</div>
-      <div class="ps-desc">Transforming raw data into structured, business-ready datasets. Includes building fact/dimension tables, churn/WIP models, KPI logic, and mapping tables. <em>If the work changes business logic or how metrics are calculated, it belongs here.</em></div>
-    </div>
-    <div class="ps-card rpt-ps">
-      <div class="ps-title">Reporting</div>
-      <div class="ps-desc">Delivering insights through dashboards and analysis. Includes building Power BI reports, DAX measures, ad hoc data requests, filters, and report-level bugs. <em>If the work happens in Power BI or focuses on how users consume data, it belongs here.</em></div>
-    </div>
-    <div class="ps-card gov-ps">
-      <div class="ps-title">Governance &amp; Architecture</div>
-      <div class="ps-desc">Improving the structure, reliability, and scalability of the data platform. Includes orchestration tooling, data ticketing, RLS/security, schema restructuring, and preventing refresh failures. <em>If the work strengthens the platform itself rather than a single report, it belongs here.</em></div>
-    </div>
-    <div class="ps-card ai-ps">
-      <div class="ps-title">AI Pipeline</div>
-      <div class="ps-desc">Building automation and intelligent workflows using AI. Includes LLM integrations, automated summarization, candidate review, compliance automation, and AI-driven internal tools. <em>If the project leverages AI to automate or enhance decision-making, it belongs here.</em></div>
-    </div>
-  </div>
-</div>
-<div class="tier-summary">
-  <h3>Project Difficulty Tiers</h3>
-  <div class="tier-summary-grid">
-    <div class="ts-card ts1"><div class="ts-label"><span class="tier-badge t1">Tier 1</span> Tactical</div><div class="ts-desc">Small, contained tasks with minimal impact. <em>Examples: minor visual updates, simple DAX fixes, adding a column, basic ad hoc data pulls.</em></div></div>
-    <div class="ts-card ts2"><div class="ts-label"><span class="tier-badge t2">Tier 2</span> Moderate</div><div class="ts-desc">Clear scope but limited cross-system impact. <em>Examples: adding a new KPI, modifying a dbt model, onboarding a small data source, fixing a defined data mismatch.</em></div></div>
-    <div class="ts-card ts3"><div class="ts-label"><span class="tier-badge t3">Tier 3</span> Complex</div><div class="ts-desc">Cross-functional or multi-layer impact (Snowflake → dbt → Power BI). <em>Examples: updating business logic affecting executive dashboards, onboarding a new acquisition, investigating root-cause metric discrepancies.</em></div></div>
-    <div class="ts-card ts4"><div class="ts-label"><span class="tier-badge t4">Tier 4</span> Strategic</div><div class="ts-desc">Architectural or firm-impact work with high visibility. <em>Examples: restructuring core fact tables, implementing orchestration tooling, redesigning KPI frameworks.</em></div></div>
-    <div class="ts-card ts5"><div class="ts-label"><span class="tier-badge t5">Tier 5</span> Transformational</div><div class="ts-desc">Firm-wide or future-facing initiatives that change how the organization operates. <em>Examples: enterprise AI implementations, platform redesigns, data governance overhauls.</em></div></div>
-  </div>
-</div>
 </div></div>
 
 <!-- ══════════════════════════════════════ -->
@@ -308,6 +274,13 @@
   <thead><tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Pillar</th><th>Impact</th><th>Completed Date</th></tr></thead>
   <tbody></tbody>
 </table>
+</div></div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: INFO                             -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-info" class="tab-content">
+<div class="content">
 <div class="pillar-summary">
   <h3>About the Data Pillars</h3>
   <div class="pillar-summary-grid">
