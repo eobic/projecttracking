@@ -31,6 +31,10 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 3. **Always update `lastModified`** on any project that was changed — set to today's date
 4. Commit and push to GitHub — the page updates automatically
 
+**Keeping filters in sync:**
+- The **Status filter** is dynamic — it automatically reads all unique status values from `projects.json` on page load. No HTML changes needed when a new status is introduced.
+- All other filters (Owner, Priority, Stakeholder, Pillar) are hardcoded in `index.html`. If a new value is introduced in `projects.json` that doesn't already exist as an option in the corresponding filter dropdown, update the dropdown in `index.html` to add it.
+
 `index.html` is layout/rendering only. It reads from `projects.json` on page load.
 
 ---

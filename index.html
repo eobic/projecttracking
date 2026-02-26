@@ -181,7 +181,7 @@
 <div class="filter-bar">
   <div><label>Owner</label><br><select id="f-fp-owner" onchange="applyFullFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
-  <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option><option>In Progress</option><option value="none">No Status</option></select></div>
+  <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option></select></div>
   <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="any">Has Stakeholder</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option></select></div>
   <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div><label>Tier</label><br><select id="f-fp-tier" onchange="applyFullFilters()"><option value="">All</option><option value="1">Tier 1 – Tactical</option><option value="2">Tier 2 – Moderate</option><option value="3">Tier 3 – Complex</option><option value="4">Tier 4 – Strategic</option><option value="5">Tier 5 – Transformational</option></select></div>
@@ -275,7 +275,7 @@
 <div id="tab-completed" class="tab-content">
 <div class="filter-bar">
   <div><label>Owner</label><br><select id="f-c-owner" onchange="applyCompletedFilters()"><option value="">All</option><option>Abdulrahman</option><option>Ervina</option></select></div>
-  <div><label>Pillar</label><br><select id="f-c-pillar" onchange="applyCompletedFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option></select></div>
+  <div><label>Pillar</label><br><select id="f-c-pillar" onchange="applyCompletedFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetCompletedFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
@@ -730,12 +730,30 @@ function renderCompletedCharts(completed){
   });
 }
 
+/* ── DYNAMIC STATUS FILTER ── */
+function buildStatusFilter(projects){
+  var statuses=[];
+  projects.forEach(function(p){
+    if(p.status&&statuses.indexOf(p.status)===-1)statuses.push(p.status);
+  });
+  statuses.sort();
+  var sel=document.getElementById('f-fp-status');
+  sel.innerHTML='<option value="">All</option>';
+  statuses.forEach(function(s){
+    sel.innerHTML+='<option value="'+s+'">'+s+'</option>';
+  });
+  if(projects.some(function(p){return !p.status;})){
+    sel.innerHTML+='<option value="none">No Status</option>';
+  }
+}
+
 /* ── INIT: fetch data and render everything ── */
 fetch('projects.json')
   .then(function(r){return r.json();})
   .then(function(data){
     document.getElementById('header-date').textContent=data.lastUpdated;
     document.getElementById('footer-date').textContent=data.lastUpdated;
+    buildStatusFilter(data.projects);
     renderFullTable(data.projects);
     renderCompletedTable(data.completed);
     renderFullStats(data.projects,data.completed);
