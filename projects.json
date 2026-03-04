@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Feb 27, 2026",
+  "lastUpdated": "Mar 4, 2026",
   "projects": [
     {"id":1,"name":"Validate Karbon_entities Table","pillar":"modeling","owners":["Ervina","Daniel"],"status":"Waiting","priority":"P1","stakeholder":"","due":"","dependencies":"Foundational","tier":null,"notes":"Cleared ~5k records. Daniel re-running analysis. Waiting to get confirmation on if we can activate the syncing of certain contact types from Karbon to NetSuite. Also waiting for Daniel to get back in office Mon 3/2.","lastModified":"Feb 26, 2026"},
     {"id":2,"name":"Update Core client_subsidiary Model","pillar":"modeling","owners":["Ervina","Daniel"],"status":"In Progress","priority":"P1","stakeholder":"","due":"","dependencies":"Depends on #1","tier":null,"notes":"Confirmed table logic with Tyson. The table should increase by rows for every client_subsidiary relationship. Additionally we will bring in the leadership_position_3 and leadership_position_4 fields from kpi_dimn_client to represent the CAS client owner and manager. We are holding off on adding operational logic around forcing the use of client owner/manager fields and CAS fields between office 3 and local offices.","lastModified":"Feb 26, 2026"},
@@ -56,6 +56,7 @@
     {"id":6,"name":"Ryan's Data Request (PDF IDs)","subtitle":"","owner":"Abdulrahman","pillar":"intake","date":"Feb 24","tier":null,"impact":"CFO data request. IDs in PDF format.","lastModified":"Feb 24, 2026"},
     {"id":7,"name":"PowerBI Bug: Sarah Lippled Client Owner (Amber)","subtitle":"","owner":"Abdulrahman","pillar":"modeling","date":"Feb 26","tier":null,"impact":"Sarah Lippled showing as client_owner on KPI report under Meridian, but she is not in that firm. Root cause: mismatching keys between the vw_fact_sales_reward table and the dim_subsidiary table because the PowerBI semantic model was pulling dim_subsidiary from sandbox but the actual vw_fact_sales_reward table was internally joining to dim_subsidiary in analytics causing mismatched keys.","lastModified":"Feb 26, 2026"},
     {"id":8,"name":"Office Prospecting Tool","subtitle":"","owner":"Abdulrahman","pillar":"ai","date":"Feb 26","tier":null,"impact":"AI tool for Noah (Corp Dev). Generates list of acquirable offices by state, filtering noisy data.","lastModified":"Feb 26, 2026"},
-    {"id":9,"name":"Pathlight Earnout Analysis","subtitle":"","owner":"Ervina","pillar":"intake","date":"Feb 26","tier":null,"impact":"Explained missing invoices in earnout statement.","lastModified":"Feb 26, 2026"}
+    {"id":9,"name":"Pathlight Earnout Analysis","subtitle":"","owner":"Ervina","pillar":"intake","date":"Feb 26","tier":null,"impact":"Explained missing invoices in earnout statement.","lastModified":"Feb 26, 2026"},
+    {"id":10,"name":"Data Request for Chase - Karbon Work Types, Task Types & Roles","subtitle":"","owner":"Abdulrahman","pillar":"intake","date":"Mar 4","tier":null,"impact":"Sent table of all work types, task types, and roles across all offices in the Karbon instance.","lastModified":"Mar 4, 2026"}
   ]
 }
