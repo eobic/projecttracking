@@ -15,7 +15,7 @@ The tracker is a JSON-driven system:
 - Last Modified column on both tables
 
 ### Next available project ID
-The highest current ID is **52**. Next new project should use ID **53**.
+The highest current ID is **53**. Next new project should use ID **54**.
 
 ### Next available completed ID
 The highest current completed ID is **10**. Next completed item should use ID **11**.
@@ -66,6 +66,7 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 | `owner` | string | Single owner name |
 | `pillar` | string | See valid values below |
 | `date` | string | Completion date, e.g. `"Feb 26"` |
+| `stakeholder` | string | Who requested it, or `""` |
 | `impact` | string | One-sentence description of what was delivered |
 | `lastModified` | string | Date record was last updated, e.g. `"Feb 26, 2026"`. Defaults to completion date if never edited. |
 
@@ -101,7 +102,7 @@ All project data lives in `projects.json`. When asked to add, update, or complet
 
 **priority:** `"P1"` | `"P2"` | `"P3"` | `"Future"` | `"Pipeline"`
 
-**stakeholder:** `"CFO"` | `"Amber"` | `"Brian"` | `"Jeff Dredge"` | `""` (empty = none)
+**stakeholder:** `"CFO"` | `"Amber"` | `"Brian"` | `"Jeff Dredge"` | `"Tyson"` | `""` (empty = none)
 
 **owners / owner:** `"Ervina"` | `"Abdulrahman"` | `"Daniel"`
 
