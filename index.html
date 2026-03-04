@@ -722,7 +722,7 @@ function buildStatusFilter(projects){
 }
 
 /* ── INIT: fetch data and render everything ── */
-fetch('projects.json')
+fetch('projects.json?v='+Date.now())
   .then(function(r){return r.json();})
   .then(function(data){
     document.getElementById('header-date').textContent=data.lastUpdated;
