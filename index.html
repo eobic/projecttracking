@@ -190,8 +190,7 @@
 </div>
 <div class="stat-strip">
   <div class="s-card"><div class="n" id="stat-fp-total">–</div><div class="l">Total</div></div>
-  <div class="s-card clickable" id="scard-ip" style="border-top:3px solid #6995FF" onclick="filterByStat('ip')" title="Click to filter by In Progress"><div class="n" style="color:#6995FF" id="stat-fp-ip">–</div><div class="l">In Progress</div></div>
-  <div class="s-card clickable" id="scard-ns" style="border-top:3px solid #8A8C8E" onclick="filterByStat('ns')" title="Click to filter by Not Started"><div class="n" style="color:#8A8C8E" id="stat-fp-ns">–</div><div class="l">Not Started</div></div>
+  <div id="status-scards" style="display:contents"></div>
   <div class="s-card clickable" id="scard-cp" style="border-top:3px solid #9FCEA8" onclick="filterByStat('cp')" title="Click to view Completed tab"><div class="n" style="color:#9FCEA8" id="stat-fp-cp">–</div><div class="l">Completed</div></div>
   <div class="s-card clickable" id="scard-sh" style="border-top:3px solid #DE6751" onclick="filterByStat('sh')" title="Click to filter by Stakeholder"><div class="n" style="color:#DE6751" id="stat-fp-sh">–</div><div class="l">Stakeholder</div></div>
 </div>
@@ -351,8 +350,9 @@ function applyFullFilters(){
   });
 
   /* update stat card active states */
-  document.getElementById('scard-ip').classList.toggle('stat-active',status==='In Progress');
-  document.getElementById('scard-ns').classList.toggle('stat-active',status==='none');
+  document.querySelectorAll('#status-scards .s-card[data-st-val]').forEach(function(card){
+    card.classList.toggle('stat-active',status===card.dataset.stVal);
+  });
   document.getElementById('scard-sh').classList.toggle('stat-active',cfo==='any');
 
   /* update workload row active states */
@@ -371,21 +371,17 @@ function resetFullFilters(){
 /* Stat card click handler */
 function filterByStat(type){
   if(type==='cp'){switchTab('completed');return;}
-  if(type==='ip'){
-    var sel=document.getElementById('f-fp-status');
-    sel.value=(sel.value==='In Progress')?'':'In Progress';
-    applyFullFilters();return;
-  }
-  if(type==='ns'){
-    var sel=document.getElementById('f-fp-status');
-    sel.value=(sel.value==='none')?'':'none';
-    applyFullFilters();return;
-  }
   if(type==='sh'){
     var sel=document.getElementById('f-fp-cfo');
     sel.value=(sel.value==='any')?'':'any';
     applyFullFilters();return;
   }
+}
+
+function filterByStatus(val){
+  var sel=document.getElementById('f-fp-status');
+  sel.value=(sel.value===val)?'':val;
+  applyFullFilters();
 }
 
 /* COMPLETED TAB FILTERS */
@@ -526,23 +522,73 @@ function renderCompletedTable(completed){
 }
 
 function renderFullStats(projects,completed){
-  var ip=projects.filter(function(p){return p.status==='In Progress';}).length;
-  var ns=projects.filter(function(p){return !p.status;}).length;
-  var sh=projects.filter(function(p){return p.stakeholder;}).length;
+  /* known status colors; unknowns get a fallback from the palette */
+  var STATUS_COLORS={'In Progress':'#3367D6','Waiting':'#E65100','Planned':'#9C27B0'};
+  var FALLBACK=['#0A9396','#2D6A4F','#264653','#C77DFF','#48CAE4'];
+  var fallbackIdx=0;
+
+  /* tally statuses */
+  var statusCounts={};
+  var noStatusCount=0;
+  projects.forEach(function(p){
+    if(p.status){statusCounts[p.status]=(statusCounts[p.status]||0)+1;}
+    else{noStatusCount++;}
+  });
+
+  /* sort: In Progress first, then alpha */
+  var statuses=Object.keys(statusCounts).sort(function(a,b){
+    if(a==='In Progress')return -1;if(b==='In Progress')return 1;
+    return a.localeCompare(b);
+  });
+
+  /* assign colors once so bar and cards are consistent */
+  var statusColorMap={};
+  statuses.forEach(function(s){
+    statusColorMap[s]=STATUS_COLORS[s]||FALLBACK[fallbackIdx++%FALLBACK.length];
+  });
+
+  /* build dynamic status KPI cards */
+  var cardsHtml='';
+  statuses.forEach(function(s){
+    var color=statusColorMap[s];
+    var safeId='scard-st-'+s.replace(/\W+/g,'-').toLowerCase();
+    cardsHtml+='<div class="s-card clickable" id="'+safeId+'" data-st-val="'+esc(s)+'" style="border-top:3px solid '+color+'" onclick="filterByStatus(\''+s.replace(/\\/g,'\\\\').replace(/'/g,'\\\'')+'\')" title="Click to filter by '+esc(s)+'">';
+    cardsHtml+='<div class="n" style="color:'+color+'">'+statusCounts[s]+'</div>';
+    cardsHtml+='<div class="l">'+esc(s)+'</div></div>';
+  });
+  if(noStatusCount>0){
+    cardsHtml+='<div class="s-card clickable" id="scard-ns" data-st-val="none" style="border-top:3px solid #8A8C8E" onclick="filterByStatus(\'none\')" title="Click to filter by Not Started">';
+    cardsHtml+='<div class="n" style="color:#8A8C8E">'+noStatusCount+'</div>';
+    cardsHtml+='<div class="l">Not Started</div></div>';
+  }
+  document.getElementById('status-scards').innerHTML=cardsHtml;
+
+  /* static cards */
   document.getElementById('stat-fp-total').textContent=projects.length;
-  document.getElementById('stat-fp-ip').textContent=ip;
-  document.getElementById('stat-fp-ns').textContent=ns;
   document.getElementById('stat-fp-cp').textContent=completed.length;
-  document.getElementById('stat-fp-sh').textContent=sh;
+  document.getElementById('stat-fp-sh').textContent=projects.filter(function(p){return p.stakeholder;}).length;
+
+  /* status bar — dynamic */
   var total=projects.length;
-  var ipPct=Math.round(ip/total*100);
-  var nsPct=100-ipPct;
-  document.getElementById('fp-status-bar').innerHTML=
-    '<div class="status-seg seg-ip" style="width:'+ipPct+'%">'+ip+' In Progress</div>'+
-    '<div class="status-seg seg-ns" style="width:'+nsPct+'%">'+ns+' Not Started</div>';
-  document.getElementById('fp-status-legend').innerHTML=
-    '<div class="legend-item"><div class="legend-dot ip"></div>In Progress ('+ip+')</div>'+
-    '<div class="legend-item"><div class="legend-dot ns"></div>Not Started ('+ns+')</div>';
+  if(!total)return;
+  var barHtml='',legendHtml='';
+  statuses.forEach(function(s){
+    var color=statusColorMap[s];
+    var pct=Math.round(statusCounts[s]/total*100);
+    if(pct>0){
+      barHtml+='<div class="status-seg" style="background:'+color+';width:'+pct+'%">'+statusCounts[s]+' '+esc(s)+'</div>';
+      legendHtml+='<div class="legend-item"><div class="legend-dot" style="background:'+color+'"></div>'+esc(s)+' ('+statusCounts[s]+')</div>';
+    }
+  });
+  if(noStatusCount>0){
+    var nsPct=Math.round(noStatusCount/total*100);
+    if(nsPct>0){
+      barHtml+='<div class="status-seg" style="background:#C7C9CB;color:#39393A;width:'+nsPct+'%">'+noStatusCount+' Not Started</div>';
+      legendHtml+='<div class="legend-item"><div class="legend-dot" style="background:#C7C9CB"></div>Not Started ('+noStatusCount+')</div>';
+    }
+  }
+  document.getElementById('fp-status-bar').innerHTML=barHtml;
+  document.getElementById('fp-status-legend').innerHTML=legendHtml;
 }
 
 function renderFullCharts(projects){
