@@ -241,6 +241,7 @@
 <div class="filter-bar">
   <div><label>Owner</label><br><select id="f-c-owner" onchange="applyCompletedFilters()"><option value="">All</option><option>Abdulrahman</option><option>Ervina</option></select></div>
   <div><label>Pillar</label><br><select id="f-c-pillar" onchange="applyCompletedFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-c-stakeholder" onchange="applyCompletedFilters()"><option value="">All</option><option>Amber</option><option>Chase</option><option>Mike</option><option>Tyson</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetCompletedFilters()">Reset</button></div>
 </div>
 <div class="stat-strip">
@@ -389,12 +390,14 @@ var completedDateFilter='';
 
 function applyCompletedFilters(){
   var owner=document.getElementById('f-c-owner').value,
-      pillar=document.getElementById('f-c-pillar').value;
+      pillar=document.getElementById('f-c-pillar').value,
+      stakeholder=document.getElementById('f-c-stakeholder').value;
 
   document.querySelectorAll('#completed-table tbody tr[data-cowner]').forEach(function(r){
     var s=true;
     if(owner&&r.dataset.cowner!==owner)s=false;
     if(pillar&&r.dataset.cpillar!==pillar)s=false;
+    if(stakeholder&&r.dataset.cstakeholder!==stakeholder)s=false;
     if(completedDateFilter&&r.dataset.cdate!==completedDateFilter)s=false;
     r.classList.toggle('hidden',!s);
   });
@@ -406,7 +409,7 @@ function applyCompletedFilters(){
 }
 
 function resetCompletedFilters(){
-  ['f-c-owner','f-c-pillar'].forEach(function(id){document.getElementById(id).value=''});
+  ['f-c-owner','f-c-pillar','f-c-stakeholder'].forEach(function(id){document.getElementById(id).value=''});
   completedDateFilter='';
   applyCompletedFilters();
 }
@@ -510,12 +513,12 @@ function renderCompletedTable(completed){
     var nameCell=c.subtitle?
       esc(c.name)+'<br><span style="font-size:11px;color:#888">'+esc(c.subtitle)+'</span>':
       esc(c.name);
-    return '<tr data-cowner="'+esc(c.owner)+'" data-cpillar="'+c.pillar+'" data-cdate="'+esc(c.date)+'">'+
+    return '<tr data-cowner="'+esc(c.owner)+'" data-cpillar="'+c.pillar+'" data-cdate="'+esc(c.date)+'" data-cstakeholder="'+esc(c.stakeholder||'')+'">'+
       '<td class="id">'+c.id+'</td>'+
       '<td>'+nameCell+'</td>'+
       '<td><span class="owner-badge '+(OWNER_CLASS[c.owner]||'')+'">'+esc(c.owner)+'</span></td>'+
       '<td>'+pillarTag(c.pillar)+'</td>'+
-      '<td>'+esc(c.stakeholder||'')+'</td>'+
+      '<td>'+stakeholderBadge(c.stakeholder)+'</td>'+
       '<td class="notes">'+esc(c.impact)+'</td>'+
       '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(c.lastModified||c.date||'')+'</td>'+
     '</tr>';
