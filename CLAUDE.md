@@ -18,7 +18,7 @@ The tracker is a JSON-driven system:
 The highest current ID is **61**. Next new project should use ID **62**.
 
 ### Next available completed ID
-The highest current completed ID is **15**. Next completed item should use ID **16**.
+The highest current completed ID is **16**. Next completed item should use ID **17**.
 
 ---
 
