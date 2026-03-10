@@ -15,10 +15,10 @@ The tracker is a JSON-driven system:
 - Last Modified column on both tables
 
 ### Next available project ID
-The highest current ID is **61**. Next new project should use ID **62**.
+The highest current ID is **62**. Next new project should use ID **63**.
 
 ### Next available completed ID
-The highest current completed ID is **16**. Next completed item should use ID **17**.
+The highest current completed ID is **17**. Next completed item should use ID **18**.
 
 ---
 
