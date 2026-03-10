@@ -90,7 +90,7 @@
   tbody tr.hidden{display:none}
   td.id{text-align:center;font-weight:600;color:#8A8C8E;width:32px}
   .st{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;white-space:nowrap}
-  .st.ip{background:#E8F0FE;color:#3367D6}.st.wt{background:#FFF3E0;color:#E65100}.st.cp{background:#E6F4EA;color:#1B7A2E}
+  .st.ip{background:#E8F0FE;color:#3367D6}.st.wt{background:#FFF3E0;color:#E65100}.st.cp{background:#E6F4EA;color:#1B7A2E}.st.oh{background:#F3E8FD;color:#6A0DAD}.st.pl{background:#FFF9E6;color:#856404}
   .owner-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600}
   .owner-badge.ervina{background:#E8F0FE;color:#1A4D8F}.owner-badge.daniel{background:#FDECEA;color:#783534}.owner-badge.abdul{background:#E6F4EA;color:#1B7A2E}
   .collab-tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:600;background:#F3E8FD;color:#5E35B1;margin-left:4px}
@@ -455,6 +455,8 @@ function ownerBadges(owners){
 function statusBadge(status){
   if(status==='In Progress')return '<span class="st ip">In Progress</span>';
   if(status==='Waiting')return '<span class="st wt">Waiting</span>';
+  if(status==='On Hold')return '<span class="st oh">On Hold</span>';
+  if(status==='Planned')return '<span class="st pl">Planned</span>';
   return '';
 }
 
