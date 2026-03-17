@@ -190,12 +190,21 @@
   .btn-save{font-family:Arial;font-size:13px;font-weight:700;padding:8px 22px;border:none;border-radius:5px;background:#171847;color:#FFF;cursor:pointer;transition:background .2s}
   .btn-save:hover{background:#2a2e6e}
   .form-error{background:#FDECEA;color:#783534;font-size:12px;padding:8px 12px;border-radius:5px;margin-top:4px;display:none}
-  .file-status{font-size:11px;color:#8A8C8E;display:flex;align-items:center;gap:6px}
-  .file-status.connected{color:#1B7A2E}
-  .file-dot{width:8px;height:8px;border-radius:50%;background:#C7C9CB;display:inline-block}
-  .file-dot.connected{background:#1B7A2E}
   .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(12px);background:#171847;color:#FFF;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:2000}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  /* ── DELETE BUTTON ── */
+  .del-btn{background:none;border:none;cursor:pointer;color:#C7C9CB;font-size:15px;padding:2px 5px;border-radius:3px;line-height:1;transition:color .15s,background .15s}
+  .del-btn:hover{color:#c0392b;background:#FDECEA}
+  /* ── CHANGE LOG ── */
+  .log-tab.active{border-bottom-color:#E65100}
+  .log-empty{text-align:center;padding:48px 20px;color:#8A8C8E;font-size:13px}
+  .log-entry-action{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;white-space:nowrap}
+  .log-entry-action.added{background:#E6F4EA;color:#1B7A2E}
+  .log-entry-action.deleted{background:#FDECEA;color:#783534}
+  .log-ts{font-size:11px;color:#8A8C8E;white-space:nowrap}
+  .log-detail{font-size:11px;color:#6B6F82;line-height:1.45}
+  .log-clear-btn{font-family:Arial;font-size:11px;padding:5px 12px;background:#F5F6F4;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#8A8C8E;font-weight:600}
+  .log-clear-btn:hover{background:#FDECEA;color:#783534;border-color:#FDECEA}
 </style>
 </head>
 <body>
@@ -212,6 +221,7 @@
   <button class="tab-btn fp-tab active" data-tab="full" onclick="switchTab('full')">Full Project View</button>
   <button class="tab-btn c-tab" data-tab="completed" onclick="switchTab('completed')">Completed</button>
   <button class="tab-btn" data-tab="info" onclick="switchTab('info')">Info</button>
+  <button class="tab-btn log-tab" data-tab="log" onclick="switchTab('log')">Change Log</button>
 </div>
 
 <!-- ══════════════════════════════════════ -->
@@ -268,6 +278,7 @@
     <th onclick="sortFullTable(9)">Dependencies</th>
     <th onclick="sortFullTable(10)">Notes</th>
     <th onclick="sortFullTable(11)">Last Modified</th>
+    <th></th>
   </tr></thead>
   <tbody></tbody>
 </table>
@@ -356,6 +367,32 @@
   </div>
 </div>
 </div></div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB: CHANGE LOG                       -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-log" class="tab-content">
+<div class="content">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+    <div>
+      <h2 style="font-size:15px;font-weight:700;color:#171847;margin-bottom:3px">Change Log</h2>
+      <div style="font-size:12px;color:#8A8C8E">All project additions and deletions made through this interface, stored in your browser.</div>
+    </div>
+    <button class="log-clear-btn" onclick="clearLog()">Clear Log</button>
+  </div>
+  <div id="log-empty" class="log-empty" style="display:none">No changes logged yet. Add or delete a project to see entries here.</div>
+  <table id="log-table" style="display:none">
+    <thead><tr>
+      <th>Timestamp</th>
+      <th>Action</th>
+      <th style="width:36px">#</th>
+      <th>Project Name</th>
+      <th>Details</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+</div>
 
 <div class="footer">PAG Data Platform &middot; Last updated <span id="footer-date"></span> &middot; v2</div>
 
@@ -470,10 +507,6 @@
       </form>
     </div>
     <div class="modal-footer">
-      <div class="file-status" id="file-status">
-        <span class="file-dot" id="file-dot"></span>
-        <span id="file-status-text">Not connected to projects.json</span>
-      </div>
       <div class="modal-footer-right">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
         <button class="btn-save" onclick="saveNewProject()">Save Project</button>
@@ -667,6 +700,7 @@ function renderFullTable(projects){
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
       '<td class="notes">'+esc(p.notes)+'</td>'+
       '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(p.lastModified||'')+'</td>'+
+      '<td style="text-align:center"><button class="del-btn" onclick="deleteProject('+p.id+')" title="Delete project #'+p.id+'">&#x2715;</button></td>'+
     '</tr>';
   }).join('');
   document.querySelector('#full-table tbody').innerHTML=rows;
@@ -938,14 +972,35 @@ function buildStatusFilter(projects){
 
 /* ── GLOBAL STATE ── */
 var projectsData=null;
-var fileHandle=null;
+var LS_KEY='pag-projects-data';
+var LOG_KEY='pag-change-log';
+var changeLog=[];
 
 /* ── INIT: fetch data and render everything ── */
 fetch('projects.json?v='+Date.now())
   .then(function(r){return r.json();})
-  .then(function(data){
+  .then(function(fetched){
+    /* Use localStorage if it has newer data (user-added projects),
+       otherwise use the fetched file (Claude/git pushes). */
+    var stored=null;
+    try{var s=localStorage.getItem(LS_KEY);if(s)stored=JSON.parse(s);}catch(e){}
+    var data=fetched;
+    if(stored){
+      /* Compare by project count + lastUpdated to decide which wins */
+      var fetchedDate=new Date(fetched.lastUpdated||0);
+      var storedDate=new Date(stored.lastUpdated||0);
+      if(storedDate>=fetchedDate&&stored.projects.length>=fetched.projects.length){
+        data=stored;
+      } else {
+        /* Server data is newer — discard stale localStorage */
+        localStorage.removeItem(LS_KEY);
+      }
+    }
     projectsData=data;
     renderAll(data);
+    /* Load change log from localStorage */
+    try{var l=localStorage.getItem(LOG_KEY);if(l)changeLog=JSON.parse(l);}catch(e){}
+    renderChangeLog();
   })
   .catch(function(e){console.error('Failed to load projects.json:',e);});
 
@@ -1023,13 +1078,7 @@ function showToast(msg){
   setTimeout(function(){t.classList.remove('show');},3500);
 }
 
-function setFileStatus(connected,label){
-  document.getElementById('file-dot').className='file-dot'+(connected?' connected':'');
-  document.getElementById('file-status').className='file-status'+(connected?' connected':'');
-  document.getElementById('file-status-text').textContent=label;
-}
-
-async function saveNewProject(){
+function saveNewProject(){
   /* Validate required fields */
   var name=document.getElementById('fp-name').value.trim();
   var pillar=document.getElementById('fp-pillar').value;
@@ -1041,41 +1090,9 @@ async function saveNewProject(){
   if(!priority){showFormError('Please select a priority.');return;}
   if(owners.length===0){showFormError('Please select at least one owner.');return;}
 
-  /* Acquire file handle if we don\'t have one */
-  if(!fileHandle){
-    if(!window.showOpenFilePicker){
-      showFormError('Your browser does not support the File System API. Please use Chrome or Edge.');
-      return;
-    }
-    try{
-      var picks=await window.showOpenFilePicker({
-        types:[{description:'JSON file',accept:{'application/json':['.json']}}],
-        multiple:false
-      });
-      fileHandle=picks[0];
-      setFileStatus(true,'Connected: '+fileHandle.name);
-    }catch(e){
-      if(e.name!=='AbortError')showFormError('Could not open file. Please try again.');
-      return;
-    }
-  }
-
-  /* Read latest file content */
-  var file,text,data;
-  try{
-    file=await fileHandle.getFile();
-    text=await file.text();
-    data=JSON.parse(text);
-  }catch(e){
-    showFormError('Could not read projects.json. Re-select the file and try again.');
-    fileHandle=null;
-    setFileStatus(false,'Not connected to projects.json');
-    return;
-  }
-
   /* Determine next ID */
   var maxId=0;
-  data.projects.forEach(function(p){if(p.id>maxId)maxId=p.id;});
+  projectsData.projects.forEach(function(p){if(p.id>maxId)maxId=p.id;});
   var newId=maxId+1;
 
   /* Build new project object */
@@ -1095,24 +1112,89 @@ async function saveNewProject(){
     notes:document.getElementById('fp-notes').value.trim(),
     lastModified:today
   };
-  data.projects.push(newProject);
-  data.lastUpdated=today;
+  projectsData.projects.push(newProject);
+  projectsData.lastUpdated=today;
 
-  /* Write back to file */
-  try{
-    var writable=await fileHandle.createWritable();
-    await writable.write(JSON.stringify(data,null,2));
-    await writable.close();
-  }catch(e){
-    showFormError('Could not write to file. Check that it is not open in another program.');
-    return;
-  }
+  /* Persist to localStorage so it survives page refresh */
+  try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
 
-  /* Update in-memory state and re-render */
-  projectsData=data;
-  renderAll(data);
+  /* Log the addition */
+  var pillarLabels={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch',ai:'AI Pipeline'};
+  logChange('Added',newProject,'Pillar: '+(pillarLabels[pillar]||pillar)+' | Priority: '+priority+' | Owner: '+owners.join(', ')+(newProject.status?' | Status: '+newProject.status:''));
+
+  renderAll(projectsData);
   closeModal();
   showToast('Project #'+newId+' "'+name+'" added successfully!');
+}
+
+/* ── CHANGE LOG ── */
+function logChange(action,project,details){
+  changeLog.unshift({
+    timestamp:new Date().toISOString(),
+    action:action,
+    id:project.id,
+    name:project.name,
+    details:details||''
+  });
+  try{localStorage.setItem(LOG_KEY,JSON.stringify(changeLog));}catch(e){}
+  renderChangeLog();
+}
+
+function formatTimestamp(iso){
+  var d=new Date(iso);
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var h=d.getHours(),m=d.getMinutes(),ampm=h>=12?'PM':'AM';
+  h=h%12||12;
+  return months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()+' at '+h+':'+(m<10?'0':'')+m+' '+ampm;
+}
+
+function renderChangeLog(){
+  var tbody=document.querySelector('#log-table tbody');
+  var empty=document.getElementById('log-empty');
+  var table=document.getElementById('log-table');
+  if(!changeLog||changeLog.length===0){
+    empty.style.display='block';
+    table.style.display='none';
+    return;
+  }
+  empty.style.display='none';
+  table.style.display='';
+  tbody.innerHTML=changeLog.map(function(e){
+    var actionCls=e.action==='Added'?'added':'deleted';
+    return '<tr>'+
+      '<td class="log-ts">'+formatTimestamp(e.timestamp)+'</td>'+
+      '<td><span class="log-entry-action '+actionCls+'">'+esc(e.action)+'</span></td>'+
+      '<td class="id">'+e.id+'</td>'+
+      '<td style="font-size:13px;font-weight:600;color:#39393A">'+esc(e.name)+'</td>'+
+      '<td class="log-detail">'+esc(e.details)+'</td>'+
+    '</tr>';
+  }).join('');
+}
+
+function clearLog(){
+  if(!confirm('Clear the entire change log? This cannot be undone.'))return;
+  changeLog=[];
+  try{localStorage.removeItem(LOG_KEY);}catch(e){}
+  renderChangeLog();
+  showToast('Change log cleared.');
+}
+
+/* ── DELETE PROJECT ── */
+function deleteProject(id){
+  var project=projectsData.projects.find(function(p){return p.id===id;});
+  if(!project)return;
+  if(!confirm('Delete project #'+id+' "'+project.name+'"?\n\nThis will be logged in the Change Log but removed from the active project list.'))return;
+
+  var pillarLabels={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch',ai:'AI Pipeline'};
+  var details='Was: Pillar: '+(pillarLabels[project.pillar]||project.pillar)+' | Priority: '+project.priority+' | Owner: '+project.owners.join(', ')+(project.status?' | Status: '+project.status:'');
+
+  projectsData.projects=projectsData.projects.filter(function(p){return p.id!==id;});
+  projectsData.lastUpdated=formatTodayDate();
+
+  try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
+  logChange('Deleted',project,details);
+  renderAll(projectsData);
+  showToast('Project #'+id+' deleted and logged.');
 }
 </script>
 </body>
