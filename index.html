@@ -206,8 +206,15 @@
   .log-entry-action.edited{background:#E8F0FE;color:#3367D6}
   .log-ts{font-size:11px;color:#8A8C8E;white-space:nowrap}
   .log-detail{font-size:11px;color:#6B6F82;line-height:1.45}
-  .log-clear-btn{font-family:Arial;font-size:11px;padding:5px 12px;background:#F5F6F4;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#8A8C8E;font-weight:600}
-  .log-clear-btn:hover{background:#FDECEA;color:#783534;border-color:#FDECEA}
+  .new-value-wrap{margin-top:6px;display:none}
+  .new-value-input{width:100%;font-family:Arial;font-size:12px;padding:6px 10px;border:1px dashed #6995FF;border-radius:5px;color:#39393A;background:#F8FBFF}
+  .new-value-input:focus{outline:none;border-color:#3367D6;box-shadow:0 0 0 3px rgba(105,149,255,.15)}
+  .log-date-filter{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .log-date-filter label{font-size:11px;font-weight:700;color:#6B6F82;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+  .log-date-input{font-family:Arial;font-size:12px;padding:5px 8px;border:1px solid #ddd;border-radius:4px;color:#39393A}
+  .log-date-input:focus{outline:none;border-color:#6995FF}
+  .log-reset-btn{font-family:Arial;font-size:11px;padding:5px 12px;background:#F5F6F4;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#8A8C8E;font-weight:600}
+  .log-reset-btn:hover{background:#e8e8e8}
 </style>
 </head>
 <body>
@@ -235,7 +242,7 @@
   <div><label>Owner</label><br><select id="f-fp-owner" onchange="applyFullFilters()"><option value="">All</option><option>Ervina</option><option>Daniel</option><option>Abdulrahman</option></select></div>
   <div><label>Priority</label><br><select id="f-fp-priority" onchange="applyFullFilters()"><option value="">All</option><option value="P1">Priority 1</option><option value="P2">Priority 2</option><option value="P3">Priority 3</option><option value="Future">Future</option><option value="Pipeline">Pipeline</option></select></div>
   <div><label>Status</label><br><select id="f-fp-status" onchange="applyFullFilters()"><option value="">All</option></select></div>
-  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="any">Has Stakeholder</option><option value="CFO">CFO</option><option value="Amber">Amber</option><option value="Brian">Brian</option><option value="Jeff Dredge">Jeff Dredge</option><option value="Operations Team">Operations Team</option><option value="Tyson">Tyson</option><option value="Tyson Chapman">Tyson Chapman</option><option value="Mike">Mike</option><option value="Mike, Chase">Mike, Chase</option><option value="Chris Schafer">Chris Schafer</option><option value="Corp Dev Team">Corp Dev Team</option></select></div>
+  <div><label>Stakeholder</label><br><select id="f-fp-cfo" onchange="applyFullFilters()"><option value="">All</option><option value="any">Has Stakeholder</option></select></div>
   <div><label>Pillar</label><br><select id="f-fp-pillar" onchange="applyFullFilters()"><option value="">All</option><option value="intake">Data Intake</option><option value="reporting">Reporting</option><option value="modeling">Data Modeling</option><option value="gov">Gov &amp; Architecture</option><option value="ai">AI Pipeline</option></select></div>
   <div><label>Tier</label><br><select id="f-fp-tier" onchange="applyFullFilters()"><option value="">All</option><option value="1">Tier 1 – Tactical</option><option value="2">Tier 2 – Moderate</option><option value="3">Tier 3 – Complex</option><option value="4">Tier 4 – Strategic</option><option value="5">Tier 5 – Transformational</option></select></div>
   <div style="align-self:flex-end"><button class="reset-btn" onclick="resetFullFilters()">Reset</button></div>
@@ -376,12 +383,16 @@
 <!-- ══════════════════════════════════════ -->
 <div id="tab-log" class="tab-content">
 <div class="content">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-    <div>
-      <h2 style="font-size:15px;font-weight:700;color:#171847;margin-bottom:3px">Change Log</h2>
-      <div style="font-size:12px;color:#8A8C8E">All project additions and deletions made through this interface, stored in your browser.</div>
+  <div style="margin-bottom:18px">
+    <h2 style="font-size:15px;font-weight:700;color:#171847;margin-bottom:3px">Change Log</h2>
+    <div style="font-size:12px;color:#8A8C8E;margin-bottom:14px">All project additions, edits, and deletions made through this interface, stored in your browser.</div>
+    <div class="log-date-filter">
+      <label>From</label>
+      <input type="date" id="log-date-from" class="log-date-input" onchange="renderChangeLog()">
+      <label>To</label>
+      <input type="date" id="log-date-to" class="log-date-input" onchange="renderChangeLog()">
+      <button class="log-reset-btn" onclick="resetLogFilter()">Reset</button>
     </div>
-    <button class="log-clear-btn" onclick="clearLog()">Clear Log</button>
   </div>
   <div id="log-empty" class="log-empty" style="display:none">No changes logged yet. Add or delete a project to see entries here.</div>
   <table id="log-table" style="display:none">
@@ -454,13 +465,10 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Status</label>
-            <select id="fp-status" class="form-select">
-              <option value="">Not Started</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Waiting">Waiting</option>
-              <option value="On Hold">On Hold</option>
-              <option value="Planned">Planned</option>
-            </select>
+            <select id="fp-status" class="form-select" onchange="handleNewOption(this,'fp-status-new-wrap')"></select>
+            <div class="new-value-wrap" id="fp-status-new-wrap">
+              <input type="text" id="fp-status-new" class="new-value-input" placeholder="Type new status name...">
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">Project Tier</label>
@@ -479,16 +487,10 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Stakeholder</label>
-            <select id="fp-stakeholder" class="form-select">
-              <option value="">None</option>
-              <option value="CFO">CFO</option>
-              <option value="Amber">Amber</option>
-              <option value="Brian">Brian</option>
-              <option value="Tyson">Tyson</option>
-              <option value="Mike">Mike</option>
-              <option value="Jeff Dredge">Jeff Dredge</option>
-              <option value="Chase">Chase</option>
-            </select>
+            <select id="fp-stakeholder" class="form-select" onchange="handleNewOption(this,'fp-stakeholder-new-wrap')"></select>
+            <div class="new-value-wrap" id="fp-stakeholder-new-wrap">
+              <input type="text" id="fp-stakeholder-new" class="new-value-input" placeholder="Type new stakeholder name...">
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">Due</label>
@@ -657,11 +659,13 @@ function ownerBadges(owners){
 }
 
 function statusBadge(status){
+  if(!status)return '';
   if(status==='In Progress')return '<span class="st ip">In Progress</span>';
   if(status==='Waiting')return '<span class="st wt">Waiting</span>';
   if(status==='On Hold')return '<span class="st oh">On Hold</span>';
   if(status==='Planned')return '<span class="st pl">Planned</span>';
-  return '';
+  if(status==='Cancelled')return '<span class="st" style="background:#F5F6F4;color:#6B6F82;border:1px solid #ddd">'+esc(status)+'</span>';
+  return '<span class="st" style="background:#EDE9FE;color:#5B21B6">'+esc(status)+'</span>';
 }
 
 function priorityBadge(priority){
@@ -974,13 +978,82 @@ function buildStatusFilter(projects){
   }
 }
 
+function buildStakeholderFilter(projects){
+  /* Collect all unique stakeholders from data + custom list */
+  var seen={};
+  var all=BASE_STAKEHOLDERS.concat(customStakeholders);
+  projects.forEach(function(p){if(p.stakeholder)all.push(p.stakeholder);});
+  var unique=[];
+  all.forEach(function(s){if(s&&!seen[s]){seen[s]=true;unique.push(s);}});
+  unique.sort();
+  var sel=document.getElementById('f-fp-cfo');
+  sel.innerHTML='<option value="">All</option><option value="any">Has Stakeholder</option>';
+  unique.forEach(function(s){
+    sel.innerHTML+='<option value="'+esc(s)+'">'+esc(s)+'</option>';
+  });
+}
+
+function allStatuses(){
+  var seen={};
+  var all=BASE_STATUSES.concat(customStatuses);
+  if(projectsData)projectsData.projects.forEach(function(p){if(p.status)all.push(p.status);});
+  var unique=[];
+  all.forEach(function(s){if(s&&!seen[s]){seen[s]=true;unique.push(s);}});
+  return unique.sort();
+}
+
+function allStakeholders(){
+  var seen={};
+  var all=BASE_STAKEHOLDERS.concat(customStakeholders);
+  if(projectsData)projectsData.projects.forEach(function(p){if(p.stakeholder)all.push(p.stakeholder);});
+  var unique=[];
+  all.forEach(function(s){if(s&&!seen[s]){seen[s]=true;unique.push(s);}});
+  return unique.sort();
+}
+
+function buildStatusSelect(currentVal){
+  var sel=document.getElementById('fp-status');
+  sel.innerHTML='<option value="">Not Started</option>';
+  allStatuses().forEach(function(s){
+    sel.innerHTML+='<option value="'+esc(s)+'"'+(s===currentVal?' selected':'')+'>'+esc(s)+'</option>';
+  });
+  sel.innerHTML+='<option value="__new__">+ Add new status...</option>';
+  if(currentVal)sel.value=currentVal;
+}
+
+function buildStakeholderSelect(currentVal){
+  var sel=document.getElementById('fp-stakeholder');
+  sel.innerHTML='<option value="">None</option>';
+  allStakeholders().forEach(function(s){
+    sel.innerHTML+='<option value="'+esc(s)+'"'+(s===currentVal?' selected':'')+'>'+esc(s)+'</option>';
+  });
+  sel.innerHTML+='<option value="__new__">+ Add new stakeholder...</option>';
+  if(currentVal)sel.value=currentVal;
+}
+
+function handleNewOption(sel,wrapId){
+  var wrap=document.getElementById(wrapId);
+  wrap.style.display=sel.value==='__new__'?'block':'none';
+  if(sel.value==='__new__'){
+    var inputId=wrapId.replace('-wrap','');
+    var inp=document.getElementById(inputId);
+    if(inp){inp.value='';inp.focus();}
+  }
+}
+
 /* ── GLOBAL STATE ── */
 var projectsData=null;
 var LS_KEY='pag-projects-data';
 var LOG_KEY='pag-change-log';
+var CUSTOM_STATUS_KEY='pag-custom-statuses';
+var CUSTOM_SH_KEY='pag-custom-stakeholders';
 var changeLog=[];
 var modalMode='add';
 var editingId=null;
+var customStatuses=[];
+var customStakeholders=[];
+var BASE_STATUSES=['In Progress','Waiting','On Hold','Planned','Cancelled'];
+var BASE_STAKEHOLDERS=['CFO','Amber','Brian','Tyson','Mike','Jeff Dredge','Chase'];
 
 /* ── INIT: fetch data and render everything ── */
 fetch('projects.json?v='+Date.now())
@@ -1003,6 +1076,9 @@ fetch('projects.json?v='+Date.now())
       }
     }
     projectsData=data;
+    /* Load custom values */
+    try{var cs=localStorage.getItem(CUSTOM_STATUS_KEY);if(cs)customStatuses=JSON.parse(cs);}catch(e){}
+    try{var csh=localStorage.getItem(CUSTOM_SH_KEY);if(csh)customStakeholders=JSON.parse(csh);}catch(e){}
     renderAll(data);
     /* Load change log from localStorage */
     try{var l=localStorage.getItem(LOG_KEY);if(l)changeLog=JSON.parse(l);}catch(e){}
@@ -1014,6 +1090,7 @@ function renderAll(data){
   document.getElementById('header-date').textContent=data.lastUpdated;
   document.getElementById('footer-date').textContent=data.lastUpdated;
   buildStatusFilter(data.projects);
+  buildStakeholderFilter(data.projects);
   renderFullTable(data.projects);
   renderCompletedTable(data.completed);
   renderFullStats(data.projects,data.completed);
@@ -1038,6 +1115,13 @@ var TIER_HINTS={
   '5':'Transformational – Firm-wide, future-facing initiatives that change how the organization operates.'
 };
 
+function resetNewValueInputs(){
+  document.getElementById('fp-status-new-wrap').style.display='none';
+  document.getElementById('fp-status-new').value='';
+  document.getElementById('fp-stakeholder-new-wrap').style.display='none';
+  document.getElementById('fp-stakeholder-new').value='';
+}
+
 function openAddModal(){
   modalMode='add';
   editingId=null;
@@ -1045,6 +1129,9 @@ function openAddModal(){
   document.getElementById('modal-save-btn').textContent='Save Project';
   document.getElementById('modal-delete-btn').style.display='none';
   document.getElementById('add-project-form').reset();
+  buildStatusSelect('');
+  buildStakeholderSelect('');
+  resetNewValueInputs();
   document.getElementById('pillar-hint').textContent='';
   document.getElementById('tier-hint').textContent='';
   document.getElementById('form-error').style.display='none';
@@ -1065,9 +1152,10 @@ function openEditModal(id){
   document.getElementById('fp-name').value=p.name||'';
   document.getElementById('fp-pillar').value=p.pillar||'';
   document.getElementById('fp-priority').value=p.priority||'';
-  document.getElementById('fp-status').value=p.status||'';
+  buildStatusSelect(p.status||'');
   document.getElementById('fp-tier').value=p.tier||'';
-  document.getElementById('fp-stakeholder').value=p.stakeholder||'';
+  buildStakeholderSelect(p.stakeholder||'');
+  resetNewValueInputs();
   document.getElementById('fp-due').value=p.due||'';
   document.getElementById('fp-deps').value=p.dependencies||'';
   document.getElementById('fp-notes').value=p.notes||'';
@@ -1122,13 +1210,17 @@ function showToast(msg){
 
 function readFormValues(){
   var tierVal=document.getElementById('fp-tier').value;
+  var statusVal=document.getElementById('fp-status').value;
+  if(statusVal==='__new__')statusVal=document.getElementById('fp-status-new').value.trim();
+  var shVal=document.getElementById('fp-stakeholder').value;
+  if(shVal==='__new__')shVal=document.getElementById('fp-stakeholder-new').value.trim();
   return {
     name:document.getElementById('fp-name').value.trim(),
     pillar:document.getElementById('fp-pillar').value,
     priority:document.getElementById('fp-priority').value,
     owners:Array.from(document.querySelectorAll('input[name="fp-owner"]:checked')).map(function(cb){return cb.value;}),
-    status:document.getElementById('fp-status').value,
-    stakeholder:document.getElementById('fp-stakeholder').value,
+    status:statusVal,
+    stakeholder:shVal,
     due:document.getElementById('fp-due').value.trim(),
     dependencies:document.getElementById('fp-deps').value.trim()||'None',
     tier:tierVal?parseInt(tierVal):null,
@@ -1146,6 +1238,15 @@ function validateForm(vals){
 }
 
 var PILLAR_LABELS_SHORT={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch',ai:'AI Pipeline'};
+
+function persistCustomValue(val,list,lsKey){
+  if(val&&list.indexOf(val)===-1){
+    list.push(val);
+    try{localStorage.setItem(lsKey,JSON.stringify(list));}catch(e){}
+    return true;
+  }
+  return false;
+}
 
 function saveProject(){
   var vals=readFormValues();
@@ -1179,6 +1280,8 @@ function saveProject(){
     old.lastModified=today;
     projectsData.lastUpdated=today;
 
+    persistCustomValue(vals.status,customStatuses,CUSTOM_STATUS_KEY);
+    persistCustomValue(vals.stakeholder,customStakeholders,CUSTOM_SH_KEY);
     try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
     logChange('Edited',old,diffs.length?diffs.join(' | '):'No changes detected');
     renderAll(projectsData);
@@ -1194,6 +1297,8 @@ function saveProject(){
     projectsData.projects.push(newProject);
     projectsData.lastUpdated=today;
 
+    persistCustomValue(vals.status,customStatuses,CUSTOM_STATUS_KEY);
+    persistCustomValue(vals.stakeholder,customStakeholders,CUSTOM_SH_KEY);
     try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
     logChange('Added',newProject,'Pillar: '+(PILLAR_LABELS_SHORT[vals.pillar]||vals.pillar)+' | Priority: '+vals.priority+' | Owner: '+vals.owners.join(', ')+(vals.status?' | Status: '+vals.status:''));
     renderAll(projectsData);
@@ -1227,14 +1332,31 @@ function renderChangeLog(){
   var tbody=document.querySelector('#log-table tbody');
   var empty=document.getElementById('log-empty');
   var table=document.getElementById('log-table');
-  if(!changeLog||changeLog.length===0){
+
+  var fromVal=document.getElementById('log-date-from').value;
+  var toVal=document.getElementById('log-date-to').value;
+  var fromDate=fromVal?new Date(fromVal+'T00:00:00'):null;
+  var toDate=toVal?new Date(toVal+'T23:59:59'):null;
+
+  var filtered=(changeLog||[]).filter(function(e){
+    if(!fromDate&&!toDate)return true;
+    var d=new Date(e.timestamp);
+    if(fromDate&&d<fromDate)return false;
+    if(toDate&&d>toDate)return false;
+    return true;
+  });
+
+  if(filtered.length===0){
     empty.style.display='block';
+    empty.textContent=changeLog.length===0
+      ?'No changes logged yet. Add or delete a project to see entries here.'
+      :'No entries found for the selected date range.';
     table.style.display='none';
     return;
   }
   empty.style.display='none';
   table.style.display='';
-  tbody.innerHTML=changeLog.map(function(e){
+  tbody.innerHTML=filtered.map(function(e){
     var actionCls=e.action==='Added'?'added':e.action==='Deleted'?'deleted':'edited';
     return '<tr>'+
       '<td class="log-ts">'+formatTimestamp(e.timestamp)+'</td>'+
@@ -1246,12 +1368,10 @@ function renderChangeLog(){
   }).join('');
 }
 
-function clearLog(){
-  if(!confirm('Clear the entire change log? This cannot be undone.'))return;
-  changeLog=[];
-  try{localStorage.removeItem(LOG_KEY);}catch(e){}
+function resetLogFilter(){
+  document.getElementById('log-date-from').value='';
+  document.getElementById('log-date-to').value='';
   renderChangeLog();
-  showToast('Change log cleared.');
 }
 
 /* ── DELETE PROJECT ── */
