@@ -93,6 +93,12 @@
   .st.ip{background:#E8F0FE;color:#3367D6}.st.wt{background:#FFF3E0;color:#E65100}.st.cp{background:#E6F4EA;color:#1B7A2E}.st.oh{background:#F3E8FD;color:#6A0DAD}.st.pl{background:#FFF9E6;color:#856404}
   .owner-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600}
   .owner-badge.ervina{background:#E8F0FE;color:#1A4D8F}.owner-badge.daniel{background:#FDECEA;color:#783534}.owner-badge.abdul{background:#E6F4EA;color:#1B7A2E}
+  .owner-badge.custom{background:#F3E8FD;color:#5B21B6}
+  .add-owner-row{display:flex;align-items:center;gap:6px;margin-top:8px}
+  .add-owner-input{font-family:Arial;font-size:12px;padding:5px 8px;border:1px dashed #aaa;border-radius:4px;color:#39393A;flex:1;min-width:0}
+  .add-owner-input:focus{outline:none;border-color:#6995FF;border-style:solid}
+  .add-owner-btn{font-family:Arial;font-size:11px;font-weight:700;padding:5px 10px;border:1px solid #6995FF;border-radius:4px;background:#FFF;color:#3367D6;cursor:pointer;white-space:nowrap}
+  .add-owner-btn:hover{background:#E8F0FE}
   .collab-tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:600;background:#F3E8FD;color:#5E35B1;margin-left:4px}
   .cfo-badge{display:inline-block;background:#FFF3E0;color:#BF5700;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px}
   .sh-badge{display:inline-block;background:#EDE9FE;color:#5B21B6;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px}
@@ -456,10 +462,10 @@
 
         <div class="form-group">
           <label class="form-label req">Owner(s)</label>
-          <div class="checkbox-group">
-            <label class="checkbox-label"><input type="checkbox" name="fp-owner" value="Ervina"> Ervina</label>
-            <label class="checkbox-label"><input type="checkbox" name="fp-owner" value="Abdulrahman"> Abdulrahman</label>
-            <label class="checkbox-label"><input type="checkbox" name="fp-owner" value="Daniel"> Daniel</label>
+          <div class="checkbox-group" id="owner-checkbox-group"></div>
+          <div class="add-owner-row">
+            <input type="text" id="new-owner-input" class="add-owner-input" placeholder="Add a person..." onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomOwner();}">
+            <button type="button" class="add-owner-btn" onclick="addCustomOwner()">+ Add</button>
           </div>
         </div>
 
@@ -664,7 +670,8 @@ function pillarTag(pillar){
 
 function ownerBadges(owners){
   return owners.map(function(o){
-    return '<span class="owner-badge '+(OWNER_CLASS[o]||'')+'">'+esc(o)+'</span>';
+    var cls=OWNER_CLASS[o]||'custom';
+    return '<span class="owner-badge '+cls+'">'+esc(o)+'</span>';
   }).join(' ');
 }
 
@@ -845,21 +852,24 @@ function renderFullCharts(projects){
   });
   document.getElementById('full-pillar-chart').innerHTML=chartHtml;
 
-  /* Workload by owner */
-  var ownerTotals={Ervina:0,Daniel:0,Abdulrahman:0};
+  /* Workload by owner — includes custom owners */
+  var allOwnerNames=BASE_OWNERS.concat(customOwners);
   projects.forEach(function(proj){
-    proj.owners.forEach(function(o){
-      if(ownerTotals[o]!==undefined)ownerTotals[o]++;
-    });
+    proj.owners.forEach(function(o){if(allOwnerNames.indexOf(o)===-1)allOwnerNames.push(o);});
   });
-  var maxW=Math.max(ownerTotals.Ervina,ownerTotals.Daniel,ownerTotals.Abdulrahman);
-  var wlOwners=[{name:'Abdulrahman',cls:'abdul'},{name:'Ervina',cls:'ervina'},{name:'Daniel',cls:'daniel'}];
-  var wlHtml=wlOwners.map(function(o){
-    var c=ownerTotals[o.name];
+  var ownerTotals={};
+  allOwnerNames.forEach(function(o){ownerTotals[o]=0;});
+  projects.forEach(function(proj){
+    proj.owners.forEach(function(o){if(ownerTotals[o]!==undefined)ownerTotals[o]++;});
+  });
+  var maxW=Math.max.apply(null,allOwnerNames.map(function(o){return ownerTotals[o]||0;}));
+  var wlHtml=allOwnerNames.filter(function(o){return ownerTotals[o]>0;}).map(function(o){
+    var cls=OWNER_CLASS[o]||'custom';
+    var c=ownerTotals[o];
     var w=maxW>0?Math.round(c/maxW*100):0;
-    return '<div class="workload-row" data-wl-owner="'+o.name+'">'+
-      '<div class="wl-name">'+o.name+'</div>'+
-      '<div class="wl-bar-bg"><div class="wl-bar-fill '+o.cls+'" style="width:'+w+'%">'+c+'</div></div>'+
+    return '<div class="workload-row" data-wl-owner="'+esc(o)+'">'+
+      '<div class="wl-name">'+esc(o)+'</div>'+
+      '<div class="wl-bar-bg"><div class="wl-bar-fill '+cls+'" style="width:'+w+'%">'+c+'</div></div>'+
       '</div>';
   }).join('');
   document.getElementById('workload-bars').innerHTML=wlHtml;
@@ -988,6 +998,19 @@ function buildStatusFilter(projects){
   }
 }
 
+function buildOwnerFilter(projects){
+  var seen={};
+  var all=BASE_OWNERS.concat(customOwners);
+  projects.forEach(function(p){(p.owners||[]).forEach(function(o){all.push(o);});});
+  var unique=[];
+  all.forEach(function(o){if(o&&!seen[o]){seen[o]=true;unique.push(o);}});
+  var sel=document.getElementById('f-fp-owner');
+  sel.innerHTML='<option value="">All</option>';
+  unique.forEach(function(o){
+    sel.innerHTML+='<option value="'+esc(o)+'">'+esc(o)+'</option>';
+  });
+}
+
 function buildStakeholderFilter(projects){
   /* Collect all unique stakeholders from data + custom list */
   var seen={};
@@ -1041,6 +1064,38 @@ function buildStakeholderSelect(currentVal){
   if(currentVal)sel.value=currentVal;
 }
 
+function buildOwnerCheckboxes(selectedOwners){
+  selectedOwners=selectedOwners||[];
+  var all=BASE_OWNERS.concat(customOwners);
+  var group=document.getElementById('owner-checkbox-group');
+  group.innerHTML=all.map(function(o){
+    var cls=OWNER_CLASS[o]||'custom';
+    var checked=selectedOwners.indexOf(o)!==-1?' checked':'';
+    return '<label class="checkbox-label">'+
+      '<input type="checkbox" name="fp-owner" value="'+esc(o)+'"'+checked+'> '+
+      '<span class="owner-badge '+cls+'" style="pointer-events:none">'+esc(o)+'</span>'+
+    '</label>';
+  }).join('');
+  document.getElementById('new-owner-input').value='';
+}
+
+function addCustomOwner(){
+  var inp=document.getElementById('new-owner-input');
+  var name=inp.value.trim();
+  if(!name)return;
+  /* Normalize capitalisation */
+  name=name.charAt(0).toUpperCase()+name.slice(1);
+  var all=BASE_OWNERS.concat(customOwners);
+  if(all.indexOf(name)!==-1){inp.value='';return;} /* already exists */
+  customOwners.push(name);
+  try{localStorage.setItem(CUSTOM_OWNERS_KEY,JSON.stringify(customOwners));}catch(e){}
+  /* Preserve current selections and add new person as checked */
+  var current=Array.from(document.querySelectorAll('input[name="fp-owner"]:checked')).map(function(cb){return cb.value;});
+  current.push(name);
+  buildOwnerCheckboxes(current);
+  buildOwnerFilter(projectsData?projectsData.projects:[]);
+}
+
 function handleNewOption(sel,wrapId){
   var wrap=document.getElementById(wrapId);
   wrap.style.display=sel.value==='__new__'?'block':'none';
@@ -1062,8 +1117,11 @@ var modalMode='add';
 var editingId=null;
 var customStatuses=[];
 var customStakeholders=[];
+var customOwners=[];
 var BASE_STATUSES=['In Progress','Waiting','On Hold','Planned','Cancelled'];
 var BASE_STAKEHOLDERS=['CFO','Amber','Brian','Tyson','Mike','Jeff Dredge','Chase'];
+var BASE_OWNERS=['Ervina','Abdulrahman','Daniel'];
+var CUSTOM_OWNERS_KEY='pag-custom-owners';
 
 /* ── INIT: fetch data and render everything ── */
 fetch('projects.json?v='+Date.now())
@@ -1089,6 +1147,7 @@ fetch('projects.json?v='+Date.now())
     /* Load custom values */
     try{var cs=localStorage.getItem(CUSTOM_STATUS_KEY);if(cs)customStatuses=JSON.parse(cs);}catch(e){}
     try{var csh=localStorage.getItem(CUSTOM_SH_KEY);if(csh)customStakeholders=JSON.parse(csh);}catch(e){}
+    try{var co=localStorage.getItem(CUSTOM_OWNERS_KEY);if(co)customOwners=JSON.parse(co);}catch(e){}
     renderAll(data);
     /* Load change log from localStorage */
     try{var l=localStorage.getItem(LOG_KEY);if(l)changeLog=JSON.parse(l);}catch(e){}
@@ -1100,6 +1159,7 @@ function renderAll(data){
   document.getElementById('header-date').textContent=data.lastUpdated;
   document.getElementById('footer-date').textContent=data.lastUpdated;
   buildStatusFilter(data.projects);
+  buildOwnerFilter(data.projects);
   buildStakeholderFilter(data.projects);
   renderFullTable(data.projects);
   renderCompletedTable(data.completed);
@@ -1143,6 +1203,7 @@ function openAddModal(){
   document.getElementById('modal-save-btn').textContent='Save Project';
   document.getElementById('modal-delete-btn').style.display='none';
   document.getElementById('add-project-form').reset();
+  buildOwnerCheckboxes([]);
   buildStatusSelect('');
   buildStakeholderSelect('');
   resetNewValueInputs();
@@ -1167,6 +1228,7 @@ function openEditModal(id){
   document.getElementById('fp-name').value=p.name||'';
   document.getElementById('fp-pillar').value=p.pillar||'';
   document.getElementById('fp-priority').value=p.priority||'';
+  buildOwnerCheckboxes(p.owners||[]);
   buildStatusSelect(p.status||'');
   document.getElementById('fp-tier').value=p.tier||'';
   buildStakeholderSelect(p.stakeholder||'');
@@ -1175,11 +1237,6 @@ function openEditModal(id){
   document.getElementById('fp-due').value=p.due||'';
   document.getElementById('fp-deps').value=p.dependencies||'';
   document.getElementById('fp-notes').value=p.notes||'';
-
-  /* Owners checkboxes */
-  document.querySelectorAll('input[name="fp-owner"]').forEach(function(cb){
-    cb.checked=p.owners&&p.owners.indexOf(cb.value)!==-1;
-  });
 
   updatePillarHint();
   updateTierHint();
