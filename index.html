@@ -399,6 +399,7 @@
     <thead><tr>
       <th>Timestamp</th>
       <th>Action</th>
+      <th>Changed By</th>
       <th style="width:36px">#</th>
       <th>Project Name</th>
       <th>Details</th>
@@ -513,6 +514,15 @@
     </div>
     <div class="modal-footer">
       <button class="btn-delete" id="modal-delete-btn" onclick="deleteFromModal()" style="display:none">Delete Project</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <label style="font-size:11px;font-weight:700;color:#6B6F82;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap">Changed by</label>
+        <select id="modal-changed-by" class="form-select" style="min-width:130px;padding:6px 10px;font-size:12px">
+          <option value="">Select...</option>
+          <option value="Ervina">Ervina</option>
+          <option value="Abdulrahman">Abdulrahman</option>
+          <option value="Daniel">Daniel</option>
+        </select>
+      </div>
       <div class="modal-footer-right">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
         <button class="btn-save" id="modal-save-btn" onclick="saveProject()">Save Project</button>
@@ -1115,6 +1125,10 @@ var TIER_HINTS={
   '5':'Transformational – Firm-wide, future-facing initiatives that change how the organization operates.'
 };
 
+function restoreLastUser(){
+  try{var u=localStorage.getItem('pag-last-user');if(u)document.getElementById('modal-changed-by').value=u;}catch(e){}
+}
+
 function resetNewValueInputs(){
   document.getElementById('fp-status-new-wrap').style.display='none';
   document.getElementById('fp-status-new').value='';
@@ -1132,6 +1146,7 @@ function openAddModal(){
   buildStatusSelect('');
   buildStakeholderSelect('');
   resetNewValueInputs();
+  restoreLastUser();
   document.getElementById('pillar-hint').textContent='';
   document.getElementById('tier-hint').textContent='';
   document.getElementById('form-error').style.display='none';
@@ -1156,6 +1171,7 @@ function openEditModal(id){
   document.getElementById('fp-tier').value=p.tier||'';
   buildStakeholderSelect(p.stakeholder||'');
   resetNewValueInputs();
+  restoreLastUser();
   document.getElementById('fp-due').value=p.due||'';
   document.getElementById('fp-deps').value=p.dependencies||'';
   document.getElementById('fp-notes').value=p.notes||'';
@@ -1309,11 +1325,15 @@ function saveProject(){
 
 /* ── CHANGE LOG ── */
 function logChange(action,project,details){
+  var changedBy=document.getElementById('modal-changed-by').value;
+  /* Persist last selection so it pre-fills next time */
+  if(changedBy)try{localStorage.setItem('pag-last-user',changedBy);}catch(e){}
   changeLog.unshift({
     timestamp:new Date().toISOString(),
     action:action,
     id:project.id,
     name:project.name,
+    changedBy:changedBy||'—',
     details:details||''
   });
   try{localStorage.setItem(LOG_KEY,JSON.stringify(changeLog));}catch(e){}
@@ -1358,9 +1378,14 @@ function renderChangeLog(){
   table.style.display='';
   tbody.innerHTML=filtered.map(function(e){
     var actionCls=e.action==='Added'?'added':e.action==='Deleted'?'deleted':'edited';
+    var ownerCls={Ervina:'ervina',Abdulrahman:'abdul',Daniel:'daniel'}[e.changedBy]||'';
+    var byCell=ownerCls
+      ?'<span class="owner-badge '+ownerCls+'">'+esc(e.changedBy)+'</span>'
+      :'<span style="color:#8A8C8E;font-size:12px">'+esc(e.changedBy||'—')+'</span>';
     return '<tr>'+
       '<td class="log-ts">'+formatTimestamp(e.timestamp)+'</td>'+
       '<td><span class="log-entry-action '+actionCls+'">'+esc(e.action)+'</span></td>'+
+      '<td>'+byCell+'</td>'+
       '<td class="id">'+e.id+'</td>'+
       '<td style="font-size:13px;font-weight:600;color:#39393A">'+esc(e.name)+'</td>'+
       '<td class="log-detail">'+esc(e.details)+'</td>'+
