@@ -160,13 +160,52 @@
   .ps-card.ai-ps{background:#FFF8E1;border-left-color:#7B6100;color:#7B6100}
   @media(max-width:900px){.chart-grid{grid-template-columns:1fr}.stat-strip,.content,.filter-bar{padding:16px 20px}.header,.tab-nav{padding-left:20px;padding-right:20px}.bar-chart{height:140px}.pillar-progress{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.pillar-progress{grid-template-columns:1fr}.tier-strip{flex-wrap:wrap}}
+  /* ── ADD PROJECT BUTTON ── */
+  .add-btn{background:#6995FF;color:#FFF;border:none;border-radius:6px;padding:8px 16px;font-family:Arial;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap}
+  .add-btn:hover{background:#5580ee}
+  /* ── MODAL ── */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:20px}
+  .modal-overlay.active{display:flex}
+  .modal{background:#FFF;border-radius:12px;width:100%;max-width:640px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.28)}
+  .modal-header{padding:20px 24px;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .modal-header h2{font-size:17px;font-weight:700;color:#171847}
+  .modal-close{background:none;border:none;font-size:24px;color:#8A8C8E;cursor:pointer;line-height:1;padding:0 4px}
+  .modal-close:hover{color:#171847}
+  .modal-body{padding:20px 24px;overflow-y:auto;flex:1}
+  .modal-footer{padding:16px 24px;border-top:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .modal-footer-right{display:flex;gap:10px}
+  .form-group{margin-bottom:16px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-label{display:block;font-size:11px;font-weight:700;color:#6B6F82;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+  .form-label.req::after{content:" *";color:#E65100}
+  .form-input,.form-select,.form-textarea{width:100%;font-family:Arial;font-size:13px;padding:7px 10px;border:1px solid #ddd;border-radius:5px;color:#39393A;background:#FFF;transition:border-color .2s}
+  .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:#6995FF;box-shadow:0 0 0 3px rgba(105,149,255,.15)}
+  .form-textarea{resize:vertical;min-height:72px}
+  .form-hint{font-size:11px;color:#8A8C8E;margin-top:5px;line-height:1.45}
+  .checkbox-group{display:flex;gap:20px;padding:5px 0}
+  .checkbox-label{display:flex;align-items:center;gap:6px;font-size:13px;color:#39393A;cursor:pointer;font-weight:600}
+  .checkbox-label input{cursor:pointer;accent-color:#6995FF;width:14px;height:14px}
+  .btn-cancel{font-family:Arial;font-size:13px;font-weight:600;padding:8px 18px;border:1px solid #ddd;border-radius:5px;background:#FFF;color:#6B6F82;cursor:pointer}
+  .btn-cancel:hover{background:#F5F6F4}
+  .btn-save{font-family:Arial;font-size:13px;font-weight:700;padding:8px 22px;border:none;border-radius:5px;background:#171847;color:#FFF;cursor:pointer;transition:background .2s}
+  .btn-save:hover{background:#2a2e6e}
+  .form-error{background:#FDECEA;color:#783534;font-size:12px;padding:8px 12px;border-radius:5px;margin-top:4px;display:none}
+  .file-status{font-size:11px;color:#8A8C8E;display:flex;align-items:center;gap:6px}
+  .file-status.connected{color:#1B7A2E}
+  .file-dot{width:8px;height:8px;border-radius:50%;background:#C7C9CB;display:inline-block}
+  .file-dot.connected{background:#1B7A2E}
+  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(12px);background:#171847;color:#FFF;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:2000}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div><h1>PAG Data Platform</h1><div class="sub">Data Intake &amp; Management &nbsp;&rarr;&nbsp; Reporting &nbsp;&rarr;&nbsp; Data Modeling &nbsp;&rarr;&nbsp; Governance &amp; Architecture</div></div>
-  <div class="date" id="header-date"></div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="date" id="header-date"></div>
+    <button class="add-btn" onclick="openAddModal()">+ Add Project</button>
+  </div>
 </div>
 
 <div class="tab-nav">
@@ -319,6 +358,131 @@
 </div></div>
 
 <div class="footer">PAG Data Platform &middot; Last updated <span id="footer-date"></span> &middot; v2</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ADD PROJECT MODAL                     -->
+<!-- ══════════════════════════════════════ -->
+<div id="modal-overlay" class="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Add New Project</h2>
+      <button class="modal-close" onclick="closeModal()" title="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="add-project-form" onsubmit="return false">
+
+        <div class="form-group">
+          <label class="form-label req">Project Name</label>
+          <input type="text" id="fp-name" class="form-input" placeholder="e.g. Update Executive Dashboard">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label req">Pillar</label>
+            <select id="fp-pillar" class="form-select" onchange="updatePillarHint()">
+              <option value="">Select pillar...</option>
+              <option value="intake">Data Intake</option>
+              <option value="reporting">Reporting</option>
+              <option value="modeling">Data Modeling</option>
+              <option value="gov">Gov &amp; Architecture</option>
+              <option value="ai">AI Pipeline</option>
+            </select>
+            <div class="form-hint" id="pillar-hint"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label req">Priority</label>
+            <select id="fp-priority" class="form-select">
+              <option value="">Select priority...</option>
+              <option value="P1">P1 – Critical</option>
+              <option value="P2">P2 – High</option>
+              <option value="P3">P3 – Medium</option>
+              <option value="Future">Future</option>
+              <option value="Pipeline">Pipeline</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label req">Owner(s)</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" name="fp-owner" value="Ervina"> Ervina</label>
+            <label class="checkbox-label"><input type="checkbox" name="fp-owner" value="Abdulrahman"> Abdulrahman</label>
+            <label class="checkbox-label"><input type="checkbox" name="fp-owner" value="Daniel"> Daniel</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select id="fp-status" class="form-select">
+              <option value="">Not Started</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Waiting">Waiting</option>
+              <option value="On Hold">On Hold</option>
+              <option value="Planned">Planned</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Project Tier</label>
+            <select id="fp-tier" class="form-select" onchange="updateTierHint()">
+              <option value="">No tier assigned</option>
+              <option value="1">Tier 1 – Tactical</option>
+              <option value="2">Tier 2 – Moderate</option>
+              <option value="3">Tier 3 – Complex</option>
+              <option value="4">Tier 4 – Strategic</option>
+              <option value="5">Tier 5 – Transformational</option>
+            </select>
+            <div class="form-hint" id="tier-hint"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Stakeholder</label>
+            <select id="fp-stakeholder" class="form-select">
+              <option value="">None</option>
+              <option value="CFO">CFO</option>
+              <option value="Amber">Amber</option>
+              <option value="Brian">Brian</option>
+              <option value="Tyson">Tyson</option>
+              <option value="Mike">Mike</option>
+              <option value="Jeff Dredge">Jeff Dredge</option>
+              <option value="Chase">Chase</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Due</label>
+            <input type="text" id="fp-due" class="form-input" placeholder="e.g. This week, EOQ, Mar 31">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Dependencies</label>
+          <input type="text" id="fp-deps" class="form-input" placeholder="e.g. Depends on #1, #2   or   None">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <textarea id="fp-notes" class="form-textarea" placeholder="Add context, background, or details..."></textarea>
+        </div>
+
+        <div class="form-error" id="form-error"></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="file-status" id="file-status">
+        <span class="file-dot" id="file-dot"></span>
+        <span id="file-status-text">Not connected to projects.json</span>
+      </div>
+      <div class="modal-footer-right">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveNewProject()">Save Project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script>
 function switchTab(t){
@@ -772,21 +936,184 @@ function buildStatusFilter(projects){
   }
 }
 
+/* ── GLOBAL STATE ── */
+var projectsData=null;
+var fileHandle=null;
+
 /* ── INIT: fetch data and render everything ── */
 fetch('projects.json?v='+Date.now())
   .then(function(r){return r.json();})
   .then(function(data){
-    document.getElementById('header-date').textContent=data.lastUpdated;
-    document.getElementById('footer-date').textContent=data.lastUpdated;
-    buildStatusFilter(data.projects);
-    renderFullTable(data.projects);
-    renderCompletedTable(data.completed);
-    renderFullStats(data.projects,data.completed);
-    renderFullCharts(data.projects);
-    renderCompletedStats(data.completed);
-    renderCompletedCharts(data.completed);
+    projectsData=data;
+    renderAll(data);
   })
   .catch(function(e){console.error('Failed to load projects.json:',e);});
+
+function renderAll(data){
+  document.getElementById('header-date').textContent=data.lastUpdated;
+  document.getElementById('footer-date').textContent=data.lastUpdated;
+  buildStatusFilter(data.projects);
+  renderFullTable(data.projects);
+  renderCompletedTable(data.completed);
+  renderFullStats(data.projects,data.completed);
+  renderFullCharts(data.projects);
+  renderCompletedStats(data.completed);
+  renderCompletedCharts(data.completed);
+}
+
+/* ── ADD PROJECT MODAL ── */
+var PILLAR_HINTS={
+  intake:'Bringing new or updated data into Snowflake. Use if the work makes data available for the first time.',
+  reporting:'Delivering insights through dashboards. Use if the work happens in Power BI or focuses on how users consume data.',
+  modeling:'Transforming raw data into business-ready datasets. Use if the work changes business logic or how metrics are calculated.',
+  gov:'Improving platform structure, reliability, and scalability. Use if the work strengthens the platform itself rather than a single report.',
+  ai:'Building AI-powered automation and workflows. Use if the project leverages AI to automate or enhance decision-making.'
+};
+var TIER_HINTS={
+  '1':'Tactical – Small, contained tasks: minor visual updates, simple DAX fixes, basic ad hoc data pulls.',
+  '2':'Moderate – Clear scope, limited cross-system impact: adding a KPI, modifying a dbt model, fixing a defined data mismatch.',
+  '3':'Complex – Multi-layer impact across Snowflake → dbt → Power BI: business logic changes, acquisition onboarding.',
+  '4':'Strategic – Architectural or firm-impact work with high visibility: restructuring core tables, major platform improvements.',
+  '5':'Transformational – Firm-wide, future-facing initiatives that change how the organization operates.'
+};
+
+function openAddModal(){
+  document.getElementById('add-project-form').reset();
+  document.getElementById('pillar-hint').textContent='';
+  document.getElementById('tier-hint').textContent='';
+  document.getElementById('form-error').style.display='none';
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('fp-name').focus();
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('modal-overlay'))closeModal();
+}
+
+function updatePillarHint(){
+  var v=document.getElementById('fp-pillar').value;
+  document.getElementById('pillar-hint').textContent=v?PILLAR_HINTS[v]:'';
+}
+
+function updateTierHint(){
+  var v=document.getElementById('fp-tier').value;
+  document.getElementById('tier-hint').textContent=v?TIER_HINTS[v]:'';
+}
+
+function formatTodayDate(){
+  var d=new Date();
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+}
+
+function showFormError(msg){
+  var el=document.getElementById('form-error');
+  el.textContent=msg;
+  el.style.display='block';
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},3500);
+}
+
+function setFileStatus(connected,label){
+  document.getElementById('file-dot').className='file-dot'+(connected?' connected':'');
+  document.getElementById('file-status').className='file-status'+(connected?' connected':'');
+  document.getElementById('file-status-text').textContent=label;
+}
+
+async function saveNewProject(){
+  /* Validate required fields */
+  var name=document.getElementById('fp-name').value.trim();
+  var pillar=document.getElementById('fp-pillar').value;
+  var priority=document.getElementById('fp-priority').value;
+  var owners=Array.from(document.querySelectorAll('input[name="fp-owner"]:checked')).map(function(cb){return cb.value;});
+  document.getElementById('form-error').style.display='none';
+  if(!name){showFormError('Project name is required.');return;}
+  if(!pillar){showFormError('Please select a pillar.');return;}
+  if(!priority){showFormError('Please select a priority.');return;}
+  if(owners.length===0){showFormError('Please select at least one owner.');return;}
+
+  /* Acquire file handle if we don\'t have one */
+  if(!fileHandle){
+    if(!window.showOpenFilePicker){
+      showFormError('Your browser does not support the File System API. Please use Chrome or Edge.');
+      return;
+    }
+    try{
+      var picks=await window.showOpenFilePicker({
+        types:[{description:'JSON file',accept:{'application/json':['.json']}}],
+        multiple:false
+      });
+      fileHandle=picks[0];
+      setFileStatus(true,'Connected: '+fileHandle.name);
+    }catch(e){
+      if(e.name!=='AbortError')showFormError('Could not open file. Please try again.');
+      return;
+    }
+  }
+
+  /* Read latest file content */
+  var file,text,data;
+  try{
+    file=await fileHandle.getFile();
+    text=await file.text();
+    data=JSON.parse(text);
+  }catch(e){
+    showFormError('Could not read projects.json. Re-select the file and try again.');
+    fileHandle=null;
+    setFileStatus(false,'Not connected to projects.json');
+    return;
+  }
+
+  /* Determine next ID */
+  var maxId=0;
+  data.projects.forEach(function(p){if(p.id>maxId)maxId=p.id;});
+  var newId=maxId+1;
+
+  /* Build new project object */
+  var today=formatTodayDate();
+  var tierVal=document.getElementById('fp-tier').value;
+  var newProject={
+    id:newId,
+    name:name,
+    pillar:pillar,
+    owners:owners,
+    status:document.getElementById('fp-status').value,
+    priority:priority,
+    stakeholder:document.getElementById('fp-stakeholder').value,
+    due:document.getElementById('fp-due').value.trim(),
+    dependencies:document.getElementById('fp-deps').value.trim()||'None',
+    tier:tierVal?parseInt(tierVal):null,
+    notes:document.getElementById('fp-notes').value.trim(),
+    lastModified:today
+  };
+  data.projects.push(newProject);
+  data.lastUpdated=today;
+
+  /* Write back to file */
+  try{
+    var writable=await fileHandle.createWritable();
+    await writable.write(JSON.stringify(data,null,2));
+    await writable.close();
+  }catch(e){
+    showFormError('Could not write to file. Check that it is not open in another program.');
+    return;
+  }
+
+  /* Update in-memory state and re-render */
+  projectsData=data;
+  renderAll(data);
+  closeModal();
+  showToast('Project #'+newId+' "'+name+'" added successfully!');
+}
 </script>
 </body>
 </html>
