@@ -193,9 +193,10 @@
   .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(12px);background:#171847;color:#FFF;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:2000}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   /* ── ROW ACTION BUTTONS ── */
-  .del-btn,.edit-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 5px;border-radius:3px;line-height:1;transition:color .15s,background .15s}
-  .del-btn{color:#C7C9CB}.del-btn:hover{color:#c0392b;background:#FDECEA}
-  .edit-btn{color:#C7C9CB}.edit-btn:hover{color:#3367D6;background:#E8F0FE}
+  .edit-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 5px;border-radius:3px;line-height:1;transition:color .15s,background .15s;color:#C7C9CB}
+  .edit-btn:hover{color:#3367D6;background:#E8F0FE}
+  .btn-delete{font-family:Arial;font-size:13px;font-weight:600;padding:8px 18px;border:1px solid #FDECEA;border-radius:5px;background:#FFF;color:#c0392b;cursor:pointer;transition:background .2s}
+  .btn-delete:hover{background:#FDECEA}
   /* ── CHANGE LOG ── */
   .log-tab.active{border-bottom-color:#E65100}
   .log-empty{text-align:center;padding:48px 20px;color:#8A8C8E;font-size:13px}
@@ -509,6 +510,7 @@
       </form>
     </div>
     <div class="modal-footer">
+      <button class="btn-delete" id="modal-delete-btn" onclick="deleteFromModal()" style="display:none">Delete Project</button>
       <div class="modal-footer-right">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
         <button class="btn-save" id="modal-save-btn" onclick="saveProject()">Save Project</button>
@@ -702,10 +704,7 @@ function renderFullTable(projects){
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
       '<td class="notes">'+esc(p.notes)+'</td>'+
       '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(p.lastModified||'')+'</td>'+
-      '<td style="text-align:center;white-space:nowrap">'+
-        '<button class="edit-btn" onclick="openEditModal('+p.id+')" title="Edit project #'+p.id+'">&#x270E;</button>'+
-        '<button class="del-btn" onclick="deleteProject('+p.id+')" title="Delete project #'+p.id+'">&#x2715;</button>'+
-      '</td>'+
+      '<td style="text-align:center"><button class="edit-btn" onclick="openEditModal('+p.id+')" title="Edit project #'+p.id+'">&#x270E;</button></td>'+
     '</tr>';
   }).join('');
   document.querySelector('#full-table tbody').innerHTML=rows;
@@ -1044,6 +1043,7 @@ function openAddModal(){
   editingId=null;
   document.getElementById('modal-title').textContent='Add New Project';
   document.getElementById('modal-save-btn').textContent='Save Project';
+  document.getElementById('modal-delete-btn').style.display='none';
   document.getElementById('add-project-form').reset();
   document.getElementById('pillar-hint').textContent='';
   document.getElementById('tier-hint').textContent='';
@@ -1059,6 +1059,7 @@ function openEditModal(id){
   editingId=id;
   document.getElementById('modal-title').textContent='Edit Project #'+id;
   document.getElementById('modal-save-btn').textContent='Save Changes';
+  document.getElementById('modal-delete-btn').style.display='';
   document.getElementById('form-error').style.display='none';
 
   document.getElementById('fp-name').value=p.name||'';
@@ -1254,7 +1255,11 @@ function clearLog(){
 }
 
 /* ── DELETE PROJECT ── */
-function deleteProject(id){
+function deleteFromModal(){
+  if(editingId!=null)deleteProject(editingId,true);
+}
+
+function deleteProject(id,fromModal){
   var project=projectsData.projects.find(function(p){return p.id===id;});
   if(!project)return;
   if(!confirm('Delete project #'+id+' "'+project.name+'"?\n\nThis will be logged in the Change Log but removed from the active project list.'))return;
@@ -1268,6 +1273,7 @@ function deleteProject(id){
   try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
   logChange('Deleted',project,details);
   renderAll(projectsData);
+  if(fromModal)closeModal();
   showToast('Project #'+id+' deleted and logged.');
 }
 </script>
