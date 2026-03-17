@@ -18,7 +18,7 @@ The tracker is a JSON-driven system:
 The highest current ID is **62**. Next new project should use ID **63**.
 
 ### Next available completed ID
-The highest current completed ID is **17**. Next completed item should use ID **18**.
+The highest current completed ID is **22**. Next completed item should use ID **23**.
 
 ---
 
@@ -125,10 +125,49 @@ Add their name to the `owners` array on the relevant projects. New owner badge s
 
 ---
 
-## GitHub collaboration setup (for new team members)
+## Change Log
 
-1. Ask Ervina to add you as a collaborator: GitHub repo → Settings → Collaborators
-2. Clone the repo locally
+The tracker has a **Change Log tab** showing all updates to project data. The data lives in the `changelog` array in `projects.json`.
+
+### Changelog entry fields
+
+| Field | Type | Notes |
+|---|---|---|
+| `date` | string | Date of the change, e.g. `"Mar 17, 2026"` |
+| `author` | string | Who made the change: `"Ervina"`, `"Abdulrahman"`, or `"Daniel"` |
+| `action` | string | Short description of what changed |
+| `ref` | string | Optional project ID reference, e.g. `"#42"`, or `""` |
+
+### How to add a changelog entry
+
+Whenever a project is added, updated, completed, or removed:
+1. Add a new entry to the **top** of the `changelog` array in `projects.json` (newest first)
+2. Add a matching `<tr>` row to the **top** of the `<tbody>` in `#changelog-table` in `index.html`
+3. Update the stat-strip counts (`#cl-count`, `#cl-ervina-count`, `#cl-abdul-count`) in `index.html`
+
+Row format for `index.html`:
+```html
+<tr><td style="white-space:nowrap">Mar 17, 2026</td><td><span class="owner-badge ervina">Ervina</span></td><td>Description of what changed</td><td>#42</td></tr>
+```
+Use `owner-badge ervina`, `owner-badge abdul`, or `owner-badge daniel` for the author badge.
+
+---
+
+## GitHub collaboration setup
+
+Both **Ervina** and **Abdulrahman** are authorized collaborators on this tracker. Either person can open Claude Code in the repo directory and ask Claude to make changes — Claude will read this CLAUDE.md for full context.
+
+### Setup steps (for any team member)
+
+1. Ask Ervina to add you as a collaborator: GitHub repo → Settings → Collaborators → `eobic/projecttracking`
+2. Clone the repo: `git clone https://github.com/eobic/projecttracking.git`
 3. Open Claude Code (`claude`) in the cloned directory
-4. Prompt Claude to update `projects.json` as needed
+4. Prompt Claude to update `projects.json` and `index.html` as needed
 5. Claude will commit and push — the GitHub Pages site updates within ~1 minute
+
+### What you can ask Claude to do
+- Add a new project
+- Update a project's status, notes, owner, or due date
+- Mark a project as complete (moves it to the Completed tab)
+- Add a changelog entry
+- Any other data changes to the tracker

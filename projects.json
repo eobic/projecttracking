@@ -69,5 +69,8 @@
     {"id":20,"name":"PowerBI Bug: Negative Production - Meridian (Amber)","subtitle":"","owner":"Abdulrahman","pillar":"reporting","date":"Mar 17","stakeholder":"Amber","tier":null,"impact":"Investigated and explained negative production showing on Meridian in PowerBI.","lastModified":"Mar 17, 2026"},
     {"id":21,"name":"PowerBI Bug: Arkose Advisors A/R (Brian)","subtitle":"Michael & Tracey Moore","owner":"Abdulrahman","pillar":"reporting","date":"Mar 17","stakeholder":"Brian","tier":null,"impact":"Resolved negative $2,040 A/R balance discrepancy between PowerBI and NetSuite ($1,285 open balance).","lastModified":"Mar 17, 2026"},
     {"id":22,"name":"PowerBI Bug: WIP N/A - Jack C Wilder Admin Trust (Amber)","subtitle":"","owner":"Abdulrahman","pillar":"reporting","date":"Mar 17","stakeholder":"Amber","tier":null,"impact":"The WIP discrepancies were solved with the other ticket items. Regarding Client Owner stuff, we'll wait to deploy the new client_sub model before digging in.","lastModified":"Mar 17, 2026"}
+  ],
+  "changelog": [
+    {"date": "Mar 17, 2026", "author": "Ervina", "action": "Added Change Log tab to tracker; updated collaboration setup for Abdulrahman", "ref": ""}
   ]
 }
