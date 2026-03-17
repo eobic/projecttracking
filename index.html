@@ -192,15 +192,17 @@
   .form-error{background:#FDECEA;color:#783534;font-size:12px;padding:8px 12px;border-radius:5px;margin-top:4px;display:none}
   .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(12px);background:#171847;color:#FFF;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:2000}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  /* ── DELETE BUTTON ── */
-  .del-btn{background:none;border:none;cursor:pointer;color:#C7C9CB;font-size:15px;padding:2px 5px;border-radius:3px;line-height:1;transition:color .15s,background .15s}
-  .del-btn:hover{color:#c0392b;background:#FDECEA}
+  /* ── ROW ACTION BUTTONS ── */
+  .del-btn,.edit-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 5px;border-radius:3px;line-height:1;transition:color .15s,background .15s}
+  .del-btn{color:#C7C9CB}.del-btn:hover{color:#c0392b;background:#FDECEA}
+  .edit-btn{color:#C7C9CB}.edit-btn:hover{color:#3367D6;background:#E8F0FE}
   /* ── CHANGE LOG ── */
   .log-tab.active{border-bottom-color:#E65100}
   .log-empty{text-align:center;padding:48px 20px;color:#8A8C8E;font-size:13px}
   .log-entry-action{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;white-space:nowrap}
   .log-entry-action.added{background:#E6F4EA;color:#1B7A2E}
   .log-entry-action.deleted{background:#FDECEA;color:#783534}
+  .log-entry-action.edited{background:#E8F0FE;color:#3367D6}
   .log-ts{font-size:11px;color:#8A8C8E;white-space:nowrap}
   .log-detail{font-size:11px;color:#6B6F82;line-height:1.45}
   .log-clear-btn{font-family:Arial;font-size:11px;padding:5px 12px;background:#F5F6F4;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#8A8C8E;font-weight:600}
@@ -402,7 +404,7 @@
 <div id="modal-overlay" class="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal">
     <div class="modal-header">
-      <h2>Add New Project</h2>
+      <h2 id="modal-title">Add New Project</h2>
       <button class="modal-close" onclick="closeModal()" title="Close">&times;</button>
     </div>
     <div class="modal-body">
@@ -509,7 +511,7 @@
     <div class="modal-footer">
       <div class="modal-footer-right">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="saveNewProject()">Save Project</button>
+        <button class="btn-save" id="modal-save-btn" onclick="saveProject()">Save Project</button>
       </div>
     </div>
   </div>
@@ -700,7 +702,10 @@ function renderFullTable(projects){
       '<td class="deps">'+esc(p.dependencies)+'</td>'+
       '<td class="notes">'+esc(p.notes)+'</td>'+
       '<td style="white-space:nowrap;font-size:11px;color:#8A8C8E">'+esc(p.lastModified||'')+'</td>'+
-      '<td style="text-align:center"><button class="del-btn" onclick="deleteProject('+p.id+')" title="Delete project #'+p.id+'">&#x2715;</button></td>'+
+      '<td style="text-align:center;white-space:nowrap">'+
+        '<button class="edit-btn" onclick="openEditModal('+p.id+')" title="Edit project #'+p.id+'">&#x270E;</button>'+
+        '<button class="del-btn" onclick="deleteProject('+p.id+')" title="Delete project #'+p.id+'">&#x2715;</button>'+
+      '</td>'+
     '</tr>';
   }).join('');
   document.querySelector('#full-table tbody').innerHTML=rows;
@@ -975,6 +980,8 @@ var projectsData=null;
 var LS_KEY='pag-projects-data';
 var LOG_KEY='pag-change-log';
 var changeLog=[];
+var modalMode='add';
+var editingId=null;
 
 /* ── INIT: fetch data and render everything ── */
 fetch('projects.json?v='+Date.now())
@@ -1033,10 +1040,44 @@ var TIER_HINTS={
 };
 
 function openAddModal(){
+  modalMode='add';
+  editingId=null;
+  document.getElementById('modal-title').textContent='Add New Project';
+  document.getElementById('modal-save-btn').textContent='Save Project';
   document.getElementById('add-project-form').reset();
   document.getElementById('pillar-hint').textContent='';
   document.getElementById('tier-hint').textContent='';
   document.getElementById('form-error').style.display='none';
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('fp-name').focus();
+}
+
+function openEditModal(id){
+  var p=projectsData.projects.find(function(x){return x.id===id;});
+  if(!p)return;
+  modalMode='edit';
+  editingId=id;
+  document.getElementById('modal-title').textContent='Edit Project #'+id;
+  document.getElementById('modal-save-btn').textContent='Save Changes';
+  document.getElementById('form-error').style.display='none';
+
+  document.getElementById('fp-name').value=p.name||'';
+  document.getElementById('fp-pillar').value=p.pillar||'';
+  document.getElementById('fp-priority').value=p.priority||'';
+  document.getElementById('fp-status').value=p.status||'';
+  document.getElementById('fp-tier').value=p.tier||'';
+  document.getElementById('fp-stakeholder').value=p.stakeholder||'';
+  document.getElementById('fp-due').value=p.due||'';
+  document.getElementById('fp-deps').value=p.dependencies||'';
+  document.getElementById('fp-notes').value=p.notes||'';
+
+  /* Owners checkboxes */
+  document.querySelectorAll('input[name="fp-owner"]').forEach(function(cb){
+    cb.checked=p.owners&&p.owners.indexOf(cb.value)!==-1;
+  });
+
+  updatePillarHint();
+  updateTierHint();
   document.getElementById('modal-overlay').classList.add('active');
   document.getElementById('fp-name').focus();
 }
@@ -1078,53 +1119,86 @@ function showToast(msg){
   setTimeout(function(){t.classList.remove('show');},3500);
 }
 
-function saveNewProject(){
-  /* Validate required fields */
-  var name=document.getElementById('fp-name').value.trim();
-  var pillar=document.getElementById('fp-pillar').value;
-  var priority=document.getElementById('fp-priority').value;
-  var owners=Array.from(document.querySelectorAll('input[name="fp-owner"]:checked')).map(function(cb){return cb.value;});
-  document.getElementById('form-error').style.display='none';
-  if(!name){showFormError('Project name is required.');return;}
-  if(!pillar){showFormError('Please select a pillar.');return;}
-  if(!priority){showFormError('Please select a priority.');return;}
-  if(owners.length===0){showFormError('Please select at least one owner.');return;}
-
-  /* Determine next ID */
-  var maxId=0;
-  projectsData.projects.forEach(function(p){if(p.id>maxId)maxId=p.id;});
-  var newId=maxId+1;
-
-  /* Build new project object */
-  var today=formatTodayDate();
+function readFormValues(){
   var tierVal=document.getElementById('fp-tier').value;
-  var newProject={
-    id:newId,
-    name:name,
-    pillar:pillar,
-    owners:owners,
+  return {
+    name:document.getElementById('fp-name').value.trim(),
+    pillar:document.getElementById('fp-pillar').value,
+    priority:document.getElementById('fp-priority').value,
+    owners:Array.from(document.querySelectorAll('input[name="fp-owner"]:checked')).map(function(cb){return cb.value;}),
     status:document.getElementById('fp-status').value,
-    priority:priority,
     stakeholder:document.getElementById('fp-stakeholder').value,
     due:document.getElementById('fp-due').value.trim(),
     dependencies:document.getElementById('fp-deps').value.trim()||'None',
     tier:tierVal?parseInt(tierVal):null,
-    notes:document.getElementById('fp-notes').value.trim(),
-    lastModified:today
+    notes:document.getElementById('fp-notes').value.trim()
   };
-  projectsData.projects.push(newProject);
-  projectsData.lastUpdated=today;
+}
 
-  /* Persist to localStorage so it survives page refresh */
-  try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
+function validateForm(vals){
+  document.getElementById('form-error').style.display='none';
+  if(!vals.name){showFormError('Project name is required.');return false;}
+  if(!vals.pillar){showFormError('Please select a pillar.');return false;}
+  if(!vals.priority){showFormError('Please select a priority.');return false;}
+  if(vals.owners.length===0){showFormError('Please select at least one owner.');return false;}
+  return true;
+}
 
-  /* Log the addition */
-  var pillarLabels={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch',ai:'AI Pipeline'};
-  logChange('Added',newProject,'Pillar: '+(pillarLabels[pillar]||pillar)+' | Priority: '+priority+' | Owner: '+owners.join(', ')+(newProject.status?' | Status: '+newProject.status:''));
+var PILLAR_LABELS_SHORT={intake:'Data Intake',reporting:'Reporting',modeling:'Data Modeling',gov:'Gov & Arch',ai:'AI Pipeline'};
 
-  renderAll(projectsData);
-  closeModal();
-  showToast('Project #'+newId+' "'+name+'" added successfully!');
+function saveProject(){
+  var vals=readFormValues();
+  if(!validateForm(vals))return;
+  var today=formatTodayDate();
+
+  if(modalMode==='edit'){
+    /* Find and update existing project */
+    var idx=projectsData.projects.findIndex(function(p){return p.id===editingId;});
+    if(idx===-1)return;
+    var old=projectsData.projects[idx];
+
+    /* Build diff for change log */
+    var diffs=[];
+    var fields=[
+      ['Name','name'],['Pillar','pillar'],['Priority','priority'],
+      ['Status','status'],['Stakeholder','stakeholder'],['Due','due'],
+      ['Dependencies','dependencies'],['Tier','tier'],['Notes','notes']
+    ];
+    fields.forEach(function(f){
+      var oldVal=old[f[1]]!=null?String(old[f[1]]):'';
+      var newVal=vals[f[1]]!=null?String(vals[f[1]]):'';
+      if(oldVal!==newVal)diffs.push(f[0]+': '+(oldVal||'—')+' → '+(newVal||'—'));
+    });
+    var oldOwners=(old.owners||[]).slice().sort().join(', ');
+    var newOwners=vals.owners.slice().sort().join(', ');
+    if(oldOwners!==newOwners)diffs.push('Owner: '+oldOwners+' → '+newOwners);
+
+    /* Apply update */
+    Object.assign(old,vals);
+    old.lastModified=today;
+    projectsData.lastUpdated=today;
+
+    try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
+    logChange('Edited',old,diffs.length?diffs.join(' | '):'No changes detected');
+    renderAll(projectsData);
+    closeModal();
+    showToast('Project #'+editingId+' updated.');
+
+  } else {
+    /* Add new project */
+    var maxId=0;
+    projectsData.projects.forEach(function(p){if(p.id>maxId)maxId=p.id;});
+    var newId=maxId+1;
+    var newProject=Object.assign({id:newId,lastModified:today},vals);
+    projectsData.projects.push(newProject);
+    projectsData.lastUpdated=today;
+
+    try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
+    logChange('Added',newProject,'Pillar: '+(PILLAR_LABELS_SHORT[vals.pillar]||vals.pillar)+' | Priority: '+vals.priority+' | Owner: '+vals.owners.join(', ')+(vals.status?' | Status: '+vals.status:''));
+    renderAll(projectsData);
+    closeModal();
+    showToast('Project #'+newId+' "'+vals.name+'" added successfully!');
+  }
 }
 
 /* ── CHANGE LOG ── */
@@ -1160,7 +1234,7 @@ function renderChangeLog(){
   empty.style.display='none';
   table.style.display='';
   tbody.innerHTML=changeLog.map(function(e){
-    var actionCls=e.action==='Added'?'added':'deleted';
+    var actionCls=e.action==='Added'?'added':e.action==='Deleted'?'deleted':'edited';
     return '<tr>'+
       '<td class="log-ts">'+formatTimestamp(e.timestamp)+'</td>'+
       '<td><span class="log-entry-action '+actionCls+'">'+esc(e.action)+'</span></td>'+
