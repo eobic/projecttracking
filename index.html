@@ -607,6 +607,19 @@ function filterByStatus(val){
 /* COMPLETED TAB FILTERS */
 var completedDateFilter='';
 
+var _cdMonths={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+var _cdMonthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function getFridayKey(dateStr){
+  var parts=(dateStr||'').split(' ');
+  if(parts.length<2)return dateStr;
+  var m=_cdMonths[parts[0]],d=parseInt(parts[1]);
+  if(m==null||isNaN(d))return dateStr;
+  var dt=new Date(new Date().getFullYear(),m,d);
+  var daysUntilFriday=(5-dt.getDay()+7)%7;
+  dt.setDate(dt.getDate()+daysUntilFriday);
+  return _cdMonthNames[dt.getMonth()]+' '+dt.getDate();
+}
+
 function applyCompletedFilters(){
   var owner=document.getElementById('f-c-owner').value,
       pillar=document.getElementById('f-c-pillar').value,
@@ -617,7 +630,7 @@ function applyCompletedFilters(){
     if(owner&&r.dataset.cowner!==owner)s=false;
     if(pillar&&r.dataset.cpillar!==pillar)s=false;
     if(stakeholder&&r.dataset.cstakeholder!==stakeholder)s=false;
-    if(completedDateFilter&&r.dataset.cdate!==completedDateFilter)s=false;
+    if(completedDateFilter&&getFridayKey(r.dataset.cdate)!==completedDateFilter)s=false;
     r.classList.toggle('hidden',!s);
   });
 
@@ -933,30 +946,30 @@ function renderCompletedCharts(completed){
   });
   document.getElementById('completed-pillar-chart').innerHTML=cpHtml;
 
-  /* Completed by date */
-  var dateCounts={};
+  /* Completed by week (ending Friday) */
+  var weekCounts={};
   completed.forEach(function(c){
-    if(!dateCounts[c.date])dateCounts[c.date]={Ervina:0,Abdulrahman:0};
-    dateCounts[c.date][c.owner]=(dateCounts[c.date][c.owner]||0)+1;
+    var wk=getFridayKey(c.date);
+    if(!weekCounts[wk])weekCounts[wk]={Ervina:0,Abdulrahman:0};
+    weekCounts[wk][c.owner]=(weekCounts[wk][c.owner]||0)+1;
   });
-  var months={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-  var dates=Object.keys(dateCounts).sort(function(a,b){
+  var weeks=Object.keys(weekCounts).sort(function(a,b){
     var pa=a.split(' '),pb=b.split(' ');
-    var ma=months[pa[0]]||0,mb=months[pb[0]]||0;
+    var ma=_cdMonths[pa[0]]||0,mb=_cdMonths[pb[0]]||0;
     if(ma!==mb)return ma-mb;
     return parseInt(pa[1])-parseInt(pb[1]);
   });
   var dtHtml='';
-  dates.forEach(function(d){
-    var dc=dateCounts[d];
-    dtHtml+='<div class="bar-group" data-cdate="'+esc(d)+'">';
+  weeks.forEach(function(wk){
+    var wc=weekCounts[wk];
+    dtHtml+='<div class="bar-group" data-cdate="'+esc(wk)+'">';
     dtHtml+='<div class="bar-stack">';
     owners.forEach(function(o){
-      var c=dc[o]||0;
+      var c=wc[o]||0;
       if(c>0)dtHtml+='<div class="bar-seg '+OWNER_CLASS[o]+'" style="height:'+(c*25)+'px">'+c+'</div>';
     });
     dtHtml+='</div>';
-    dtHtml+='<div class="bar-label">'+esc(d)+'</div>';
+    dtHtml+='<div class="bar-label">'+esc(wk)+'</div>';
     dtHtml+='</div>';
   });
   document.getElementById('completed-date-chart').innerHTML=dtHtml;
