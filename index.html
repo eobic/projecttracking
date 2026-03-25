@@ -1118,7 +1118,7 @@ var editingId=null;
 var customStatuses=[];
 var customStakeholders=[];
 var customOwners=[];
-var BASE_STATUSES=['In Progress','Waiting','On Hold','Planned','Cancelled'];
+var BASE_STATUSES=['In Progress','Waiting','On Hold','Planned','Cancelled','Completed'];
 var BASE_STAKEHOLDERS=['CFO','Amber','Brian','Tyson','Mike','Jeff Dredge','Chase'];
 var BASE_OWNERS=['Ervina','Abdulrahman','Daniel'];
 var CUSTOM_OWNERS_KEY='pag-custom-owners';
@@ -1347,6 +1347,38 @@ function saveProject(){
     var oldOwners=(old.owners||[]).slice().sort().join(', ');
     var newOwners=vals.owners.slice().sort().join(', ');
     if(oldOwners!==newOwners)diffs.push('Owner: '+oldOwners+' → '+newOwners);
+
+    /* If marked Completed, move to completed array */
+    if(vals.status==='Completed'){
+      var cd=new Date();
+      var cmonths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var completedDate=cmonths[cd.getMonth()]+' '+cd.getDate();
+      var maxCId=0;
+      (projectsData.completed||[]).forEach(function(c){if(c.id>maxCId)maxCId=c.id;});
+      var completedItem={
+        id:maxCId+1,
+        name:vals.name,
+        subtitle:'',
+        owner:vals.owners.length?vals.owners[0]:'',
+        pillar:vals.pillar,
+        date:completedDate,
+        stakeholder:vals.stakeholder||'',
+        impact:vals.notes||'',
+        lastModified:today
+      };
+      projectsData.projects.splice(idx,1);
+      if(!projectsData.completed)projectsData.completed=[];
+      projectsData.completed.push(completedItem);
+      projectsData.lastUpdated=today;
+      persistCustomValue(vals.stakeholder,customStakeholders,CUSTOM_SH_KEY);
+      try{localStorage.setItem(LS_KEY,JSON.stringify(projectsData));}catch(e){}
+      logChange('Completed',{id:editingId,name:vals.name},'Moved to Completed tab');
+      renderAll(projectsData);
+      closeModal();
+      showToast('Project #'+editingId+' marked as Completed.');
+      switchTab('completed');
+      return;
+    }
 
     /* Apply update */
     Object.assign(old,vals);
