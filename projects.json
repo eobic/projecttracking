@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Mar 17, 2026",
+  "lastUpdated": "Apr 1, 2026",
   "projects": [
     {"id":1,"name":"Validate Karbon_entities Table","pillar":"modeling","owners":["Ervina","Daniel"],"status":"In Progress","priority":"P1","stakeholder":"","due":"","dependencies":"Foundational","tier":null,"notes":"Cleared ~5k records. Daniel re-running analysis. Waiting to get confirmation on if we can activate the syncing of certain contact types from Karbon to NetSuite. Also waiting for Daniel to get back in office Mon 3/2.","lastModified":"Mar 10, 2026"},
     {"id":2,"name":"Update Core client_subsidiary Model","pillar":"modeling","owners":["Ervina","Daniel"],"status":"In Progress","priority":"P1","stakeholder":"","due":"","dependencies":"Depends on #1","tier":null,"notes":"Confirmed table logic with Tyson. The table should increase by rows for every client_subsidiary relationship. Additionally we will bring in the leadership_position_3 and leadership_position_4 fields from kpi_dimn_client to represent the CAS client owner and manager. We are holding off on adding operational logic around forcing the use of client owner/manager fields and CAS fields between office 3 and local offices.","lastModified":"Feb 26, 2026"},
@@ -44,7 +44,8 @@
     {"id":59,"name":"Talent Acquisition - Automated Coordinator Workflow","pillar":"ai","owners":["Abdulrahman"],"status":"On Hold","priority":"Pipeline","stakeholder":"Chris Schafer","due":"","dependencies":"None","tier":4,"notes":"A webapp that replaces the coordinator role on the TA team. It preps the interviewer, schedules, and coordinates candidate interview process.","lastModified":"Mar 10, 2026"},
     {"id":58,"name":"Review Master - HR Tool","pillar":"ai","owners":["Abdulrahman"],"status":"In Progress","priority":"P1","stakeholder":"Tyson","due":"","dependencies":"None","tier":4,"notes":"HR Tool that streamlines annual comp cycle. An Infrastructure request was made and sent to IT and Security. We're waiting on the 7 requirements listed in the Inf. Request. See doc for details. Deploying the tool can't be done until requests are fulfilled. The hierarchy structure has been completed, the planning and md file is done, and currently working on publishing a local page with the dummy data to test the first version of the tool.","lastModified":"Mar 10, 2026"},
     {"id":57,"name":"Add WIP Breakout Filter to KPI","pillar":"reporting","owners":["Abdulrahman"],"status":"In Progress","priority":"P2","stakeholder":"Amber","due":"","dependencies":"None","tier":null,"notes":"KPI Report includes all billing types and this is inconsistent compared to the WIP and RLZ report because there we only show T&M/Fixed Billing Type WIP. To add clarity we will include a billing type WIP filter on the KPI PowerBI report.","lastModified":"Mar 10, 2026"},
-    {"id":62,"name":"Update Time and Billing HDI for Keystone-O","pillar":"intake","owners":["Abdulrahman"],"status":"In Progress","priority":"P1","stakeholder":"Tyson","due":"","dependencies":"None","tier":null,"notes":"Reached out to the Admin.","lastModified":"Mar 10, 2026"}
+    {"id":62,"name":"Update Time and Billing HDI for Keystone-O","pillar":"intake","owners":["Abdulrahman"],"status":"In Progress","priority":"P1","stakeholder":"Tyson","due":"","dependencies":"None","tier":null,"notes":"Reached out to the Admin.","lastModified":"Mar 10, 2026"},
+    {"id":63,"name":"Realization Dashboard","pillar":"reporting","owners":["Ervina"],"status":"","priority":"P1","stakeholder":"Tyson","due":"","dependencies":"None","tier":3,"notes":"Build a new Realization Dashboard in Power BI for COO Tyson.","lastModified":"Apr 1, 2026"}
   ],
   "completed": [
     {"id":1,"name":"Historical Data Integration - 5 Offices","subtitle":"ASG, Pottsville, Greencoast, Walpole, Santa Cruz","owner":"Abdulrahman","pillar":"modeling","date":"Feb 23","tier":null,"impact":"Uploaded tables to Snowflake, added to dbt models, published in Power BI. Full pipeline delivery.","lastModified":"Feb 23, 2026"},
@@ -71,6 +72,7 @@
     {"id":22,"name":"PowerBI Bug: WIP N/A - Jack C Wilder Admin Trust (Amber)","subtitle":"","owner":"Abdulrahman","pillar":"reporting","date":"Mar 17","stakeholder":"Amber","tier":null,"impact":"The WIP discrepancies were solved with the other ticket items. Regarding Client Owner stuff, we'll wait to deploy the new client_sub model before digging in.","lastModified":"Mar 17, 2026"}
   ],
   "changelog": [
+    {"date": "Apr 1, 2026", "author": "Ervina", "action": "Added new project: Realization Dashboard (Power BI) for COO Tyson", "ref": "#63"},
     {"date": "Mar 17, 2026", "author": "Ervina", "action": "Added Change Log tab to tracker; updated collaboration setup for Abdulrahman", "ref": ""}
   ]
 }
