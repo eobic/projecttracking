@@ -569,6 +569,21 @@ function applyFullFilters(){
     r.classList.toggle('hidden',!s);
   });
 
+  /* update KPI counts to reflect visible rows */
+  var vis=0,visSh=0,visStCounts={};
+  document.querySelectorAll('#full-table tbody tr[data-p]').forEach(function(r){
+    if(r.classList.contains('hidden'))return;
+    vis++;
+    if(r.dataset.cfo==='yes')visSh++;
+    var st=r.dataset.status||'none';
+    visStCounts[st]=(visStCounts[st]||0)+1;
+  });
+  document.getElementById('stat-fp-total').textContent=vis;
+  document.getElementById('stat-fp-sh').textContent=visSh;
+  document.querySelectorAll('#status-scards .s-card[data-st-val]').forEach(function(card){
+    card.querySelector('.n').textContent=visStCounts[card.dataset.stVal]||0;
+  });
+
   /* update stat card active states */
   document.querySelectorAll('#status-scards .s-card[data-st-val]').forEach(function(card){
     card.classList.toggle('stat-active',status===card.dataset.stVal);
